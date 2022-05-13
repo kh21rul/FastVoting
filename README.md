@@ -10,6 +10,7 @@
 
 ## About
 - [ ] Menampilkan informasi tentang aplikasi #F
+
 ## Register
 - [ ] Form register
   - [ ] Menampilkan form register #F
@@ -54,6 +55,10 @@
 - [ ] Menambahkan cookies session login
 - [ ] Redirect ke halaman dashboard jika sukses #F
 
+## Logout
+- [ ] Verifikasi session
+- [ ] Menghapus session
+
 ## Dashboard User
 - [ ] Verifikasi session #F
 - [ ] Redirect ke halaman login jika session invalid #F
@@ -71,8 +76,9 @@
   - [ ] Validasi request voting baru #B
   - [ ] Menampilkan respon jika gagal #F
   - [ ] Redirect ke halaman detail voting jika sukses #F
+- [ ] Menampilkan tombol logout
 
-# Detail Voting
+## Detail Voting
 - [ ] Verifikasi session #F
 - [ ] Redirect ke halaman login jika session invalid #F
 - [ ] Set waktu voting (mulai dan selesai)
@@ -96,12 +102,16 @@
   - [ ] Membuat endpoint GET /votes/{voteId}/result #B
   - [ ] Menampilkan hasil voting real-time setelah waktu voting dimulai #F
 
-# Vote
+## Vote
 - [ ] Verifikasi link
 - [ ] Mengirim vote
 - [ ] Menampilkan hasil voting real-time jika sudah vote
 
-# Dashboard Admin
+## Dashboard Admin
 - [ ] Verifikasi session #F
 - [ ] Menampilkan daftar user
 - [ ] Menghapus user
+- [ ] Menampilkan tombol logout
+
+## Lainnya
+- [ ] Membuat entity relationship diagram (ERD)
