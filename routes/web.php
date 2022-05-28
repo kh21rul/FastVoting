@@ -15,11 +15,14 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Auth::routes();
+Auth::routes(['verify' => true]);
 
 Route::get('/', function () {
     return view('welcome');
 });
 
-Route::get('/dashboard', [DashboardController::class, 'index'])
-    ->name('dashboard');
+Route::middleware(['auth', 'verified'])->group(function () {
+    // Put all routes that need authentication and email verification here.
+    Route::get('/dashboard', [DashboardController::class, 'index'])
+        ->name('dashboard');
+});
