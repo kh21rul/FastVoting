@@ -1,8 +1,8 @@
 /node_modules
 /public/hot
 /public/storage
-/public/styles/**
-/public/scripts/**
+/public/css/**
+/public/js/**
 /public/assets/**
 /public/vendor
 /public/mix-manifest.json

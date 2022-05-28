@@ -12,8 +12,8 @@ const mix = require('laravel-mix');
  */
 
 // === Mix configuration for both production and development environments ===
-mix.js('resources/scripts/app.js', 'public/scripts');
-mix.postCss('resources/styles/app.css', 'public/styles', [
+mix.js('resources/js/app.js', 'public/js');
+mix.postCss('resources/css/app.css', 'public/css', [
     //
 ]);
 
