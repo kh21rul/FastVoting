@@ -20,7 +20,7 @@
     {{-- Font-Awesome Icons --}}
     <script src="vendor/fontawesome/fontawesome-icons.min.js" defer></script>
 </head>
-<body>
+<body class="d-flex flex-column min-vh-100">
     <div id="app">
         <nav class="navbar navbar-expand-md navbar-light bg-white shadow-sm">
             <div class="container">
@@ -85,16 +85,14 @@
             @yield('content')
         </main>
     </div>
-    <div class="container">
-        <footer class="d-flex flex-wrap justify-content-between align-items-center py-3 my-4 border-top">
-          <div class="col-md-4 d-flex align-items-center">
+        <footer class="w-100 mt-auto d-flex flex-wrap justify-content-between align-items-center py-3 my-4 border-top">
+          <div class="d-flex align-items-center text-center mx-auto">
             <a href="/" class="mb-3 me-2 mb-md-0 text-muted text-decoration-none lh-1">
               <img src="./assets/logo.png" class="bi" width="30" height="24">
             </a>
             <span class="text-muted">&copy; 2022 FastVoting</span>
           </div>
         </footer>
-      </div>
 
 </body>
 </html>
