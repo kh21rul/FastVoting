@@ -16,6 +16,12 @@ mix.js('resources/js/app.js', 'public/js');
 mix.sass('resources/sass/app.scss', 'public/css');
 mix.sourceMaps();
 
+// Copy all assets to public folder
+mix.copyDirectory('resources/assets', 'public/assets');
+
+// Copy all third-party vendors to public folder
+mix.copyDirectory('resources/vendor', 'public/vendor');
+
 // === Mix configuration for development environment ===
 if (!mix.inProduction()) {
     mix.disableNotifications();
