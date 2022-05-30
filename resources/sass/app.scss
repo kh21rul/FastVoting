@@ -6,3 +6,10 @@
 
 // Bootstrap
 @import '~bootstrap/scss/bootstrap';
+
+* {
+    background-color: #fff;
+}
+.container {
+    padding: 16px;
+}
