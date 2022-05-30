@@ -22,6 +22,9 @@ mix.copyDirectory('resources/assets', 'public/assets');
 // Copy all third-party vendors to public folder
 mix.copyDirectory('resources/vendor', 'public/vendor');
 
+// Split the js files into manifest.js, vendor.js and app.js.
+mix.extract();
+
 // === Mix configuration for development environment ===
 if (!mix.inProduction()) {
     mix.disableNotifications();
