@@ -16,4 +16,11 @@
 
 .description-text {
     font-size: 1.2em;
+    padding-bottom: 0;
+}
+
+.ruler {
+    margin-top: 0;
+    border: 1px solid rgba(0, 0, 0, 0.41);
+    box-shadow: 0px 1px 4px rgba(0, 0, 0, 0.25);
 }
