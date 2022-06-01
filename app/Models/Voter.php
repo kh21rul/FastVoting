@@ -26,7 +26,6 @@ class Voter extends Model
         'event_id',
         'name',
         'email',
-        'created_at'
     ];
 
     /**
