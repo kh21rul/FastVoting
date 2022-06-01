@@ -70,3 +70,8 @@ Route::get('/events/eventId/result', function () {
 Route::get('/events/eventId/voters', function () {
     return view('pages.voters');
 })->name('voters');
+
+// Go to options page
+Route::get('/events/eventId/options', function () {
+    return view('pages.options');
+})->name('options');
