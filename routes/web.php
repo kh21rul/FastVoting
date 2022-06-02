@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\EventController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
@@ -43,6 +44,14 @@ Route::middleware(['auth', 'verified'])->group(function () {
     // Go to dashboard page
     Route::get('/dashboard', [DashboardController::class, 'index'])
         ->name('dashboard');
+
+    // Go to add new event page
+    Route::get('/events/add', [EventController::class, 'add'])
+        ->name('event.add');
+
+    // Go to detail event page
+    Route::get('/events/{id}', [EventController::class, 'detail'])
+        ->name('event.detail');
 });
 
 // TODO: All routes in below is not used the right method and params yet
@@ -51,15 +60,6 @@ Route::get('/vote', function () {
     return view('pages.vote');
 })->name('vote');
 
-// Go to add new event page
-Route::get('/events/add', function () {
-    return view('pages.event-add');
-})->name('event.add');
-
-// Go to detail event page
-Route::get('/events/eventId', function () {
-    return view('pages.event-detail');
-})->name('event.detail');
 
 // Go to result page
 Route::get('/events/eventId/result', function () {
