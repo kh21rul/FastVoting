@@ -49,6 +49,10 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('/events/add', [EventController::class, 'add'])
         ->name('event.add');
 
+    // Insert new event
+    Route::post('/events/add', [EventController::class, 'create'])
+        ->name('event.create');
+
     // Go to detail event page
     Route::get('/events/{id}', [EventController::class, 'detail'])
         ->name('event.detail');
