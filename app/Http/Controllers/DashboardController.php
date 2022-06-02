@@ -13,7 +13,7 @@ class DashboardController extends Controller
      */
     public function __construct()
     {
-        $this->middleware(['auth', 'verified']);
+        //
     }
 
     /**
@@ -23,6 +23,10 @@ class DashboardController extends Controller
      */
     public function index()
     {
-        return view('pages.dashboard');
+        $user = auth()->user();
+        $data['title'] = 'Dashboard | ' . config('app.name');
+        $data['events'] = $user->events;
+
+        return view('pages.dashboard', $data);
     }
 }
