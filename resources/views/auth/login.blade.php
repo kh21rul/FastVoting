@@ -3,6 +3,11 @@
 @section('content')
     <div class="container-fluid">
       <div class="row">
+        <div class="col-sm-6 d-none d-sm-block pr-5">
+            <img src="./assets/undraw_onboarding_re_6osc.png"
+              alt="Login image" class="w-100 py-3" style="object-fit: cover; object-position: center;">
+          </div>
+
         <div class="col-sm-6 text-black">
 
           <div class="d-flex align-items-center h-custom-2 px-5 ms-xl-4 mt-5 pt-5 pt-xl-0 mt-xl-n5">
@@ -44,7 +49,7 @@
             </div>
 
               <div class="pt-1 mb-4">
-                <button class="btn btn-info btn-lg btn-block" type="submit">{{ __('Login') }}</button>
+                <button class="btn btn-primary btn-lg btn-block" type="submit">{{ __('Login') }}</button>
               </div>
 
               <p class="small mb-5 pb-lg-2">@if (Route::has('password.request'))<a class="text-muted" href="{{ route('password.request') }}"> {{ __('Forgot Your Password?') }}</a></p>
@@ -54,10 +59,6 @@
 
           </div>
 
-        </div>
-        <div class="col-sm-6 d-none d-sm-block pr-5">
-          <img src="./assets/undraw_onboarding_re_6osc.png"
-            alt="Login image" class="w-100 py-3" style="object-fit: cover; object-position: center;">
         </div>
       </div>
     </div>
