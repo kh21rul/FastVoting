@@ -58,4 +58,12 @@ class User extends Authenticatable implements MustVerifyEmail
     protected $attributes = [
         'is_admin' => false,
     ];
+
+    /**
+     * Get the user's events.
+     */
+    public function events()
+    {
+        return $this->hasMany(Event::class);
+    }
 }
