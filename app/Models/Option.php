@@ -55,4 +55,20 @@ class Option extends Model
     protected $attributes = [
         //
     ];
+
+    /**
+     * Get the event that this option belongs to.
+     */
+    public function event()
+    {
+        return $this->belongsTo(Event::class);
+    }
+
+    /**
+     * Get the ballots that this option has.
+     */
+    public function ballots()
+    {
+        return $this->hasMany(Ballot::class);
+    }
 }
