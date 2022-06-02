@@ -57,4 +57,36 @@ class Event extends Model
     protected $attributes = [
         //
     ];
+
+    /**
+     * Get the event's creator.
+     */
+    public function creator()
+    {
+        return $this->belongsTo(User::class, 'user_id');
+    }
+
+    /**
+     * Get the options of the event.
+     */
+    public function options()
+    {
+        return $this->hasMany(Option::class);
+    }
+
+    /**
+     * Get the voters of the event.
+     */
+    public function voters()
+    {
+        return $this->hasMany(Voter::class);
+    }
+
+    /**
+     * Get the ballots of the event.
+     */
+    public function ballots()
+    {
+        return $this->hasMany(Ballot::class);
+    }
 }
