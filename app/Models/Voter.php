@@ -54,4 +54,20 @@ class Voter extends Model
     protected $attributes = [
         //
     ];
+
+    /**
+     * Get the event of the voter.
+     */
+    public function event()
+    {
+        return $this->belongsTo(Event::class);
+    }
+
+    /**
+     * Get the voter's ballot.
+     */
+    public function ballot()
+    {
+        return $this->hasOne(Ballot::class);
+    }
 }
