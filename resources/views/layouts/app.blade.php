@@ -22,10 +22,12 @@
 </head>
 <body class="d-flex flex-column min-vh-100">
     <div id="app">
-        <nav class="navbar navbar-expand-md navbar-light bg-white shadow-sm">
-            <div class="container">
-                <img src="{{ asset('assets/logo.png') }}" class="me-2" height="38" alt="FastVoting logo" loading="lazy" />
-                <small class="font-weight-bold text-primary" style="text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.25);">FastVoting</small>
+        <nav class="navbar navbar-expand-md navbar-light bg-white shadow-sm p-0" style="height: 1%">
+            <div class="container" style="height: 1%">
+                <a href="/" class="mb-3 me-2 mb-md-0 text-muted text-decoration-none lh-1">
+                    <img src="{{ asset('assets/logo.png') }}" class="me-2" height="38" alt="FastVoting logo" loading="lazy" />
+                    <small class="font-weight-bold text-primary" style="text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.25); font-size: 15px;">FastVoting</small>
+                </a>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="{{ __('Toggle navigation') }}">
                     <span class="navbar-toggler-icon"></span>
                 </button>
@@ -81,9 +83,6 @@
     </div>
     <footer class="w-100 mt-auto d-flex flex-wrap justify-content-between align-items-center py-3 my-4 border-top">
         <div class="d-flex align-items-center text-center mx-auto">
-            <a href="/" class="mb-3 me-2 mb-md-0 text-muted text-decoration-none lh-1">
-                <img src="{{ asset('assets/logo.png') }}" class="bi" width="30" height="24">
-            </a>
             <span class="text-muted">&copy; 2022 FastVoting</span>
         </div>
     </footer>
