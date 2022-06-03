@@ -22,8 +22,9 @@
     </section>
 
     {{-- Options --}}
+    <h2>{{ __('Options') }}</h2>
     <section class="d-flex justify-content-between align-items-center gap-2 flex-wrap mb-2">
-        <h2>{{ __('Options') }}</h2>
+        <span>{{ $event->options->count() }} {{ $event->options->count() > 1 ? __('options available') : __('option available') }}</span>
         <a class="btn btn-primary" href="#">{{ __('Add Option') }}</a>
     </section>
     <section class="mb-3">
@@ -47,13 +48,15 @@
     </section>
 
     {{-- Voters --}}
+    <h2>{{ __('Voters') }}</h2>
     <section class="d-flex justify-content-between align-items-center gap-2 flex-wrap mb-2">
-        <h2>{{ __('Voters') }}</h2>
-        <a class="btn btn-primary" href="#">{{ __('Add Voter') }}</a>
+        <span>{{ $event->voters->count() }} {{ $event->voters->count() > 1 ? __('registered voters') : __('registered voter')  }}</span>
+        <a class="btn btn-primary" href="{{ route('voters', ['id' => $event->id]) }}">{{ __('Show All') }}</a>
     </section>
     <section class="mb-3">
         @if ($event->voters->count() > 0)
-            @foreach ($event->voters->sortBy('email') as $voter)
+            {{-- Showing max. 5 voters --}}
+            @foreach ($event->voters->sortBy('email', SORT_NATURAL)->take(5) as $voter)
                 <article class="card mb-2">
                     <div class="card-body">
                         <p class="card-title mb-0 fs-5">{{ $voter->name }}</p>
