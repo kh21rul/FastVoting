@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\EventController;
+use App\Http\Controllers\VoterController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
@@ -58,6 +59,10 @@ Route::middleware(['auth', 'verified'])->group(function () {
         // Go to detail event page
         Route::get('/events/{id}', [EventController::class, 'detail'])
             ->name('event.detail');
+
+        // Go to voters page
+        Route::get('/events/{id}/voters', [VoterController::class, 'index'])
+            ->name('voters');
     });
 });
 
@@ -72,11 +77,6 @@ Route::get('/vote', function () {
 Route::get('/events/eventId/result', function () {
     return view('pages.result');
 })->name('result');
-
-// Go to voters page
-Route::get('/events/eventId/voters', function () {
-    return view('pages.voters');
-})->name('voters');
 
 // Go to options page
 Route::get('/events/eventId/options', function () {
