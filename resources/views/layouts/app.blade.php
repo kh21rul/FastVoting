@@ -18,7 +18,7 @@
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
 
     {{-- Font-Awesome Icons --}}
-    <script src="vendor/fontawesome/fontawesome-icons.min.js" defer></script>
+    <script src="{{ asset('vendor/fontawesome/fontawesome-icons.min.js') }}" defer></script>
 </head>
 <body class="d-flex flex-column min-vh-100">
     <div id="app">
