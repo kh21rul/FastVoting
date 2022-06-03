@@ -14,6 +14,10 @@
     padding: 16px;
 }
 
+main {
+    height: 100vh;
+}
+
 .description-text {
     font-size: 1.2em;
     padding-bottom: 0;
@@ -32,6 +36,10 @@
 
 a:link { text-decoration: none; }
 
+.about {
+    flex-wrap: wrap;
+}
+
 @media (min-width: 768px) {
     .choice {
         width: 60%;
@@ -40,14 +48,29 @@ a:link { text-decoration: none; }
     .choiceCard {
         justify-content: space-between;
     }
+
+    .about {
+        justify-content: space-between;
+    }
+
+    .descriptionAbout {
+        width:49%;
+    }
 }
 
 @media (min-width: 992px) {
+    p {
+        font-size: 1.2em;
+    }
     .choice {
         width: 32%;
     }
 
     .choiceCard {
         justify-content: space-evenly;
+    }
+
+    .descriptionAbout {
+        width:48%;
     }
 }
