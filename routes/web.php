@@ -53,9 +53,12 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::post('/events/add', [EventController::class, 'create'])
         ->name('event.create');
 
-    // Go to detail event page
-    Route::get('/events/{id}', [EventController::class, 'detail'])
-        ->name('event.detail');
+    Route::middleware('event.authorized')->group(function () {
+        // === Put all routes that need event authorization here ===
+        // Go to detail event page
+        Route::get('/events/{id}', [EventController::class, 'detail'])
+            ->name('event.detail');
+    });
 });
 
 // TODO: All routes in below is not used the right method and params yet
