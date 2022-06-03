@@ -51,9 +51,9 @@ class EventController extends Controller
      */
     public function detail($id)
     {
-        // TODO: Get event detail from database
-        // ...
+        $data['title'] = 'Event detail | '. config('app.name');
+        $data['event'] = Event::find($id);
 
-        return view('pages.event-detail');
+        return view('pages.event-detail', $data);
     }
 }

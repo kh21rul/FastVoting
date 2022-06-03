@@ -2,6 +2,13 @@
 
 @section('content')
 <div class="container py-4">
+    {{-- Displaying alert error --}}
+    @if (session('error'))
+        <div class="alert alert-warning alert-dismissible fade show" role="alert">
+            <span>{{ session('error') }}</span>
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+    @endif
     <div class="mb-3 d-flex justify-content-end">
         <a class="btn btn-primary" href="{{ route('event.add') }}">Add Event</a>
     </div>
