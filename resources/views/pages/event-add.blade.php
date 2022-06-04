@@ -2,6 +2,12 @@
 
 @section('content')
 <div class="container py-4">
+    <section style="--bs-breadcrumb-divider: '>';" aria-label="breadcrumb">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="{{ route('dashboard') }}">Dashboard</a></li>
+            <li class="breadcrumb-item active" aria-current="page">Add New Event</li>
+        </ol>
+    </section>
     <h1>Add New Event</h1>
     <form action="{{ route('event.create') }}" method="POST">
         @csrf

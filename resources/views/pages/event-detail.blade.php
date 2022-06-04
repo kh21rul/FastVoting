@@ -2,6 +2,12 @@
 
 @section('content')
 <div class="container py-4">
+    <section style="--bs-breadcrumb-divider: '>';" aria-label="breadcrumb">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="{{ route('dashboard') }}">Dashboard</a></li>
+            <li class="breadcrumb-item active" aria-current="page">Event</li>
+        </ol>
+    </section>
     <section class="d-flex justify-content-between align-items-center gap-2 flex-wrap">
         <h1>{{ $event->title }}</h1>
         <div class="d-flex gap-2">

@@ -2,6 +2,13 @@
 
 @section('content')
 <div class="container py-4">
+    <section style="--bs-breadcrumb-divider: '>';" aria-label="breadcrumb">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="{{ route('dashboard') }}">Dashboard</a></li>
+            <li class="breadcrumb-item"><a href="{{ route('event.detail', ['id' => $event->id]) }}">Event</a></li>
+            <li class="breadcrumb-item active" aria-current="page">Voters</li>
+        </ol>
+    </section>
     {{-- Displaying alert error --}}
     @if (session('error'))
         <div class="alert alert-warning alert-dismissible fade show" role="alert">
