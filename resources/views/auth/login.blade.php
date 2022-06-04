@@ -25,7 +25,7 @@
                     </span>
                 @enderror
 
-                <label class="form-label" for="email">{{ __('Email Address') }}</label>
+                <label class="form-label mt-2" for="email">{{ __('Email Address') }}</label>
               </div>
 
               <div class="form-outline mb-4">
@@ -35,7 +35,7 @@
                                         <strong>{{ $message }}</strong>
                                     </span>
                                 @enderror
-                <label class="form-label" for="password">{{ __('Password') }}</label>
+                <label class="form-label mt-2" for="password">{{ __('Password') }}</label>
               </div>
 
               <div class="row mb-3">
