@@ -51,7 +51,7 @@
     <h2>{{ __('Options') }}</h2>
     <section class="d-flex justify-content-between align-items-center gap-2 flex-wrap mb-2">
         <span>{{ $event->options->count() }} {{ $event->options->count() > 1 ? __('options available') : __('option available') }}</span>
-        <a class="btn btn-primary" href="#">{{ __('Add Option') }}</a>
+        <a class="btn btn-primary" href="/events/options/create">{{ __('Add Option') }}</a>
     </section>
     <section class="mb-3">
         @if ($event->options->count() > 0)

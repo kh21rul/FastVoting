@@ -5,6 +5,7 @@ use App\Http\Controllers\EventController;
 use App\Http\Controllers\VoterController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\DashboardEventOptionController;
 
 /*
 |--------------------------------------------------------------------------
@@ -28,6 +29,7 @@ use Illuminate\Support\Facades\Route;
 | - Reset password page         : route('password.reset') -> auth/passwords/reset.blade.php
 | - Email verification page     : route('verification.notice') -> auth/verify.blade.php
 */
+
 Auth::routes(['verify' => true]);
 
 // Go to home page
@@ -87,6 +89,8 @@ Route::get('/events/eventId/result', function () {
 })->name('result');
 
 // Go to options page
-Route::get('/events/eventId/options', function () {
-    return view('pages.options');
-})->name('options');
+// Route::get('/events/eventId/options', function () {
+//     return view('pages.options');
+// })->name('options');
+
+Route::resource('/events/options', DashboardEventOptionController::class)->middleware('auth');
