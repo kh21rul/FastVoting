@@ -62,6 +62,14 @@ Route::middleware(['auth', 'verified'])->group(function () {
         Route::get('/events/{id}', [EventController::class, 'detail'])
             ->name('event.detail');
 
+        // Go to edit event page
+        Route::get('/events/{id}/edit', [EventController::class, 'edit'])
+            ->name('event.edit');
+
+        // Update the event
+        Route::put('/events/{id}/edit', [EventController::class, 'update'])
+            ->name('event.update');
+
         // Go to voters page
         Route::get('/events/{id}/voters', [VoterController::class, 'index'])
             ->name('voters');
