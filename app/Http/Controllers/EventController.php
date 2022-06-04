@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\EventModifyRequest;
 use App\Models\Event;
 use Illuminate\Http\Request;
 
@@ -29,14 +30,9 @@ class EventController extends Controller
     /**
      * Create new event
      */
-    public function create(Request $request)
+    public function create(EventModifyRequest $request)
     {
-        $validatedData = $request->validate([
-            'title' => ['required', 'string', 'min:8', 'max:255'],
-            'description' => ['nullable', 'string'],
-            'started_at' => ['nullable', 'date', 'after:now', 'required_with:finished_at'],
-            'finished_at' => ['nullable', 'date', 'after:started_at', 'required_with:started_at'],
-        ]);
+        $validatedData = $request->validated();
         $validatedData['user_id'] = auth()->user()->id;
 
         // Create a new event.
@@ -74,14 +70,9 @@ class EventController extends Controller
     /**
      * Update the event
      */
-    public function update(Request $request, $id)
+    public function update(EventModifyRequest $request, $id)
     {
-        $validatedData = $request->validate([
-            'title' => ['required', 'string', 'min:8', 'max:255'],
-            'description' => ['nullable', 'string'],
-            'started_at' => ['nullable', 'date', 'after:now', 'required_with:finished_at'],
-            'finished_at' => ['nullable', 'date', 'after:started_at', 'required_with:started_at'],
-        ]);
+        $validatedData = $request->validated();
 
         $event = Event::find($id);
         $event->update($validatedData);
