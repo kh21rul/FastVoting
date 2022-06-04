@@ -77,6 +77,10 @@ Route::middleware(['auth', 'verified'])->group(function () {
         // Go to voters page
         Route::get('/events/{id}/voters', [VoterController::class, 'index'])
             ->name('voters');
+
+        // Add new voter
+        Route::post('/events/{id}/voters', [VoterController::class, 'create'])
+            ->name('voter.create');
     });
 });
 
