@@ -34,8 +34,8 @@ class EventController extends Controller
         $validatedData = $request->validate([
             'title' => ['required', 'string', 'min:8', 'max:255'],
             'description' => ['nullable', 'string'],
-            'started_at' => ['nullable', 'date'],
-            'finished_at' => ['nullable', 'date'],
+            'started_at' => ['nullable', 'date', 'after:now', 'required_with:finished_at'],
+            'finished_at' => ['nullable', 'date', 'after:started_at', 'required_with:started_at'],
         ]);
         $validatedData['user_id'] = auth()->user()->id;
 
