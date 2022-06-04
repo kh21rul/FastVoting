@@ -25,7 +25,7 @@
                     </span>
                 @enderror
 
-                <label class="form-label" for="name">{{ __('Name') }}</label>
+                <label class="form-label mt-2" for="name">{{ __('Name') }}</label>
               </div>
 
 
@@ -37,7 +37,7 @@
                     </span>
                 @enderror
 
-                <label class="form-label" for="email">{{ __('Email Address') }}</label>
+                <label class="form-label mt-2" for="email">{{ __('Email Address') }}</label>
               </div>
 
               <div class="form-outline mb-4">
@@ -47,16 +47,13 @@
                                         <strong>{{ $message }}</strong>
                                     </span>
                                 @enderror
-                <label class="form-label" for="password">{{ __('Password') }}</label>
+                <label class="form-label mt-2" for="password">{{ __('Password') }}</label>
               </div>
 
 
-                <div class="col-md-6">
+                <div class="form-outline mb-4">
                     <input id="password-confirm" type="password" class="form-control form-control-lg @error('password') is-invalid @enderror" name="password_confirmation" required autocomplete="new-password"/>
-
-                    <div class="form-outline mb-4">
-                          <label class="form-label text-md-end"   for="password-confirm">{{ __('Confirm Password') }}</label>
-                    </div>
+                          <label class="form-label text-md-end mt-2"   for="password-confirm">{{ __('Confirm Password') }}</label>
                 </div>
 
 
