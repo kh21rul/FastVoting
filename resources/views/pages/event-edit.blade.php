@@ -6,7 +6,6 @@
     <form action="{{ route('event.update', ['id' => $event->id]) }}" method="POST">
         @csrf
         @method('PUT')
-        <input id="timezone" type="hidden" name="timezone">
         <div class="form-group mb-2">
             <label for="title" class="form-label">Title</label>
             <input type="text" class="form-control @error('title') is-invalid @enderror" id="title" name="title" placeholder="Title" value="{{ old('title') ?? $event->title }}">
