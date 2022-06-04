@@ -5,20 +5,46 @@
     <section class="d-flex justify-content-between align-items-center gap-2 flex-wrap">
         <h1>{{ $event->title }}</h1>
         <div class="d-flex gap-2">
-            <a class="btn btn-secondary" href="#">{{ __('Edit Event') }}</a>
+            <a class="btn btn-secondary" href="{{ route('event.edit', ['id' => $event->id]) }}">{{ __('Edit Event') }}</a>
             <button type="submit" class="btn btn-outline-danger" href="#">{{ __('Delete Event') }}</button>
         </div>
     </section>
     <hr>
-    <section class="mb-3">
-        <p><b>{{ __('Started at: ') }}</b> {{ $event->started_at ?? __('-') }}</p>
-        <p><b>{{ __('Finished at: ') }}</b> {{ $event->finished_at ?? __('-') }}</p>
-        <b>{{ __('Description: ') }}</b>
-        @if ($event->description)
-            <p>{{ $event->description }}</p>
-        @else
-            <p class="text-muted">{{ __('There are no description') }}</p>
-        @endif
+    <section class="table-responsive mb-3">
+        <table class="table" style="min-width: 204px">
+            <tbody>
+                <tr>
+                    <th>{{ __('Started At') }}</th>
+                    <td>
+                        @if ($event->started_at)
+                            {{ $event->started_at->format('D, j M Y H:i:s e') }}
+                        @else
+                            <span class="text-muted">{{ __('Not set') }}</span>
+                        @endif
+                    </td>
+                </tr>
+                <tr>
+                    <th>{{ __('Finished At') }}</th>
+                    <td>
+                        @if ($event->finished_at)
+                            {{ $event->finished_at->format('D, j M Y H:i:s e') }}
+                        @else
+                            <span class="text-muted">{{ __('Not set') }}</span>
+                        @endif
+                    </td>
+                </tr>
+                <tr>
+                    <th>{{ __('Description') }}</th>
+                    <td>
+                        @if ($event->description)
+                            {{ $event->description }}
+                        @else
+                            <span class="text-muted">{{ __('Not set') }}</span>
+                        @endif
+                    </td>
+                </tr>
+            </tbody>
+        </table>
     </section>
 
     {{-- Options --}}

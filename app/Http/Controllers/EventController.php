@@ -26,6 +26,9 @@ class EventController extends Controller
         return view('pages.event-add', $data);
     }
 
+    /**
+     * Create new event
+     */
     public function create(Request $request)
     {
         $validatedData = $request->validate([
@@ -55,5 +58,34 @@ class EventController extends Controller
         $data['event'] = Event::find($id);
 
         return view('pages.event-detail', $data);
+    }
+
+    /**
+     * Go to list event page
+     */
+    public function edit($id)
+    {
+        $data['title'] = 'Edit event | '. config('app.name');
+        $data['event'] = Event::find($id);
+
+        return view('pages.event-edit', $data);
+    }
+
+    /**
+     * Update the event
+     */
+    public function update(Request $request, $id)
+    {
+        $validatedData = $request->validate([
+            'title' => ['required', 'string', 'min:8', 'max:255'],
+            'description' => ['nullable', 'string'],
+            'started_at' => ['nullable', 'date', 'after:now', 'required_with:finished_at'],
+            'finished_at' => ['nullable', 'date', 'after:started_at', 'required_with:started_at'],
+        ]);
+
+        $event = Event::find($id);
+        $event->update($validatedData);
+
+        return redirect()->route('event.detail', ['id' => $event->id]);
     }
 }
