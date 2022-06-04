@@ -4,7 +4,7 @@
 <div class="container">
     <h2>Add Event</h2>
     <hr>
-    <form>
+    <form method="POST" action="#">
         <div class="form-outline mb-4">
             <label class="form-label" for="form1Example1">Tittle <span style="color:red;font-weight:bold">*</span></label>
             <input type="text" id="form1Example1" class="form-control" placeholder="Enter tittle event" required/>
@@ -43,10 +43,12 @@
             <label class="form-label">Choice <span style="color:red;font-weight:bold">*</span></label>
             <div class="col">
               <div class="form-outline">
-                <a type="button" class="btn btn-primary" href="{{route('login')}}" style="margin-right: 2%">Add Option</a>
+                <a type="submit" class="btn btn-primary" href="{{route('options')}}" style="margin-right: 2%">Add Option</a>
               </div>
             </div>
         </div>
+    </form>
+    <form>
         <div class="d-flex flex-wrap justify-content-around">
             <div class="card" style="width: 100%;margin-bottom: 1rem;">
                 <div class="card-head d-flex justify-content-center p-2"><img src="{{asset('assets/imgCandidate.png')}}" alt="" style="width: 90%"></div>
