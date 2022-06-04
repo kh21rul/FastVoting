@@ -53,4 +53,23 @@ class VoterController extends Controller
 
         return redirect()->route('voters', ['id' => $eventId]);
     }
+
+    /**
+     * Delete voter
+     */
+    public function delete($eventId, $voterId)
+    {
+        $voter = Voter::find($voterId);
+
+        if (!isset($voter)) {
+            return redirect()->back()->with('error', 'The voter you were looking for could not be found.');
+        }
+
+        // Delete the voter.
+        if (!$voter->delete()) {
+            return redirect()->back()->with('error', 'Failed deleting the voter.');
+        }
+
+        return redirect()->route('voters', ['id' => $eventId]);
+    }
 }

@@ -81,6 +81,10 @@ Route::middleware(['auth', 'verified'])->group(function () {
         // Add new voter
         Route::post('/events/{id}/voters', [VoterController::class, 'create'])
             ->name('voter.create');
+
+        // Delete voter
+        Route::delete('/events/{id}/voters/{voterId}', [VoterController::class, 'delete'])
+            ->name('voter.delete');
     });
 });
 

@@ -41,9 +41,20 @@
         @if ($event->voters->count() > 0)
             @foreach ($event->voters->sortBy('email', SORT_NATURAL) as $voter)
                 <article class="card mb-2">
-                    <div class="card-body">
-                        <p class="card-title mb-0 fs-5">{{ $voter->name }}</p>
-                        <p class="mb-0">{{ $voter->email }}</p>
+                    <div class="card-body d-flex align-items-center justify-content-between gap-2 overflow-auto">
+                        <div class="">
+                            <p class="card-title mb-0 fs-5">{{ $voter->name }}</p>
+                            <p class="mb-0">{{ $voter->email }}</p>
+                        </div>
+                        <div class="">
+                            <form action="{{ route('voter.delete', ['id' => $event->id, 'voterId' => $voter->id]) }}" method="post">
+                                @csrf
+                                @method('DELETE')
+                                <button class="btn btn-outline-danger" type="submit" title="Remove Voter">
+                                    <i class="fa-solid fa-user-xmark"></i>
+                                </button>
+                            </form>
+                        </div>
                     </div>
                 </article>
             @endforeach
