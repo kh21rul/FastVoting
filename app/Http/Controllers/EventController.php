@@ -88,4 +88,28 @@ class EventController extends Controller
 
         return redirect()->route('event.detail', ['id' => $event->id]);
     }
+
+    /**
+     * Delete the event
+     */
+    public function delete($id)
+    {
+        return redirect()->route('dashboard')->with('error', 'Delete event feature is coming soon.');
+
+        $event = Event::find($id);
+
+        // TODO: Delete all entity that related to this event.
+        // ...
+
+        // TODO: Delete this event
+        // ...
+
+        // TODO: Redirect to Detail Event page if failed
+        // if ($event == 0) {
+        //     return redirect()->route('event.detail', ['id' => $id])->with('error', 'Failed to delete this event.');
+        // }
+
+        // TODO: Redirect to Dashboard page if success
+        // return redirect()->route('dashboard')->with('success', 'One event has been deleted.');
+    }
 }

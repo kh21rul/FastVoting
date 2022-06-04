@@ -6,7 +6,7 @@
         <h1>{{ $event->title }}</h1>
         <div class="d-flex gap-2">
             <a class="btn btn-secondary" href="{{ route('event.edit', ['id' => $event->id]) }}">{{ __('Edit Event') }}</a>
-            <button type="submit" class="btn btn-outline-danger" href="#">{{ __('Delete Event') }}</button>
+            <button type="button" class="btn btn-outline-danger" data-bs-toggle="modal" data-bs-target="#deleteConfirmationModal">{{ __('Delete Event') }}</button>
         </div>
     </section>
     <hr>
@@ -97,4 +97,28 @@
         @endif
     </section>
 </div>
+
+<!-- Modal -->
+<div class="modal fade" id="deleteConfirmationModal" tabindex="-1" aria-labelledby="deleteConfirmationModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="deleteConfirmationModalLabel">{{ __('Delete This Event?') }}</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        {{ __('This event will be deleted with all voters and ballots?') }}
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">{{ __('Cancel') }}</button>
+        <form action="{{ route('event.delete', ['id' => $event->id]) }}" method="post">
+            @csrf
+            @method('DELETE')
+            <button type="submit" class="btn btn-danger">{{ __('Delete') }}</button>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
 @endsection

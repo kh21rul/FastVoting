@@ -70,6 +70,10 @@ Route::middleware(['auth', 'verified'])->group(function () {
         Route::put('/events/{id}/edit', [EventController::class, 'update'])
             ->name('event.update');
 
+        // Delete the event
+        Route::delete('/events/{id}', [EventController::class, 'delete'])
+            ->name('event.delete');
+
         // Go to voters page
         Route::get('/events/{id}/voters', [VoterController::class, 'index'])
             ->name('voters');
