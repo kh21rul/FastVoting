@@ -16,9 +16,9 @@ return new class extends Migration
         Schema::create('voters', function (Blueprint $table) {
             $table->uuid('id')->primary()->unique();
             $table->foreignUuid('event_id')->references('id')->on('events');
-            $table->string('name');
+            $table->string('name', 60);
             $table->string('email');
-            $table->string('token');
+            $table->string('token', 100)->nullable();
             $table->timestamp('created_at')->useCurrent();
         });
     }
