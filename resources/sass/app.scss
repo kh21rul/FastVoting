@@ -18,6 +18,16 @@ main {
     height: 100vh;
 }
 
+.jumbotron {
+    flex-wrap: wrap;
+    padding: 0 16px 0 16px;
+    align-items: center;
+    background: linear-gradient(180deg, rgba(84, 99, 255, 0.37) 0%, rgba(66, 82, 255, 0) 101.67%);
+}
+
+.subjumbotron {
+    background-color: transparent;
+}
 .description-text {
     font-size: 1.2em;
     padding-bottom: 0;
@@ -59,6 +69,18 @@ a:link { text-decoration: none; }
 }
 
 @media (min-width: 992px) {
+    .jumbotron {
+        flex-wrap: nowrap;
+        justify-content: center;
+    }
+    .subjumbotron {
+        width: 38%;
+    }
+
+    .imgJumbotron {
+        padding-top: 2%;
+        height: 100vh;
+    }
     p {
         font-size: 1.2em;
     }
