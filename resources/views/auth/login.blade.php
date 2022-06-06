@@ -39,7 +39,7 @@
                             </label>
                         </div>
                       </div>
-                      <button type="submit" class="btn btn-primary btn-block" style="width:100%;">
+                      <button type="submit" class="btn btn-primary btn-lg btn-block" style="width:25%;">
                         {{ __('Login') }}
                       </button>
                       <p class="pt-1 m-0">@if (Route::has('password.request'))<a class="link-info" href="{{ route('password.request') }}"> {{ __('Forgot password?') }}</a></p>
