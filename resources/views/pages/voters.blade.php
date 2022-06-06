@@ -14,7 +14,7 @@
             <label class="form-label" for="form2Example1">Email <span style="color:red;font-weight:bold">*</span></label>
             <input type="email" id="form2Example1" class="form-control" placeholder="Enter email participant" required/>
         </div>
-        <button type="submit" class="btn btn-primary btn-block" style="width:100%;">ADD PARTICIPANT</button>
+        <button type="submit" class="btn btn-primary btn-block" style="width:100%;">Add Participant</button>
     </form>
     <h2 class="my-2 py-2">Participant</h2>
     <div class="d-flex flex-wrap justify-content-around">
