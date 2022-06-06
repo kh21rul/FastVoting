@@ -5,7 +5,7 @@ use App\Http\Controllers\EventController;
 use App\Http\Controllers\VoterController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\DashboardEventOptionController;
+use App\Http\Controllers\OptionController;
 
 /*
 |--------------------------------------------------------------------------
@@ -85,6 +85,14 @@ Route::middleware(['auth', 'verified'])->group(function () {
         // Delete voter
         Route::delete('/events/{id}/voters/{voterId}', [VoterController::class, 'delete'])
             ->name('voter.delete');
+
+        // Go to add option page
+        Route::get('/events/{id}/options/add', [OptionController::class, 'add'])
+            ->name('option.add');
+
+        // Create new option
+        Route::post('/events/{id}/options/add', [OptionController::class, 'create'])
+            ->name('option.create');
     });
 });
 
@@ -99,10 +107,3 @@ Route::get('/vote', function () {
 Route::get('/events/eventId/result', function () {
     return view('pages.result');
 })->name('result');
-
-// Go to options page
-// Route::get('/events/eventId/options', function () {
-//     return view('pages.options');
-// })->name('options');
-
-Route::resource('/events/options', DashboardEventOptionController::class)->middleware('auth');
