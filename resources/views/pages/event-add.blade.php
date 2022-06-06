@@ -4,7 +4,7 @@
 <div class="container">
     <h2>Add Event</h2>
     <hr>
-    <form method="POST" action="#">
+    <form action="{{ route('options') }}">
         <div class="form-outline mb-4">
             <label class="form-label" for="form1Example1">Tittle <span style="color:red;font-weight:bold">*</span></label>
             <input type="text" id="form1Example1" class="form-control" placeholder="Enter tittle event" required/>
@@ -13,12 +13,12 @@
             <label class="form-label">Starting date & time <span style="color:red;font-weight:bold">*</span></label>
             <div class="col">
               <div class="form-outline">
-                <input type="date" id="form2Example1" class="form-control" />
+                <input type="date" id="start-date" class="form-control" required />
               </div>
             </div>
             <div class="col">
               <div class="form-outline">
-                <input type="time" id="form3Example2" class="form-control" />
+                <input type="time" id="start-time" class="form-control" required/>
               </div>
             </div>
         </div>
@@ -26,12 +26,12 @@
             <label class="form-label">Closed date & time <span style="color:red;font-weight:bold">*</span></label>
             <div class="col">
               <div class="form-outline">
-                <input type="date" id="form4Example1" class="form-control" />
+                <input type="date" id="close-date" class="form-control" required/>
               </div>
             </div>
             <div class="col">
               <div class="form-outline">
-                <input type="time" id="form5Example2" class="form-control" />
+                <input type="time" id="close-time" class="form-control" required/>
               </div>
             </div>
         </div>
@@ -43,7 +43,7 @@
             <label class="form-label">Choice <span style="color:red;font-weight:bold">*</span></label>
             <div class="col">
               <div class="form-outline">
-                <a type="submit" class="btn btn-primary" href="{{route('options')}}" style="margin-right: 2%">Add Option</a>
+                <button type="submit" class="btn btn-primary" style="margin-right: 2%">Add Option</button>
               </div>
             </div>
         </div>
@@ -75,4 +75,27 @@
         <button type="submit" class="btn btn-primary btn-block" style="width:100%;">SUBMIT</button>
     </form>
 </div>
+<script>
+        $("#close-date").change(function () {
+            const startDate = document.getElementById("start-date").value;
+            const endDate = document.getElementById("close-date").value;
+
+            if ((Date.parse(startDate) > Date.parse(endDate))) {
+                alert("Close date should be greater than Start date");
+                document.getElementById("close-date").value = "";
+            }
+        });
+
+        $("#close-time").change(function () {
+            const startTime = document.getElementById("start-time").value;
+            const endTime = document.getElementById("close-time").value;
+
+            if(startTime>endTime){
+                    alert('start time should be smaller');
+                    document.getElementById("close-time").value = "";
+                }
+        });
+
+
+</script>
 @endsection
