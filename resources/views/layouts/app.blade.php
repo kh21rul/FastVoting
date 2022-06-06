@@ -7,7 +7,8 @@
     <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
-    <title>{{ $title ?? config('app.name', 'FastVoting') }}</title>
+    <title>FastVoting</title>
+    <link rel="icon" type="image/x-icon" href="/assets/logo.png">
 
     <!-- Scripts -->
     <script src="{{ mix('js/manifest.js') }}" defer></script>
@@ -77,7 +78,7 @@
             </div>
         </nav>
 
-        <main>
+        <main class="h-100">
             @yield('content')
         </main>
     </div>

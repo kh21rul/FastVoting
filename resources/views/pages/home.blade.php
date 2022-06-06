@@ -9,11 +9,11 @@
                 <a type="button" class="btn btn-light border border-dark m-1" href="{{route('about')}}">About FastVoting</a>
             </div>
         </div>
-        <div class="p-2 text-center subjumbotron">
+        <div class="p-2 text-center subjumbotron" style="width:50%;">
             <img class="img-fluid imgJumbotron" src="{{asset('assets/undraw_voting_nvu7.png')}}" alt="" style="align-items: center; background-color: transparent;">
         </div>
     </div>
-    <section class="container-home">
+    <section class="container-home mb-5">
         <h2 class="text-center" id="learnFastVoting">Why must FastVoting ?</h2>
         <div class="d-flex flex-wrap justify-content-around text-center">
             <div class="card my-2" style="width: 15rem;height: 15rem;">
