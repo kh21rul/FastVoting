@@ -13,7 +13,7 @@
             <img class="img-fluid imgJumbotron" src="{{asset('assets/undraw_voting_nvu7.png')}}" alt="" style="align-items: center; background-color: transparent;">
         </div>
     </div>
-    <section class="container">
+    <section class="container-home">
         <h2 class="text-center" id="learnFastVoting">Why must FastVoting ?</h2>
         <div class="d-flex flex-wrap justify-content-around text-center">
             <div class="card my-2" style="width: 15rem;height: 15rem;">
