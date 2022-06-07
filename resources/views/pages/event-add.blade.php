@@ -88,14 +88,12 @@
 
         $("#close-time").change(function () {
             const startTime = document.getElementById("start-time").value;
-            const endTime = document.getElementById("close-time").value;
+            const endTime = document.getElementById("close-t  ime").value;
 
             if(startTime>endTime){
                     alert('start time should be smaller');
                     document.getElementById("close-time").value = "";
                 }
         });
-
-
 </script>
 @endsection

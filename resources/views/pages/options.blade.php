@@ -5,7 +5,7 @@
     <h2>Option</h2>
     <p class="description-text">add the option to be selected in the vote</p>
     <hr class="ruler">
-    <form method="POST" action="#">
+    <form action="{{ route('voters') }}">
         <div class="form-outline mb-4">
             <label class="form-label" for="form1Example1">Select Image <span style="color:red;font-weight:bold">*</span></label>
             <input type="file" id="form1Example1" class="form-control" name="selectImage" accept="image/*" required/>

@@ -4,7 +4,7 @@
 <div class="container">
     <h2>Voters</h2>
     <hr>
-    <form>
+    <form action="{{ route('event.detail') }}">
         <p class="description-text">Add the participants you want to be able to choose the event you create</p>
         <div class="form-outline mb-4">
             <label class="form-label" for="form1Example1">Name <span style="color:red;font-weight:bold">*</span></label>
