@@ -56,6 +56,10 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::post('/events/add', [EventController::class, 'create'])
         ->name('event.create');
 
+    // Get the option image
+    Route::get('/option_images/{name}', [OptionController::class, 'getImage'])
+        ->name('option.image');
+
     Route::middleware('event.authorized')->group(function () {
         // === Put all routes that need event authorization here ===
         // Go to detail event page
