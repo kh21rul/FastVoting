@@ -103,4 +103,12 @@ class EventController extends Controller
         // TODO: Redirect to Dashboard page if success
         // return redirect()->route('dashboard')->with('success', 'One event has been deleted.');
     }
+
+    /**
+     * Commit the event
+     */
+    public function commit($id)
+    {
+        return redirect()->route('dashboard')->with('error', 'Commit event feature is coming soon.');
+    }
 }

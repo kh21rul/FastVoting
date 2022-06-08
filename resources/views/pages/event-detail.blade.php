@@ -66,7 +66,7 @@
                 <div class="card" style="width: 18rem;">
                     @if ($option->image_location)
                         <img src="{{ route('option.image', ['name' => $option->image_location]) }}" class="card-img-top" alt="Option Image" style="height:200px; overflow:hidden">
-                    @endif            
+                    @endif
                     <div class="card-body">
                         <h5 class="card-title">{{ $option->name }}</h5>
                         @if ($option->description)
@@ -76,7 +76,7 @@
                             @method('DELETE')
                             @csrf
                             <button class="btn btn-danger" type="submit">Delete</button>
-                        </form>  
+                        </form>
                     </div>
                 </div>
             @endforeach
@@ -111,6 +111,54 @@
             </div>
         @endif
     </section>
+
+    {{-- Commit --}}
+    <h2>{{ __('Commit Event') }}</h2>
+    <div class="p-3 bg-white border mb-3">
+        <p>Commit this event to start the voting at the time you specify. We will send a voting link to each voter's email.</p>
+        <p>Before commit, make sure you fulfill this requirement:</p>
+        <ul>
+            <li>
+                <span class="me-1">{{ __('The event has a start time') }}</span>
+                @if ($event->started_at)
+                    <i class="fa-solid fa-check" title="Fulfilled"></i>
+                @else
+                    <i class="fa-solid fa-xmark" title="Not fulfilled"></i>
+                @endif
+            </li>
+            <li>
+                <span class="me-1">{{ __('The event has a finish time') }}</span>
+                @if ($event->finished_at)
+                    <i class="fa-solid fa-check" title="Fulfilled"></i>
+                @else
+                    <i class="fa-solid fa-xmark" title="Not fulfilled"></i>
+                @endif
+            </li>
+            <li>
+                <span class="me-1">{{ __('The event has at least two options') }}</span>
+                @if ($event->options->count() >= 2)
+                    <i class="fa-solid fa-check" title="Fulfilled"></i>
+                @else
+                    <i class="fa-solid fa-xmark" title="Not fulfilled"></i>
+                @endif
+            </li>
+            <li>
+                <span class="me-1">{{ __('The event has at least two voters') }}</span>
+                @if ($event->voters->count() >= 2)
+                    <i class="fa-solid fa-check" title="Fulfilled"></i>
+                @else
+                    <i class="fa-solid fa-xmark" title="Not fulfilled"></i>
+                @endif
+            </li>
+        </ul>
+    </div>
+    <div class="p-3 bg-white border border-danger mb-3">
+        <p><strong class="text-danger">Warning!</strong> You <strong>can't change</strong> the event's detail, the options, and the voters after you commit this event.</p>
+        <form action="{{ route('event.commit', ['id' => $event->id]) }}" method="POST">
+            @csrf
+            <button type="submit" class="btn btn-outline-danger">{{ __('Commit Event') }}</button>
+        </form>
+    </div>
 </div>
 
 <!-- Modal -->

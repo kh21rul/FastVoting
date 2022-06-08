@@ -101,6 +101,10 @@ Route::middleware(['auth', 'verified'])->group(function () {
         // Delete option
         Route::delete('/events/{id}/options/{optionId}', [OptionController::class, 'delete'])
             ->name('option.delete');
+
+        // Commit event
+        Route::post('/events/{id}/commit', [EventController::class, 'commit'])
+            ->name('event.commit');
     });
 });
 
