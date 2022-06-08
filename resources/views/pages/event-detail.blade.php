@@ -11,7 +11,9 @@
     <section class="d-flex justify-content-between align-items-center gap-2 flex-wrap">
         <h1>{{ $event->title }}</h1>
         <div class="d-flex gap-2">
-            <a class="btn btn-secondary" href="{{ route('event.edit', ['id' => $event->id]) }}">{{ __('Edit Event') }}</a>
+            @if (!$event->is_committed)
+                <a class="btn btn-secondary" href="{{ route('event.edit', ['id' => $event->id]) }}">{{ __('Edit Event') }}</a>
+            @endif
             <button type="button" class="btn btn-outline-danger" data-bs-toggle="modal" data-bs-target="#deleteConfirmationModal">{{ __('Delete Event') }}</button>
         </div>
     </section>
@@ -57,7 +59,9 @@
     <h2>{{ __('Options') }}</h2>
     <section class="d-flex justify-content-between align-items-center gap-2 flex-wrap mb-2">
         <span>{{ $event->options->count() }} {{ $event->options->count() > 1 ? __('options available') : __('option available') }}</span>
-        <a class="btn btn-primary" href="{{ route('option.add', ['id' => $event->id]) }}">{{ __('Add Option') }}</a>
+        @if (!$event->is_committed)
+            <a class="btn btn-primary" href="{{ route('option.add', ['id' => $event->id]) }}">{{ __('Add Option') }}</a>
+        @endif
     </section>
     <section class="mb-3">
         @if ($event->options->count() > 0)
@@ -114,51 +118,57 @@
 
     {{-- Commit --}}
     <h2>{{ __('Commit Event') }}</h2>
-    <div class="p-3 bg-white border mb-3">
-        <p>Commit this event to start the voting at the time you specify. We will send a voting link to each voter's email.</p>
-        <p>Before commit, make sure you fulfill this requirement:</p>
-        <ul>
-            <li>
-                <span class="me-1">{{ __('The event has a start time') }}</span>
-                @if ($event->started_at)
-                    <i class="fa-solid fa-check" title="Fulfilled"></i>
-                @else
-                    <i class="fa-solid fa-xmark" title="Not fulfilled"></i>
-                @endif
-            </li>
-            <li>
-                <span class="me-1">{{ __('The event has a finish time') }}</span>
-                @if ($event->finished_at)
-                    <i class="fa-solid fa-check" title="Fulfilled"></i>
-                @else
-                    <i class="fa-solid fa-xmark" title="Not fulfilled"></i>
-                @endif
-            </li>
-            <li>
-                <span class="me-1">{{ __('The event has at least two options') }}</span>
-                @if ($event->options->count() >= 2)
-                    <i class="fa-solid fa-check" title="Fulfilled"></i>
-                @else
-                    <i class="fa-solid fa-xmark" title="Not fulfilled"></i>
-                @endif
-            </li>
-            <li>
-                <span class="me-1">{{ __('The event has at least two voters') }}</span>
-                @if ($event->voters->count() >= 2)
-                    <i class="fa-solid fa-check" title="Fulfilled"></i>
-                @else
-                    <i class="fa-solid fa-xmark" title="Not fulfilled"></i>
-                @endif
-            </li>
-        </ul>
-    </div>
-    <div class="p-3 bg-white border border-danger mb-3">
-        <p><strong class="text-danger">Warning!</strong> You <strong>can't change</strong> the event's detail, the options, and the voters after you commit this event.</p>
-        <form action="{{ route('event.commit', ['id' => $event->id]) }}" method="POST">
-            @csrf
-            <button type="submit" class="btn btn-outline-danger">{{ __('Commit Event') }}</button>
-        </form>
-    </div>
+    @if (!$event->is_committed)
+        <div class="p-3 bg-white border mb-3">
+            <p>Commit this event to start the voting at the time you specify. We will send a voting link to each voter's email.</p>
+            <p>Before commit, make sure you fulfill this requirement:</p>
+            <ul>
+                <li>
+                    <span class="me-1">{{ __('The event has a start time') }}</span>
+                    @if ($event->started_at)
+                        <i class="fa-solid fa-check" title="Fulfilled"></i>
+                    @else
+                        <i class="fa-solid fa-xmark" title="Not fulfilled"></i>
+                    @endif
+                </li>
+                <li>
+                    <span class="me-1">{{ __('The event has a finish time') }}</span>
+                    @if ($event->finished_at)
+                        <i class="fa-solid fa-check" title="Fulfilled"></i>
+                    @else
+                        <i class="fa-solid fa-xmark" title="Not fulfilled"></i>
+                    @endif
+                </li>
+                <li>
+                    <span class="me-1">{{ __('The event has at least two options') }}</span>
+                    @if ($event->options->count() >= 2)
+                        <i class="fa-solid fa-check" title="Fulfilled"></i>
+                    @else
+                        <i class="fa-solid fa-xmark" title="Not fulfilled"></i>
+                    @endif
+                </li>
+                <li>
+                    <span class="me-1">{{ __('The event has at least two voters') }}</span>
+                    @if ($event->voters->count() >= 2)
+                        <i class="fa-solid fa-check" title="Fulfilled"></i>
+                    @else
+                        <i class="fa-solid fa-xmark" title="Not fulfilled"></i>
+                    @endif
+                </li>
+            </ul>
+        </div>
+        <div class="p-3 bg-white border border-danger mb-3">
+            <p><strong class="text-danger">Warning!</strong> You <strong>can't change</strong> the event's detail, the options, and the voters after you commit this event.</p>
+            <form action="{{ route('event.commit', ['id' => $event->id]) }}" method="POST" class="">
+                @csrf
+                <button type="submit" class="btn btn-outline-danger">{{ __('Commit Event') }}</button>
+            </form>
+        </div>
+    @else
+        <div class="p-3 bg-white border mb-3 text-center border border-success">
+            <span class="text-success">This event has been committed.</span>
+        </div>
+    @endif
 </div>
 
 <!-- Modal -->

@@ -17,33 +17,37 @@
         </div>
     @endif
     <h1>Voters</h1>
-    <section class="my-3">
-        <form class="card" action="{{ route('voters', ['id' => $event->id]) }}" method="post">
-            @csrf
-            <div class="card-body">
-                <h2>Add Voter</h2>
-                <div class="form-group mb-3">
-                    <label class="form-label" for="email">Email</label>
-                    <input type="email" class="form-control @error('email') is-invalid @enderror" id="email" name="email" placeholder="Email" value="{{ old('email') }}">
-                    @error('email')
-                        <span class="invalid-feedback" role="alert">
-                            <strong>{{ $message }}</strong>
-                        </span>
-                    @enderror
+    @if (!$event->is_committed)
+        <section class="my-3">
+            <form class="card" action="{{ route('voters', ['id' => $event->id]) }}" method="post">
+                @csrf
+                <div class="card-body">
+                    <h2>Add Voter</h2>
+                    <div class="form-group mb-3">
+                        <label class="form-label" for="email">Email</label>
+                        <input type="email" class="form-control @error('email') is-invalid @enderror" id="email" name="email" placeholder="Email" value="{{ old('email') }}">
+                        @error('email')
+                            <span class="invalid-feedback" role="alert">
+                                <strong>{{ $message }}</strong>
+                            </span>
+                        @enderror
+                    </div>
+                    <div class="form-group mb-3">
+                        <label class="form-label" for="name">Name</label>
+                        <input type="text" class="form-control @error('name') is-invalid @enderror" id="name" name="name" placeholder="Name" value="{{ old('name') }}">
+                        @error('name')
+                            <span class="invalid-feedback" role="alert">
+                                <strong>{{ $message }}</strong>
+                            </span>
+                        @enderror
+                    </div>
+                    <button type="submit" class="btn btn-primary">Add Voter</button>
                 </div>
-                <div class="form-group mb-3">
-                    <label class="form-label" for="name">Name</label>
-                    <input type="text" class="form-control @error('name') is-invalid @enderror" id="name" name="name" placeholder="Name" value="{{ old('name') }}">
-                    @error('name')
-                        <span class="invalid-feedback" role="alert">
-                            <strong>{{ $message }}</strong>
-                        </span>
-                    @enderror
-                </div>
-                <button type="submit" class="btn btn-primary">Add Voter</button>
-            </div>
-        </form>
-    </section>
+            </form>
+        </section>
+    @endif
+
+    {{-- Show the voters list --}}
     <section class="mb-3">
         @if ($event->voters->count() > 0)
             @foreach ($event->voters->sortBy('email', SORT_NATURAL) as $voter)
@@ -54,13 +58,17 @@
                             <p class="mb-0">{{ $voter->email }}</p>
                         </div>
                         <div class="">
-                            <form action="{{ route('voter.delete', ['id' => $event->id, 'voterId' => $voter->id]) }}" method="post">
-                                @csrf
-                                @method('DELETE')
-                                <button class="btn btn-outline-danger" type="submit" title="Remove Voter">
-                                    <i class="fa-solid fa-user-xmark"></i>
-                                </button>
-                            </form>
+                            @if ($event->is_committed)
+                                {{-- TODO: Resend vote link email --}}
+                            @else
+                                <form action="{{ route('voter.delete', ['id' => $event->id, 'voterId' => $voter->id]) }}" method="post">
+                                    @csrf
+                                    @method('DELETE')
+                                    <button class="btn btn-outline-danger" type="submit" title="Remove Voter">
+                                        <i class="fa-solid fa-user-xmark"></i>
+                                    </button>
+                                </form>
+                            @endif
                         </div>
                     </div>
                 </article>
