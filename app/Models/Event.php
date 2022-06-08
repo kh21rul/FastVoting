@@ -55,7 +55,7 @@ class Event extends Model
      * @var array
      */
     protected $attributes = [
-        //
+        'is_committed' => false,
     ];
 
     /**
