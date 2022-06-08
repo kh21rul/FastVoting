@@ -63,12 +63,18 @@
         @if ($event->options->count() > 0)
             @foreach ($event->options as $option)
                 <article class="card mb-2">
-                    {{-- <div class="card-head d-flex justify-content-center p-2"><img src="{{asset('assets/imgCandidate.png')}}" alt=""></div> --}}
                     <div class="card-body">
-                        <span class="card-title">{{ $option->name }}</span>
-                        @if ($option->description)
-                            <p class="card-text">{{ $option->description }}</p>
-                        @endif
+                        <div class="d-flex justify-content-between">
+                            <div class="">
+                                <span class="card-title">{{ $option->name }}</span>
+                                @if ($option->description)
+                                    <p class="card-text">{{ $option->description }}</p>
+                                @endif
+                            </div>
+                            @if ($option->image_location)
+                                <img style="height: 120px; overflow: hidden;" class="img-thumbnail" src="{{ route('option.image', ['name' => $option->image_location]) }}" alt="Option Image">
+                            @endif
+                        </div>
                     </div>
                 </article>
             @endforeach
