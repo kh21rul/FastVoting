@@ -102,14 +102,24 @@ class OptionController extends Controller
     {
         $option = Option::find($optionId);
 
-        $option->delete();
-
-        // Delete the image if it exists.
-        $imagePath = storage_path('app/' . $this->imageStoragePath . '/' . $option->image_location);
-        if (file_exists($imagePath)) {
-            unlink($imagePath);
+        // If the option does not exist, return 404.
+        if (!isset($option)) {
+            return redirect()->route('event.detail', ['id' => $eventId])->with('error', 'The option that you are trying to delete does not exist.');
         }
 
+        // Delete the option image if it exists.
+        if (isset($option->image_location)) {
+            $imagePath = storage_path('app/' . $this->imageStoragePath . '/' . $option->image_location);
+
+            if (file_exists($imagePath)) {
+                unlink($imagePath);
+            }
+        }
+
+        // Delete the option and return error message if failed.
+        if (!$option->delete()) {
+            return redirect()->route('event.detail', ['id' => $eventId])->with('error', 'Failed deleting option.');
+        }
 
         return redirect()->route('event.detail', ['id' => $eventId]);
     }
