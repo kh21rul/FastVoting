@@ -61,23 +61,26 @@
     </section>
     <section class="mb-3">
         @if ($event->options->count() > 0)
+        <div class="d-flex gap-2 flex-wrap">
             @foreach ($event->options as $option)
-                <article class="card mb-2">
+                <div class="card" style="width: 18rem;">
+                    @if ($option->image_location)
+                        <img src="{{ route('option.image', ['name' => $option->image_location]) }}" class="card-img-top" alt="Option Image" style="height:200px; overflow:hidden">
+                    @endif            
                     <div class="card-body">
-                        <div class="d-flex justify-content-between">
-                            <div class="">
-                                <span class="card-title">{{ $option->name }}</span>
-                                @if ($option->description)
-                                    <p class="card-text">{{ $option->description }}</p>
-                                @endif
-                            </div>
-                            @if ($option->image_location)
-                                <img style="height: 120px; overflow: hidden;" class="img-thumbnail" src="{{ route('option.image', ['name' => $option->image_location]) }}" alt="Option Image">
-                            @endif
-                        </div>
+                        <h5 class="card-title">{{ $option->name }}</h5>
+                        @if ($option->description)
+                            <p class="card-text">{{ $option->description }}</p>
+                        @endif
+                        <form action="{{ route('option.delete', ['id' => $event->id, 'optionId' => $option->id]) }}" method="POST">
+                            @method('DELETE')
+                            @csrf
+                            <button class="btn btn-danger" type="submit">Delete</button>
+                        </form>  
                     </div>
-                </article>
+                </div>
             @endforeach
+        </div>
         @else
             <div class="card p-3 text-center">
                 <span class="text-muted">{{ __('There are no options') }}</span>
