@@ -75,10 +75,6 @@ Route::middleware(['auth', 'verified'])->group(function () {
         Route::get('/events/{id}/voters', [VoterController::class, 'index'])
             ->name('voters');
 
-        // Delete option
-        Route::delete('/events/{id}/options/{optionId}', [OptionController::class, 'delete'])
-            ->name('option.delete');
-
         // Event editable middleware.
         Route::middleware('event.editable')->group(function () {
             // === Put all routes that need event editability here ===
@@ -105,6 +101,10 @@ Route::middleware(['auth', 'verified'])->group(function () {
             // Create new option
             Route::post('/events/{id}/options/add', [OptionController::class, 'create'])
                 ->name('option.create');
+
+            // Delete option
+            Route::delete('/events/{id}/options/{optionId}', [OptionController::class, 'delete'])
+                ->name('option.delete');
 
             // Commit event
             Route::post('/events/{id}/commit', [EventController::class, 'commit'])
