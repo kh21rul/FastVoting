@@ -56,7 +56,7 @@ class OptionController extends Controller
         // Upload image.
         if ($request->hasFile('image')) {
             $image = $request->file('image');
-            $imageName = time() .'_' . $image->hashName();
+            $imageName = time() . '_' . $image->hashName();
             $path = $image->storeAs($this->imageStoragePath, $imageName);
 
             if (!isset($path)) {
@@ -96,5 +96,21 @@ class OptionController extends Controller
         }
 
         return response()->file($path);
+    }
+
+    public function delete($eventId, $optionId)
+    {
+        $option = Option::find($optionId);
+
+        $option->delete();
+
+        // Delete the image if it exists.
+        $imagePath = storage_path('app/' . $this->imageStoragePath . '/' . $option->image_location);
+        if (file_exists($imagePath)) {
+            unlink($imagePath);
+        }
+
+
+        return redirect()->route('event.detail', ['id' => $eventId]);
     }
 }

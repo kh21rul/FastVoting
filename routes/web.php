@@ -97,6 +97,10 @@ Route::middleware(['auth', 'verified'])->group(function () {
         // Create new option
         Route::post('/events/{id}/options/add', [OptionController::class, 'create'])
             ->name('option.create');
+
+        // Delete option
+        Route::delete('/events/{id}/options/{optionId}', [OptionController::class, 'delete'])
+            ->name('option.delete');
     });
 });
 
