@@ -109,6 +109,20 @@ class EventController extends Controller
      */
     public function commit($id)
     {
-        return redirect()->route('dashboard')->with('error', 'Commit event feature is coming soon.');
+        $event = Event::find($id);
+
+        // Check if all commit checklist is fulfilled.
+        if (!$event->isAllCommitChecklistFulfilled()) {
+            return redirect()->route('event.detail', ['id' => $id])->with('error', 'There are requirement that not fulfilled yet.');
+        }
+
+        // Commit the event
+        $event->is_committed = true;
+        $event->save();
+
+        // TODO: send email to all voters
+        // ...
+
+        return redirect()->route('event.detail', ['id' => $id]);
     }
 }
