@@ -4,7 +4,7 @@
 <div class="container">
     <h2>Add Event</h2>
     <hr>
-    <form action="{{ route('options') }}">
+    <form action="{{ route('event.detail') }}">
         <div class="form-outline mb-4">
             <label class="form-label" for="form1Example1">Tittle <span style="color:red;font-weight:bold">*</span></label>
             <input type="text" id="form1Example1" class="form-control" placeholder="Enter tittle event" required/>
@@ -39,40 +39,12 @@
             <label class="form-label" for="form6Example1">Description Event <span style="color:red;font-weight:bold">*</span></label>
             <input type="text" id="form1Example1" class="form-control" placeholder="Enter description event" required/>
         </div>
-        <div class="row mb-4">
-            <label class="form-label">Choice <span style="color:red;font-weight:bold">*</span></label>
-            <div class="col">
-              <div class="form-outline">
-                <button type="submit" class="btn btn-primary" style="margin-right: 2%">Add Option</button>
+        <div class="row mb-5">
+              <div class="d-grid gap-2 col-1">
+                <button type="submit" class="btn btn-primary" style="margin-right: 2%">Submit</button>
               </div>
             </div>
         </div>
-    </form>
-    <form>
-        <div class="d-flex flex-wrap choiceCard">
-            <div class="card choice" style="margin-bottom: 1rem;">
-                <div class="card-head d-flex justify-content-center p-2" style="height: 75%"><img src="{{asset('assets/imgCandidate.png')}}" alt="" style="max-width: 100%"></div>
-                <div class="card-body">
-                  <h5 class="card-title text-center">Special title treatment</h5>
-                  <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
-                </div>
-            </div>
-            <div class="card choice" style="margin-bottom: 1rem;">
-                <div class="card-head d-flex justify-content-center p-2" style="height: 75%"><img src="{{asset('assets/imgCandidate.png')}}" alt="" style="max-width: 100%"></div>
-                <div class="card-body">
-                  <h5 class="card-title text-center">Special title treatment</h5>
-                  <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
-                </div>
-            </div>
-            <div class="card choice" style="margin-bottom: 1rem;">
-                <div class="card-head d-flex justify-content-center p-2" style="height: 75%"><img src="{{asset('assets/imgCandidate.png')}}" alt="" style="max-width: 100%"></div>
-                <div class="card-body">
-                  <h5 class="card-title text-center">Special title treatment</h5>
-                  <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
-                </div>
-            </div>
-        </div>
-        <button type="submit" class="btn btn-primary btn-block" style="width:100%;">SUBMIT</button>
     </form>
 </div>
 <script>
