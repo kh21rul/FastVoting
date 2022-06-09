@@ -18,14 +18,14 @@
             <td>Lorem ipsum dolor sit amet consectetur adipisicing elit. Aut fuga, magnam facilis, consequuntur itaque non voluptates id quasi perferendis expedita quaerat corporis, ad ipsum dolorum.</td>
           </tr>
           <tr>
-            <td colspan="1">Total Participants</td>
+            <td colspan="1">Name</td>
             <td>:</td>
-            <td>1000</td>
+            <td>loremipsum</td>
           </tr>
           <tr>
-            <td colspan="1">Total Vote</td>
+            <td colspan="1">email</td>
             <td>:</td>
-            <td>800</td>
+            <td>loremipsum@fastvoting.com</td>
           </tr>
         </tbody>
     </table>
