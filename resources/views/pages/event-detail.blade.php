@@ -18,7 +18,7 @@
           <tr>
             <td colspan="1">Starting</td>
             <td>:</td>
-            <td>25 June 2022 at 8 AM</td>
+            <td>25 June 2122 at 8 AM</td>
           </tr>
           <tr>
             <td colspan="1">Closed</td>
@@ -43,9 +43,8 @@
         </tbody>
     </table>
     <div class="choice-detailEvent">
-        <div class="choice-detailEvent">
             <h3 class="mt-2">Options to Vote :</h3>
-            <a class="btn btn-primary btn-block my-2" href="{{ route('options') }}">Add Option</a>
+            <a class="btn btn-primary btn-block my-2" href="{{ route('options') }}" >Add Option</a>
             <div class="d-flex flex-wrap choiceCard">
                 <div class="card choice" style="margin-bottom: 1rem;">
                     <div class="card-head d-flex justify-content-center p-2"><img src="{{asset('assets/imgCandidate.png')}}" alt="" style="width: 90%"></div>
@@ -79,6 +78,35 @@
                         <a type="button" class="btn btn-danger" href="#">Delete</a>
                       </div>
                     </div>
+                </div>
+            </div>
+    </div>
+    <div class="participants-detailEvent">
+        <h3 class="mt-2">Participants to Vote :</h3>
+        <a class="btn btn-primary btn-block my-2" href="{{ route('options') }}" >Add Voter</a>
+        <div class="d-flex flex-wrap justify-content-around">
+            <div class="card shadow-sm p-3 mb-3 bg-white rounded" style="width: 100%;">
+                <div class="card-body">
+                    <p class="card-text">Name : <span>Fast Voting User</span></p>
+                    <p class="card-text">Email : <span>fastVoting@xxx.com</span></p>
+                </div>
+            </div>
+            <div class="card shadow-sm p-3 mb-3 bg-white rounded" style="width: 100%;">
+                <div class="card-body">
+                    <p class="card-text">Name : <span>Fast Voting User</span></p>
+                    <p class="card-text">Email : <span>fastVoting@xxx.com</span></p>
+                </div>
+            </div>
+            <div class="card shadow-sm p-3 mb-3 bg-white rounded" style="width: 100%;">
+                <div class="card-body">
+                    <p class="card-text">Name : <span>Fast Voting User</span></p>
+                    <p class="card-text">Email : <span>fastVoting@xxx.com</span></p>
+                </div>
+            </div>
+            <div class="card shadow-sm p-3 mb-3 bg-white rounded" style="width: 100%;">
+                <div class="card-body">
+                    <p class="card-text">Name : <span>Fast Voting User</span></p>
+                    <p class="card-text">Email : <span>fastVoting@xxx.com</span></p>
                 </div>
             </div>
         </div>
