@@ -14,10 +14,10 @@
         @csrf
         <div class="form-outline mb-4">
             <label class="form-label" for="title">
-              <span>Title</span> 
+              <span>Title</span>
               <span style="color:red;font-weight:bold">*</span>
             </label>
-            <input type="text" id="title" class="form-control @error('title') is-invalid @enderror" name="title" placeholder="Enter title event" value="{{ old('title') }} required/>
+            <input type="text" id="title" class="form-control @error('title') is-invalid @enderror" name="title" placeholder="Enter title event" value="{{ old('title') }}" required/>
             @error('title')
                 <span class="invalid-feedback" role="alert">
                     <strong>{{ $message }}</strong>
