@@ -76,14 +76,20 @@
                         @if ($option->description)
                             <p class="card-text">{{ $option->description }}</p>
                         @endif
-
                         @if (!$event->is_committed)
                             <form action="{{ route('option.delete', ['id' => $event->id, 'optionId' => $option->id]) }}" method="POST">
                                 @method('DELETE')
                                 @csrf
                                 <button class="btn btn-danger" type="submit">Delete</button>
                             </form>
+                             {{-- button edit --}}
+                          <a class="btn btn-primary" href="{{ route('option.edit', ['id' => $event->id, 'optionId' => $option->id]) }}">{{ __('Edit Option') }}</a> 
                         @endif
+                        <form action="{{ route('option.delete', ['id' => $event->id, 'optionId' => $option->id]) }}" method="POST">
+                            @method('DELETE')
+                            @csrf
+                            <button class="btn btn-danger" type="submit" onclick="return confirm('Are You Sure?')">Delete</button>
+                        </form>
                     </div>
                 </div>
             @endforeach

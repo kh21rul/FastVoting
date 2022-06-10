@@ -123,4 +123,60 @@ class OptionController extends Controller
 
         return redirect()->route('event.detail', ['id' => $eventId]);
     }
+  
+    public function edit($eventId, $optionId)
+    {
+        $data['title'] = 'Edit Option | ' . config('app.name');
+        $data['event'] = Event::find($eventId);
+        $data['option'] = Option::find($optionId);
+
+        return view('pages.option-edit', $data);
+    }
+
+    public function update(OptionPostRequest $request, $eventId, $optionId)
+    {
+        $validatedData = $request->validated();
+        $validatedData['event_id'] = $eventId;
+
+        // Update the option.
+        $option = Option::find($optionId);
+
+        if (!isset($option)) {
+            return redirect()->back()->with('error', 'Failed updating option.');
+        }
+
+        // Check if there are any changes in the image.
+        if ($request->hasFile('image')) {
+            // Delete image old image if it exists.
+            if (isset($option->image_location)) {
+                $imagePath = storage_path('app/' . $this->imageStoragePath . '/' . $option->image_location);
+
+                if (file_exists($imagePath)) {
+                    unlink($imagePath);
+                }
+
+                $option->image_location = null;
+            }
+
+            // Upload image.
+            if ($request->hasFile('image')) {
+                $image = $request->file('image');
+                $imageName = time() . '_' . $image->hashName();
+                $path = $image->storeAs($this->imageStoragePath, $imageName);
+
+                if (!isset($path)) {
+                    return redirect()->back()->with('error', 'Failed uploading image.')->withInput();
+                }
+
+                $option->image_location = $imageName;
+            }
+        }
+
+
+        if (!$option->update($validatedData)) {
+            return redirect()->back()->with('error', 'Failed updating option.');
+        }
+
+        return redirect()->route('event.detail', ['id' => $eventId]);
+    }
 }
