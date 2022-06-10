@@ -1,5 +1,10 @@
-// Fonts
-// @import url('https://fonts.googleapis.com/css?family=Nunito');
+/*
+ |--------------------------------------------------------------------------
+ | Be careful with the pickers. Avoid using selectors already used by
+ | Bootstrap CSS.
+ | The use of Bootstrap CSS selector will affect the entire application.
+ |--------------------------------------------------------------------------
+ */
 
 // Variables
 @import 'variables';
@@ -7,9 +12,6 @@
 // Bootstrap
 @import '~bootstrap/scss/bootstrap';
 
-* {
-    background-color: #fff;
-}
 .container {
     padding: 16px;
 }

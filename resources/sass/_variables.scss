@@ -1,7 +1,19 @@
+/*
+ |--------------------------------------------------------------------------
+ | Put your own variables here,
+ | or put the Bootstrap CSS variables to override the default value.
+ |--------------------------------------------------------------------------
+ | Reference:
+ | Bootstrap color variables: https://getbootstrap.com/docs/5.1/customize/color/
+*/
+
+// ===== Bootstrap variables =====
 // Body
-$body-bg: #f8fafc;
+$body-bg: #ffffff;
 
 // Typography
 // $font-family-sans-serif: 'Nunito', sans-serif;
 $font-size-base: 0.9rem;
 $line-height-base: 1.6;
+
+// ===== Custom variables =====
