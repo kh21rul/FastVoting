@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('content')
-<div class="container py-4">
+<div class="container">
     <section style="--bs-breadcrumb-divider: '>';" aria-label="breadcrumb">
         <ol class="breadcrumb">
             <li class="breadcrumb-item"><a href="{{ route('dashboard') }}">Dashboard</a></li>
@@ -9,14 +9,9 @@
             <li class="breadcrumb-item active" aria-current="page">Voters</li>
         </ol>
     </section>
-    {{-- Displaying alert error --}}
-    @if (session('error'))
-        <div class="alert alert-warning alert-dismissible fade show" role="alert">
-            <span>{{ session('error') }}</span>
-            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-        </div>
-    @endif
+    
     <h1>Voters</h1>
+    <p class="description-text">Add the participants you want to be able to choose the event you create</p>
     @if (!$event->is_committed)
         <section class="my-3">
             <form class="card" action="{{ route('voters', ['id' => $event->id]) }}" method="post">
@@ -24,8 +19,11 @@
                 <div class="card-body">
                     <h2>Add Voter</h2>
                     <div class="form-group mb-3">
-                        <label class="form-label" for="email">Email</label>
-                        <input type="email" class="form-control @error('email') is-invalid @enderror" id="email" name="email" placeholder="Email" value="{{ old('email') }}">
+                        <label class="form-label" for="email">
+                            <span>Email</span>
+                            <span style="color:red;font-weight:bold">*</span>
+                        </label>
+                        <input type="email" class="form-control @error('email') is-invalid @enderror" id="email" name="email" placeholder="Enter the voter's email" value="{{ old('email') }}">
                         @error('email')
                             <span class="invalid-feedback" role="alert">
                                 <strong>{{ $message }}</strong>
@@ -33,8 +31,11 @@
                         @enderror
                     </div>
                     <div class="form-group mb-3">
-                        <label class="form-label" for="name">Name</label>
-                        <input type="text" class="form-control @error('name') is-invalid @enderror" id="name" name="name" placeholder="Name" value="{{ old('name') }}">
+                        <label class="form-label" for="name">
+                            <span>Name</span>
+                            <span style="color:red;font-weight:bold">*</span>
+                        </label>
+                        <input type="text" class="form-control @error('name') is-invalid @enderror" id="name" name="name" placeholder="Enter the voter's name" value="{{ old('name') }}">
                         @error('name')
                             <span class="invalid-feedback" role="alert">
                                 <strong>{{ $message }}</strong>

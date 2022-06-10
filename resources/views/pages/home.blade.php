@@ -1,19 +1,19 @@
 @extends('layouts.app')
 @section('content')
-    <div class="d-flex flex-wrap" style="align-items: center;background: linear-gradient(180deg, rgba(84, 99, 255, 0.37) 0%, rgba(66, 82, 255, 0) 101.67%);">
-        <div class="p-2 flex-fill text-center">
-            <h1 class="font-weight-bold" style="font-size: 2em;">Make your voting event feel easy</h1>
-            <p class="px-3">Planning easier, practical and faster. You can determine who can vote without breaking from fraud.</p>
-            <div class="d-flex justify-content-center">
-                <a type="button" class="btn btn-primary m-2" href="{{route('login')}}" >Get Started</a>
-                <a type="button" class="btn btn-light border border-dark m-2" href="#learnFastVoting">Learn More</a>
+    <div class="d-flex jumbotron">
+        <div class="p-2 text-center subjumbotron">
+            <h1 class="font-weight-bold" style="font-size: 2em;background-color: transparent;">Make your voting event feel easy</h1>
+            <p class="px-3" style="background-color: transparent;">Planning easier, practical and faster. You can determine who can vote without breaking from fraud.</p>
+            <div class="d-flex justify-content-center" style="background-color: transparent;">
+                <a type="button" class="btn btn-primary m-1" href="{{route('login')}}">Get Started</a>
+                <a type="button" class="btn btn-light border border-dark m-1" href="{{route('about')}}">About FastVoting</a>
             </div>
         </div>
-        <div class="p-2 flex-fill text-center">
-            <img class="img-fluid" src="{{asset('assets/undraw_voting_nvu7.svg')}}" alt="" style="align-items: center">
+        <div class="p-2 text-center subjumbotron" style="width:50%;">
+            <img class="img-fluid imgJumbotron" src="{{asset('assets/undraw_voting_nvu7.png')}}" alt="" style="align-items: center; background-color: transparent;">
         </div>
     </div>
-    <section class="container">
+    <section class="container-home mb-5">
         <h2 class="text-center" id="learnFastVoting">Why must FastVoting ?</h2>
         <div class="d-flex flex-wrap justify-content-around text-center">
             <div class="card my-2" style="width: 15rem;height: 15rem;">

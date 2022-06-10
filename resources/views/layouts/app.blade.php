@@ -7,12 +7,16 @@
     <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
-    <title>{{ $title ?? config('app.name', 'FastVoting') }}</title>
+    <title>FastVoting</title>
+    <link rel="icon" type="image/x-icon" href="/assets/logo.png">
 
     <!-- Scripts -->
     <script src="{{ mix('js/manifest.js') }}" defer></script>
     <script src="{{ mix('js/vendor.js') }}" defer></script>
     <script src="{{ mix('js/app.js') }}" defer></script>
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.6/jquery.min.js" type="text/javascript"></script>
+    <script src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8/jquery-ui.min.js"
+    type="text/javascript"></script>
 
     <!-- Styles -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
@@ -22,10 +26,12 @@
 </head>
 <body class="d-flex flex-column min-vh-100">
     <div id="app">
-        <nav class="navbar navbar-expand-md navbar-light bg-white shadow-sm">
+        <nav class="navbar navbar-expand-md navbar-light bg-white shadow-sm p-0">
             <div class="container">
-                <img src="{{ asset('assets/logo.png') }}" class="me-2" height="38" alt="FastVoting logo" loading="lazy" />
-                <small class="font-weight-bold text-primary" style="text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.25);">FastVoting</small>
+                <a href="/" class="mb-3 me-2 mb-md-0 text-muted text-decoration-none lh-1">
+                    <img src="{{ asset('assets/logo.png') }}" class="me-2" height="38" alt="FastVoting logo" loading="lazy" />
+                    <small class="font-weight-bold text-primary" style="text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.25); font-size: 15px;">FastVoting</small>
+                </a>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="{{ __('Toggle navigation') }}">
                     <span class="navbar-toggler-icon"></span>
                 </button>
@@ -75,15 +81,12 @@
             </div>
         </nav>
 
-        <main>
+        <main class="h-100">
             @yield('content')
         </main>
     </div>
-    <footer class="w-100 mt-auto d-flex flex-wrap justify-content-between align-items-center py-3 my-4 border-top">
+    <footer class="w-100 mt-auto d-flex flex-wrap justify-content-between align-items-center py-2 my-1 border-top">
         <div class="d-flex align-items-center text-center mx-auto">
-            <a href="/" class="mb-3 me-2 mb-md-0 text-muted text-decoration-none lh-1">
-                <img src="{{ asset('assets/logo.png') }}" class="bi" width="30" height="24">
-            </a>
             <span class="text-muted">&copy; 2022 FastVoting</span>
         </div>
     </footer>
