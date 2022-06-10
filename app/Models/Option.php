@@ -3,22 +3,19 @@
 namespace App\Models;
 
 use App\Traits\Uuids;
-use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Foundation\Auth\User as Authenticatable;
-use Illuminate\Notifications\Notifiable;
-use Laravel\Sanctum\HasApiTokens;
+use Illuminate\Database\Eloquent\Model;
 
-class User extends Authenticatable implements MustVerifyEmail
+class Option extends Model
 {
-    use HasApiTokens, HasFactory, Notifiable, Uuids;
+    use HasFactory, Uuids;
 
     /**
      * Indicates if the model should be timestamped.
      *
      * @var bool
      */
-    public $timestamps = true;
+    public $timestamps = false;
 
     /**
      * The attributes that are mass assignable.
@@ -26,9 +23,10 @@ class User extends Authenticatable implements MustVerifyEmail
      * @var array<int, string>
      */
     protected $fillable = [
+        'event_id',
         'name',
-        'email',
-        'password',
+        'description',
+        'image_location'
     ];
 
     /**
@@ -37,8 +35,7 @@ class User extends Authenticatable implements MustVerifyEmail
      * @var array<int, string>
      */
     protected $hidden = [
-        'password',
-        'remember_token',
+        //
     ];
 
     /**
@@ -47,7 +44,7 @@ class User extends Authenticatable implements MustVerifyEmail
      * @var array<string, string>
      */
     protected $casts = [
-        'email_verified_at' => 'datetime',
+        //
     ];
 
     /**
@@ -56,14 +53,22 @@ class User extends Authenticatable implements MustVerifyEmail
      * @var array
      */
     protected $attributes = [
-        'is_admin' => false,
+        //
     ];
 
     /**
-     * Get the user's events.
+     * Get the event that this option belongs to.
      */
-    public function events()
+    public function event()
     {
-        return $this->hasMany(Event::class);
+        return $this->belongsTo(Event::class);
+    }
+
+    /**
+     * Get the ballots that this option has.
+     */
+    public function ballots()
+    {
+        return $this->hasMany(Ballot::class);
     }
 }

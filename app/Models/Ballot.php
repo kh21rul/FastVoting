@@ -3,22 +3,19 @@
 namespace App\Models;
 
 use App\Traits\Uuids;
-use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Foundation\Auth\User as Authenticatable;
-use Illuminate\Notifications\Notifiable;
-use Laravel\Sanctum\HasApiTokens;
+use Illuminate\Database\Eloquent\Model;
 
-class User extends Authenticatable implements MustVerifyEmail
+class Ballot extends Model
 {
-    use HasApiTokens, HasFactory, Notifiable, Uuids;
+    use HasFactory, Uuids;
 
     /**
      * Indicates if the model should be timestamped.
      *
      * @var bool
      */
-    public $timestamps = true;
+    public $timestamps = false;
 
     /**
      * The attributes that are mass assignable.
@@ -26,9 +23,9 @@ class User extends Authenticatable implements MustVerifyEmail
      * @var array<int, string>
      */
     protected $fillable = [
-        'name',
-        'email',
-        'password',
+        'event_id',
+        'voter_id',
+        'option_id',
     ];
 
     /**
@@ -37,8 +34,7 @@ class User extends Authenticatable implements MustVerifyEmail
      * @var array<int, string>
      */
     protected $hidden = [
-        'password',
-        'remember_token',
+        'voter_id'
     ];
 
     /**
@@ -47,7 +43,7 @@ class User extends Authenticatable implements MustVerifyEmail
      * @var array<string, string>
      */
     protected $casts = [
-        'email_verified_at' => 'datetime',
+        'voted_at' => 'datetime'
     ];
 
     /**
@@ -56,14 +52,30 @@ class User extends Authenticatable implements MustVerifyEmail
      * @var array
      */
     protected $attributes = [
-        'is_admin' => false,
+        //
     ];
 
     /**
-     * Get the user's events.
+     * Get the event that this ballot belongs to.
      */
-    public function events()
+    public function event()
     {
-        return $this->hasMany(Event::class);
+        return $this->belongsTo(Event::class);
+    }
+
+    /**
+     * Get the voter that this ballot belongs to.
+     */
+    public function voter()
+    {
+        return $this->belongsTo(Voter::class);
+    }
+
+    /**
+     * Get the option that this ballot belongs to.
+     */
+    public function option()
+    {
+        return $this->belongsTo(Option::class);
     }
 }
