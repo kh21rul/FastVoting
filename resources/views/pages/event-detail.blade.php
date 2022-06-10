@@ -77,6 +77,14 @@
                             @csrf
                             <button class="btn btn-danger" type="submit">Delete</button>
                         </form>  
+                        {{-- button edit --}}
+                        <a class="btn btn-primary" href="{{ route('option.edit', ['id' => $event->id, 'optionId' => $option->id]) }}">{{ __('Edit Option') }}</a>
+                        {{-- <div class="d-flex gap-2">
+                            <a class="btn btn-secondary" href="{{ route('event.edit', ['id' => $event->id]) }}">{{ __('Edit Event') }}</a>
+                            <button type="button" class="btn btn-outline-danger" data-bs-toggle="modal" data-bs-target="#deleteConfirmationModal">{{ __('Delete Event') }}</button>
+                        </div> --}}
+                        
+
                     </div>
                 </div>
             @endforeach

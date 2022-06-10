@@ -101,6 +101,14 @@ Route::middleware(['auth', 'verified'])->group(function () {
         // Delete option
         Route::delete('/events/{id}/options/{optionId}', [OptionController::class, 'delete'])
             ->name('option.delete');
+
+        // Go to edit option page
+        Route::get('/events/{id}/options/{optionId}/edit', [OptionController::class, 'edit'])
+            ->name('option.edit');
+
+        // Update option
+        Route::put('/events/{id}/options/{optionId}/edit', [OptionController::class, 'update'])
+            ->name('option.update');
     });
 });
 
