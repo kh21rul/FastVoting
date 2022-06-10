@@ -145,27 +145,33 @@ class OptionController extends Controller
             return redirect()->back()->with('error', 'Failed updating option.');
         }
 
-        // Delete image old image if it exists.
-        if (isset($option->image_location)) {
-            $imagePath = storage_path('app/' . $this->imageStoragePath . '/' . $option->image_location);
-
-            if (file_exists($imagePath)) {
-                unlink($imagePath);
-            }
-        }
-
-        // Upload image.
+        // Check if there are any changes in the image.
         if ($request->hasFile('image')) {
-            $image = $request->file('image');
-            $imageName = time() . '_' . $image->hashName();
-            $path = $image->storeAs($this->imageStoragePath, $imageName);
+            // Delete image old image if it exists.
+            if (isset($option->image_location)) {
+                $imagePath = storage_path('app/' . $this->imageStoragePath . '/' . $option->image_location);
 
-            if (!isset($path)) {
-                return redirect()->back()->with('error', 'Failed uploading image.')->withInput();
+                if (file_exists($imagePath)) {
+                    unlink($imagePath);
+                }
+
+                $option->image_location = null;
             }
 
-            $option->image_location = $imageName;
+            // Upload image.
+            if ($request->hasFile('image')) {
+                $image = $request->file('image');
+                $imageName = time() . '_' . $image->hashName();
+                $path = $image->storeAs($this->imageStoragePath, $imageName);
+
+                if (!isset($path)) {
+                    return redirect()->back()->with('error', 'Failed uploading image.')->withInput();
+                }
+
+                $option->image_location = $imageName;
+            }
         }
+
 
         if (!$option->update($validatedData)) {
             return redirect()->back()->with('error', 'Failed updating option.');
