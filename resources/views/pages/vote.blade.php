@@ -30,24 +30,30 @@
         </tbody>
     </table>
     <div class="d-flex flex-wrap choiceCard">
-        <div class="card choice" style="margin-bottom: 1rem;">
-            <div class="card-head d-flex justify-content-center p-2" style="height: 75%"><img src="{{asset('assets/imgCandidate.png')}}" alt="" style="max-width: 100%"></div>
+        <div class="card me-3" style="margin-bottom: 1rem; width: 18rem;">
+            <div class="cropped">
+                <img src="{{asset('assets/imgCandidate.png')}}" alt="">
+            </div>
             <div class="card-body">
               <h5 class="card-title text-center">Special title treatment</h5>
               <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
               <a class="btn btn-success" style="width: 25%" href="{{'/events/eventId/result'}}">Vote</a>
             </div>
         </div>
-                <div class="card choice" style="margin-bottom: 1rem;">
-            <div class="card-head d-flex justify-content-center p-2" style="height: 75%"><img src="{{asset('assets/imgCandidate.png')}}" alt="" style="max-width: 100%"></div>
+        <div class="card me-3" style="margin-bottom: 1rem; width: 18rem;">
+            <div class="cropped">
+                <img src="{{asset('assets/imgCandidate.png')}}" alt="">
+            </div>
             <div class="card-body">
               <h5 class="card-title text-center">Special title treatment</h5>
               <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
               <a class="btn btn-success" style="width: 25%" href="{{'/events/eventId/result'}}">Vote</a>
             </div>
         </div>
-                <div class="card choice" style="margin-bottom: 1rem;">
-            <div class="card-head d-flex justify-content-center p-2" style="height: 75%"><img src="{{asset('assets/imgCandidate.png')}}" alt="" style="max-width: 100%"></div>
+        <div class="card me-3" style="margin-bottom: 1rem; width: 18rem;">
+            <div class="cropped">
+                <img src="{{asset('assets/pexels-element-digital-1550337.jpg')}}" alt="">
+            </div>
             <div class="card-body">
               <h5 class="card-title text-center">Special title treatment</h5>
               <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
