@@ -145,6 +145,15 @@ class OptionController extends Controller
             return redirect()->back()->with('error', 'Failed updating option.');
         }
 
+        // Delete image old image if it exists.
+        if (isset($option->image_location)) {
+            $imagePath = storage_path('app/' . $this->imageStoragePath . '/' . $option->image_location);
+
+            if (file_exists($imagePath)) {
+                unlink($imagePath);
+            }
+        }
+
         // Upload image.
         if ($request->hasFile('image')) {
             $image = $request->file('image');
