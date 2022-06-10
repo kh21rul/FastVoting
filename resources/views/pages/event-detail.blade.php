@@ -8,7 +8,7 @@
           <li class="breadcrumb-item active" aria-current="page">Detail Event</li>
         </ol>
     </section>
-    
+
     <h1 class="detail-event">{{ $event->title }}</h1>
     <section class="d-flex justify-content-end my-2">
         @if (!$event->is_committed)
@@ -16,7 +16,7 @@
         @endif
         <button type="button" class="btn btn-outline-danger" data-bs-toggle="modal" data-bs-target="#deleteConfirmationModal">Delete Event</button>
     </section>
-    
+
     <section class="table-responsive mb-3">
         <table class="table" style="font-size: 1.1em">
             <tbody>
@@ -53,21 +53,21 @@
             </tbody>
         </table>
     </section>
-         
+
     {{-- Options --}}
-    <section class="choice-detailEvent">
-        <h2 class="mt-2">{{ __('Options') }}</h2> 
+    <section class="choice-detailEvent mb-3">
+        <h2 class="mt-2">{{ __('Options') }}</h2>
         <div class="d-flex justify-content-between align-items-center gap-2 flex-wrap mb-2">
             <span>{{ $event->options->count() }} {{ $event->options->count() > 1 ? __('options available') : __('option available') }}</span>
             @if (!$event->is_committed)
                 <a class="btn btn-primary" href="{{ route('option.add', ['id' => $event->id]) }}">{{ __('Add Option') }}</a>
             @endif
         </div>
-        
+
         @if ($event->options->count() > 0)
-            <div class="d-flex gap-2 flex-wrap choiceCard">
-                @foreach ($event->options as $option)  
-                    <div class="card choice" style="width: 18rem;">
+            <div class="d-flex gap-2 flex-wrap choiceCard my-3">
+                @foreach ($event->options as $option)
+                    <div class="card choice mb-2 me-2" style="width: 18rem;">
                         @if ($option->image_location)
                             <img src="{{ route('option.image', ['name' => $option->image_location]) }}" class="card-img-top" alt="Option Image" style="height:200px; overflow:hidden">
                         @endif
@@ -98,20 +98,20 @@
             </div>
         @endif
     </section>
-    
+
     {{-- Voters --}}
-    <section class="participants-detailEvent">
+    <section class="participants-detailEvent mb-3">
         <h2>{{ __('Voters') }}</h2>
         <div class="d-flex justify-content-between align-items-center gap-2 flex-wrap mb-2">
             <span>{{ $event->voters->count() }} {{ $event->voters->count() > 1 ? __('registered voters') : __('registered voter')  }}</span>
             <a class="btn btn-primary" href="{{ route('voters', ['id' => $event->id]) }}">{{ __('Show All') }}</a>
         </div>
-        
+
         @if ($event->voters->count() > 0)
             {{-- Showing max. 5 voters --}}
-            <div class="d-flex flex-wrap justify-content-around">
+            <div class="d-flex flex-wrap">
                 @foreach ($event->voters->sortBy('email', SORT_NATURAL)->take(5) as $voter)
-                    <article class="card mb-2">
+                    <article class="card mb-2" style="width: 100%">
                         <div class="card-body">
                             <p class="card-title mb-0 fs-5">{{ $voter->name }}</p>
                             <p class="mb-0">{{ $voter->email }}</p>
@@ -125,7 +125,7 @@
             </div>
         @endif
     </section>
-    
+
     {{-- Commit --}}
     <h2>{{ __('Commit Event') }}</h2>
     @if (!$event->is_committed)

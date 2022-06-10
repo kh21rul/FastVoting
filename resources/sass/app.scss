@@ -61,14 +61,6 @@
 }
 
 @media (min-width: 768px) {
-    .choice {
-        width: 60%;
-    }
-
-    .choiceCard {
-        justify-content: space-between;
-    }
-
     .about {
         justify-content: space-between;
     }
@@ -78,11 +70,18 @@
     }
 }
 
+@media (max-width: 993px) {
+    .choiceCard {
+        flex-direction: column;
+    }
+}
+
 @media (min-width: 992px) {
     .jumbotron {
         flex-wrap: nowrap;
         justify-content: center;
     }
+
     .subjumbotron {
         width: 38%;
     }
@@ -91,15 +90,9 @@
         padding-top: 2%;
         height: 100vh;
     }
+
     p {
         font-size: 1.2em;
-    }
-    .choice {
-        width: 32%;
-    }
-
-    .choiceCard {
-        justify-content: space-between;
     }
 
     .descriptionAbout {
