@@ -1,38 +1,40 @@
 @extends('layouts.app')
 
 @section('content')
-<div class="container">
-    <div class="mb-3 d-flex justify-content-between">
-        <h2>Welcome <span>{{ Auth::user()->name }}</span></h2>
+<div class="container py-4">
+    <div class="mb-4 d-flex justify-content-between align-items-center flex-wrap">
+        <h2>Welcome, <span>{{ Auth::user()->name }}</span>!</h2>
         <a type="button" class="btn btn-primary" href="{{ route('event.add') }}">Add Event</a>
     </div>
-    
-    <div id="container" class="d-flex flex-wrap justify-content-around">
-        {{-- Load each `event` in `events` --}}
-        @foreach ($events as $event)
-            <div class="event-item d-flex flex-wrap justify-content-around" >
-                <div class="card my-2" style="width: 100%; box-shadow: 1px 1px 7px rgba(0, 0, 0, 0.25)">
-                    <a href="{{ route('event.detail', ['id' => $event->id]) }}">
-                        <div class="card-body">
-                            <h5 class="card-title">{{ $event->title }}</h5>
-                            <span class="card-text"><span><img class="img-fluid" src="{{asset('assets/Calendar.png')}}" alt=""></span>{{ $event->started_at }} - {{ $event->finished_at }}</span>
-                            @if ($event->description)
-                              <p class="card-text mt-2" id="desc">{{ $event->description }}</p>
-                            @endif
+
+    @if ($events->count() > 0)
+        <div id="eventList" class="d-flex flex-column flex-wrap gap-3">
+            {{-- Load each `event` in `events` --}}
+            @foreach ($events as $event)
+                <a class="event-item card shadow-sm" href="{{ route('event.detail', ['id' => $event->id]) }}">
+                    <div class="card-body">
+                        <p class="h5 card-title">{{ $event->title }}</p>
+                        <div class="d-flex flex-wrap">
+                            <div class="d-flex gap-2 align-items-center me-3" title="Started at" style="width: 200px;">
+                                <i class="fa-solid fa-calendar-day"></i>
+                                <span>{{ $event->started_at->format('D, d M Y, H.i') }}</span>
+                            </div>
+                            <div class="d-flex gap-2 align-items-center" title="Finished at">
+                                <i class="fa-solid fa-calendar-week"></i>
+                                <span>{{ $event->finished_at->format('D, d M Y, H.i') }}</span>
+                            </div>
                         </div>
-                    </a>
-                </div>
-            </div>
-        @endforeach
-    </div>
+                        @if ($event->description)
+                            <p class="event-item__description card-text mt-2">{{ $event->description }}</p>
+                        @endif
+                    </div>
+                </a>
+            @endforeach
+        </div>
+    @else
+        <div class="text-center border p-4 bg-light">
+            <p class="text-muted mb-0">You haven't created any events yet</p>
+        </div>
+    @endif
 </div>
-<script>
-    const container = document.getElementById("container");
-    const eventItems = container.querySelector('.event-item');
-    
-    eventItems.foreach((item) => {
-      const description = item.getElementById('desc');
-      description.innerHTML = description.innerHTML.slice(0,248) + '...';
-    });
-</script>
 @endsection
