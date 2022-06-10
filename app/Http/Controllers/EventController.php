@@ -3,8 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\EventModifyRequest;
+use App\Mail\VotingInvitation;
 use App\Models\Event;
-use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Mail;
 
 class EventController extends Controller
 {
@@ -120,9 +121,21 @@ class EventController extends Controller
         $event->is_committed = true;
         $event->save();
 
-        // TODO: send email to all voters
-        // ...
+        // Send voting invitation email to all voters
+        $failedDelivery = 0;
 
-        return redirect()->route('event.detail', ['id' => $id]);
+        foreach ($event->voters as $voter) {
+            $sentMessage = Mail::to($voter->email)->send(new VotingInvitation($voter));
+
+            if (!isset($sentMessage)) {
+                $failedDelivery += 1;
+            }
+        }
+
+        if ($failedDelivery > 0) {
+            return redirect()->route('event.detail', ['id' => $id])->with('error', 'Failed sending email to ' . $failedDelivery . ' voters.');
+        }
+
+        return redirect()->route('event.detail', ['id' => $id])->with('success', 'Voting invitation email has been sent to all voters.');
     }
 }
