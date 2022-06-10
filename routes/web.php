@@ -29,7 +29,6 @@ use App\Http\Controllers\OptionController;
 | - Reset password page         : route('password.reset') -> auth/passwords/reset.blade.php
 | - Email verification page     : route('verification.notice') -> auth/verify.blade.php
 */
-
 Auth::routes(['verify' => true]);
 
 // Go to home page
@@ -42,6 +41,7 @@ Route::get('/about', function () {
     return view('pages.about');
 })->name('about');
 
+// User authentication and email verification middleware
 Route::middleware(['auth', 'verified'])->group(function () {
     // === Put all routes that need authentication and email verification here ===
     // Go to dashboard page
@@ -60,19 +60,12 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('/option_images/{name}', [OptionController::class, 'getImage'])
         ->name('option.image');
 
+    // Event authorization middleware
     Route::middleware('event.authorized')->group(function () {
         // === Put all routes that need event authorization here ===
         // Go to detail event page
         Route::get('/events/{id}', [EventController::class, 'detail'])
             ->name('event.detail');
-
-        // Go to edit event page
-        Route::get('/events/{id}/edit', [EventController::class, 'edit'])
-            ->name('event.edit');
-
-        // Update the event
-        Route::put('/events/{id}/edit', [EventController::class, 'update'])
-            ->name('event.update');
 
         // Delete the event
         Route::delete('/events/{id}', [EventController::class, 'delete'])
@@ -82,33 +75,49 @@ Route::middleware(['auth', 'verified'])->group(function () {
         Route::get('/events/{id}/voters', [VoterController::class, 'index'])
             ->name('voters');
 
-        // Add new voter
-        Route::post('/events/{id}/voters', [VoterController::class, 'create'])
-            ->name('voter.create');
+        // Event editable middleware.
+        Route::middleware('event.editable')->group(function () {
+            // === Put all routes that need event editability here ===
+            // Go to edit event page
+            Route::get('/events/{id}/edit', [EventController::class, 'edit'])
+                ->name('event.edit');
 
-        // Delete voter
-        Route::delete('/events/{id}/voters/{voterId}', [VoterController::class, 'delete'])
-            ->name('voter.delete');
+            // Update the event
+            Route::put('/events/{id}/edit', [EventController::class, 'update'])
+                ->name('event.update');
 
-        // Go to add option page
-        Route::get('/events/{id}/options/add', [OptionController::class, 'add'])
-            ->name('option.add');
+            // Add new voter
+            Route::post('/events/{id}/voters', [VoterController::class, 'create'])
+                ->name('voter.create');
 
-        // Create new option
-        Route::post('/events/{id}/options/add', [OptionController::class, 'create'])
-            ->name('option.create');
+            // Delete voter
+            Route::delete('/events/{id}/voters/{voterId}', [VoterController::class, 'delete'])
+                ->name('voter.delete');
 
-        // Delete option
-        Route::delete('/events/{id}/options/{optionId}', [OptionController::class, 'delete'])
-            ->name('option.delete');
+            // Go to add option page
+            Route::get('/events/{id}/options/add', [OptionController::class, 'add'])
+                ->name('option.add');
 
-        // Go to edit option page
-        Route::get('/events/{id}/options/{optionId}/edit', [OptionController::class, 'edit'])
-            ->name('option.edit');
+            // Create new option
+            Route::post('/events/{id}/options/add', [OptionController::class, 'create'])
+                ->name('option.create');
 
-        // Update option
-        Route::put('/events/{id}/options/{optionId}/edit', [OptionController::class, 'update'])
-            ->name('option.update');
+            // Delete option
+            Route::delete('/events/{id}/options/{optionId}', [OptionController::class, 'delete'])
+                ->name('option.delete');
+          
+            // Go to edit option page
+            Route::get('/events/{id}/options/{optionId}/edit', [OptionController::class, 'edit'])
+                ->name('option.edit');
+
+            // Update option
+            Route::put('/events/{id}/options/{optionId}/edit', [OptionController::class, 'update'])
+                ->name('option.update');
+
+            // Commit event
+            Route::post('/events/{id}/commit', [EventController::class, 'commit'])
+                ->name('event.commit');
+        });
     });
 });
 
@@ -117,7 +126,6 @@ Route::middleware(['auth', 'verified'])->group(function () {
 Route::get('/vote', function () {
     return view('pages.vote');
 })->name('vote');
-
 
 // Go to result page
 Route::get('/events/eventId/result', function () {

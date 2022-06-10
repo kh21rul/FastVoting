@@ -103,4 +103,26 @@ class EventController extends Controller
         // TODO: Redirect to Dashboard page if success
         // return redirect()->route('dashboard')->with('success', 'One event has been deleted.');
     }
+
+    /**
+     * Commit the event
+     */
+    public function commit($id)
+    {
+        $event = Event::find($id);
+
+        // Check if all commit checklist is fulfilled.
+        if (!$event->isAllCommitChecklistFulfilled()) {
+            return redirect()->route('event.detail', ['id' => $id])->with('error', 'There are requirement that not fulfilled yet.');
+        }
+
+        // Commit the event
+        $event->is_committed = true;
+        $event->save();
+
+        // TODO: send email to all voters
+        // ...
+
+        return redirect()->route('event.detail', ['id' => $id]);
+    }
 }

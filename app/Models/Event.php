@@ -55,8 +55,44 @@ class Event extends Model
      * @var array
      */
     protected $attributes = [
-        //
+        'is_committed' => false,
     ];
+
+    /**
+     * Get the checklist before commit the event.
+     */
+    public function getCommitChecklist()
+    {
+        return [
+            [
+                'name' => 'The event has a start time after the current time.',
+                'is_fulfilled' => $this->started_at && $this->started_at > now(),
+            ],
+            [
+                'name' => 'The event has a finish time after the start time.',
+                'is_fulfilled' => $this->finished_at && $this->finished_at > $this->started_at,
+            ],
+            [
+                'name' => 'The event has at least two options',
+                'is_fulfilled' => $this->options()->count() >= 2,
+            ],
+            [
+                'name' => 'The event has at least two voters',
+                'is_fulfilled' => $this->voters()->count() >= 2,
+            ],
+        ];
+    }
+
+    public function isAllCommitChecklistFulfilled()
+    {
+        foreach ($this->getCommitChecklist() as $checkItem) {
+            if (!$checkItem['is_fulfilled']) {
+                return false;
+            }
+        }
+
+        return true;
+    }
 
     /**
      * Get the event's creator.

@@ -123,7 +123,7 @@ class OptionController extends Controller
 
         return redirect()->route('event.detail', ['id' => $eventId]);
     }
-
+  
     public function edit($eventId, $optionId)
     {
         $data['title'] = 'Edit Option | ' . config('app.name');
