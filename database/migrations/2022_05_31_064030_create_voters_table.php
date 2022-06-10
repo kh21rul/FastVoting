@@ -13,15 +13,13 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('users', function (Blueprint $table) {
+        Schema::create('voters', function (Blueprint $table) {
             $table->uuid('id')->primary()->unique();
+            $table->foreignUuid('event_id')->references('id')->on('events');
             $table->string('name', 60);
-            $table->string('email')->unique();
-            $table->string('password');
-            $table->boolean('is_admin')->default(false);
-            $table->rememberToken();
-            $table->timestamp('email_verified_at')->nullable();
-            $table->timestamps();
+            $table->string('email');
+            $table->string('token', 100)->nullable();
+            $table->timestamp('created_at')->useCurrent();
         });
     }
 
@@ -32,6 +30,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('users');
+        Schema::dropIfExists('voters');
     }
 };
