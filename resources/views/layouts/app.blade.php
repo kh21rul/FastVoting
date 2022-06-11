@@ -7,7 +7,7 @@
     <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
-    <title>FastVoting</title>
+    <title>{{ config('app.name') }}</title>
     <link rel="icon" type="image/x-icon" href="/assets/logo.png">
 
     <!-- Scripts -->
@@ -29,8 +29,8 @@
         <nav class="navbar navbar-expand-md navbar-light bg-white shadow-sm">
             <div class="container">
                 <a href="{{ route('home') }}" class="text-decoration-none d-flex gap-2 align-items-center me-3">
-                    <img src="{{ asset('assets/logo.png') }}" height="32" alt="FastVoting logo" loading="lazy" />
-                    <span class="font-weight-bold text-primary fs-5">FastVoting</span>
+                    <img src="{{ asset('assets/logo.png') }}" height="32" alt="{{ config('app.name') }} logo" loading="lazy" />
+                    <span class="font-weight-bold text-primary fs-5">{{ config('app.name') }}</span>
                 </a>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="{{ __('Toggle navigation') }}">
                     <i class="fa-solid fa-bars"></i>
@@ -84,7 +84,7 @@
     </div>
     <footer class="w-100 mt-auto d-flex flex-wrap justify-content-between align-items-center py-2 my-1 border-top">
         <div class="d-flex align-items-center text-center mx-auto">
-            <span class="text-muted">&copy; 2022 FastVoting</span>
+            <span class="text-muted">&copy; 2022 {{ config('app.name') }}</span>
         </div>
     </footer>
 </body>
