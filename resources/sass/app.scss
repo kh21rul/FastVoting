@@ -12,8 +12,25 @@
 // Bootstrap
 @import '~bootstrap/scss/bootstrap';
 
-.container {
-    padding: 0.5rem 1rem;
+.navbar {
+    position: sticky;
+    position: -webkit-sticky;
+    top: 0;
+    z-index: 999;
+}
+
+.navbar .navbar-toggler {
+    padding: 0.5rem 0.75rem;
+    border-color: $primary;
+    color: $primary;
+}
+
+.navbar .navbar-toggler > svg {
+    width: 16px;
+}
+
+.navbar .navbar-nav.nav-left {
+    margin-top: 0.5rem;
 }
 
 .jumbotron {
@@ -72,6 +89,10 @@
 }
 
 @media (min-width: 768px) {
+    .navbar .navbar-nav.nav-left {
+        margin-top: 0;
+    }
+
     .about {
         justify-content: space-between;
     }

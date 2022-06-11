@@ -26,37 +26,34 @@
 </head>
 <body class="d-flex flex-column min-vh-100">
     <div id="app">
-        <nav class="navbar navbar-expand-md navbar-light bg-white shadow-sm p-0">
+        <nav class="navbar navbar-expand-md navbar-light bg-white shadow-sm">
             <div class="container">
-                <a href="/" class="mb-3 me-2 mb-md-0 text-muted text-decoration-none lh-1">
-                    <img src="{{ asset('assets/logo.png') }}" class="me-2" height="38" alt="FastVoting logo" loading="lazy" />
-                    <small class="font-weight-bold text-primary" style="text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.25); font-size: 15px;">FastVoting</small>
+                <a href="{{ route('home') }}" class="text-decoration-none d-flex gap-2 align-items-center me-3">
+                    <img src="{{ asset('assets/logo.png') }}" height="32" alt="FastVoting logo" loading="lazy" />
+                    <span class="font-weight-bold text-primary fs-5">FastVoting</span>
                 </a>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="{{ __('Toggle navigation') }}">
-                    <span class="navbar-toggler-icon"></span>
+                    <i class="fa-solid fa-bars"></i>
                 </button>
 
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
                     <!-- Left Side Of Navbar -->
                     <ul class="navbar-nav me-auto">
-
                     </ul>
 
                     <!-- Right Side Of Navbar -->
-                    <ul class="navbar-nav ms-auto">
+                    <ul class="navbar-nav nav-left">
                         <!-- Authentication Links -->
                         @guest
-                            @if (Route::has('login'))
-                                <li class="nav-item">
-                                    <a type="button" class="nav-link btn btn-outline-primary m-2" href="{{ route('login') }}">{{ __('Login') }}</a>
-                                </li>
-                            @endif
+                            <li class="nav-item d-flex gap-2 flex-wrap">
+                                @if (Route::has('login'))
+                                    <a type="button" class="btn btn-outline-primary flex-fill" href="{{ route('login') }}">{{ __('Login') }}</a>
+                                @endif
 
-                            @if (Route::has('register'))
-                                <li class="nav-item">
-                                    <a type="button" class="nav-link btn btn-outline-secondary m-2" href="{{ route('register') }}">{{ __('Register') }}</a>
-                                </li>
-                            @endif
+                                @if (Route::has('register'))
+                                    <a type="button" class="btn btn-primary flex-fill" href="{{ route('register') }}">{{ __('Register') }}</a>
+                                @endif
+                            </li>
                         @else
                             <li class="nav-item dropdown">
                                 <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
