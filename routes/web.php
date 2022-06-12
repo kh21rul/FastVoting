@@ -6,6 +6,7 @@ use App\Http\Controllers\VoterController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\OptionController;
+use App\Http\Controllers\VoteController;
 
 /*
 |--------------------------------------------------------------------------
@@ -60,6 +61,10 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('/option_images/{name}', [OptionController::class, 'getImage'])
         ->name('option.image');
 
+    // Go to vote page
+    Route::get('/vote/{voterId}', [VoteController::class, 'index'])
+        ->name('vote');
+
     // Event authorization middleware
     Route::middleware('event.authorized')->group(function () {
         // === Put all routes that need event authorization here ===
@@ -105,7 +110,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
             // Delete option
             Route::delete('/events/{id}/options/{optionId}', [OptionController::class, 'delete'])
                 ->name('option.delete');
-          
+
             // Go to edit option page
             Route::get('/events/{id}/options/{optionId}/edit', [OptionController::class, 'edit'])
                 ->name('option.edit');
@@ -122,11 +127,6 @@ Route::middleware(['auth', 'verified'])->group(function () {
 });
 
 // TODO: All routes in below is not used the right method and params yet
-// Go to vote page
-Route::get('/vote', function () {
-    return view('pages.vote');
-})->name('vote');
-
 // Go to result page
 Route::get('/events/eventId/result', function () {
     return view('pages.result');
