@@ -36,14 +36,10 @@ class VoteAuthorization
             return redirect()->route('result', ['event' => $voter->event, 'token' => $voter->token])->with('success', 'You have already voted.');
         }
 
-        // Check if the vote is already opened
-        if (now() < $voter->event->started_at) {
-            abort(403, 'Voting has not started yet');
-        }
-
         // Check if the vote is not closed yet
-        if (now() > $voter->event->finished_at) {
-            abort(403, 'Voting has been closed');
+        if ($voter->event->finished_at->isPast()) {
+            // Redirect to result page
+            return redirect()->route('result', ['event' => $voter->event, 'token' => $voter->token])->with('error', 'The vote has been closed.');
         }
 
         return $next($request);

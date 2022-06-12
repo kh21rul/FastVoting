@@ -42,6 +42,11 @@ class VoteController extends Controller
     {
         $voter = Voter::find($voterId);
 
+        // Check if the event is already started
+        if ($voter->event->started_at->isFuture()) {
+            return redirect()->route('vote', ['voterId' => $voter->id, 'token' => $voter->token])->with('error', 'The vote has been closed.');
+        }
+
         // Check if the selected option is valid
         if (!$voter->event->options->contains($request->option_id)) {
             return redirect()->back()->with('error', 'The selected option is invalid.');

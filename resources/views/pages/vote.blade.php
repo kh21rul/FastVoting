@@ -16,7 +16,14 @@
     @isset($voter->event->description)
         <p class="fs-6">{{ $voter->event->description }}</p>
     @endisset
+
     <hr class="mb-4">
+
+    @if ($voter->event->started_at->isFuture())
+        <div class="p-3 bg-white border border-danger mb-4 text-center">
+            <span class="text-danger">This vote is not opened yet.</span>
+        </div>
+    @endif
 
     <h2>Your Identity</h2>
     <table class="table table-borderless mb-4">
@@ -43,11 +50,13 @@
                             @isset($option->description)
                                 <p class="card-text">{{ $option->description }}</p>
                             @endisset
-                            <form action="{{ route('vote.save', ['voterId' => $voter->id, 'token' => $voter->token]) }}" method="post">
-                                @csrf
-                                <input type="hidden" name="option_id" value="{{ $option->id }}">
-                                <button type="submit" class="btn btn-success">Vote</button>
-                            </form>
+                            @if ($voter->event->started_at->isPast())
+                                <form action="{{ route('vote.save', ['voterId' => $voter->id, 'token' => $voter->token]) }}" method="post">
+                                    @csrf
+                                    <input type="hidden" name="option_id" value="{{ $option->id }}">
+                                    <button type="submit" class="btn btn-success">Vote</button>
+                                </form>
+                            @endif
                         </div>
                     </div>
                     {{-- Option Image --}}
