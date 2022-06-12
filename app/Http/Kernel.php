@@ -65,5 +65,6 @@ class Kernel extends HttpKernel
         'verified' => \Illuminate\Auth\Middleware\EnsureEmailIsVerified::class,
         'event.authorized' => \App\Http\Middleware\EventAuthorization::class,
         'event.editable' => \App\Http\Middleware\IsEventEditable::class,
+        'vote' => \App\Http\Middleware\VoteAuthorization::class,
     ];
 }

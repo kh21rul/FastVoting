@@ -43,7 +43,11 @@
                             @isset($option->description)
                                 <p class="card-text">{{ $option->description }}</p>
                             @endisset
-                            <a class="btn btn-success" href="{{'/events/eventId/result'}}">Vote</a>
+                            <form action="{{ route('vote.save', ['voterId' => $voter->id, 'token' => $voter->token]) }}" method="post">
+                                @csrf
+                                <input type="hidden" name="option_id" value="{{ $option->id }}">
+                                <button type="submit" class="btn btn-success">Vote</button>
+                            </form>
                         </div>
                     </div>
                     {{-- Option Image --}}

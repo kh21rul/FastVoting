@@ -61,9 +61,16 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('/option_images/{name}', [OptionController::class, 'getImage'])
         ->name('option.image');
 
-    // Go to vote page
-    Route::get('/vote/{voterId}', [VoteController::class, 'index'])
-        ->name('vote');
+    // Vote authorization middleware
+    Route::middleware('vote')->group(function () {
+        // Go to vote page
+        Route::get('/vote/{voterId}', [VoteController::class, 'index'])
+            ->name('vote');
+
+        // Save the vote
+        Route::post('/vote/{voterId}', [VoteController::class, 'vote'])
+            ->name('vote.save');
+    });
 
     // Event authorization middleware
     Route::middleware('event.authorized')->group(function () {
