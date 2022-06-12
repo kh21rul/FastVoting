@@ -77,15 +77,30 @@
     font-size: 0.8rem;
 }
 
-.cropped {
-    width: 100%;
-    height: 50%;
-    overflow: hidden;
+.option-list {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 1rem;
 }
 
-.cropped img {
+.option-item {
     width: 100%;
+    overflow: hidden;
+    border-radius: 0.5rem;
+    height: fit-content;
+}
+
+.option-item__image-frame {
+    overflow: hidden;
     height: 100%;
+}
+
+.option-item__image {
+    object-fit: cover;
+    object-position: center;
+    width: 100%;
+    min-height: 100px;
+    height: 20vh;
 }
 
 @media (min-width: 768px) {
@@ -100,11 +115,10 @@
     .descriptionAbout {
         width:49%;
     }
-}
 
-@media (max-width: 993px) {
-    .choiceCard {
-        flex-direction: column;
+    .option-list {
+        grid-template-columns: repeat(2, 1fr);
+        column-gap: 1.5rem;
     }
 }
 
