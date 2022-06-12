@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Event;
 use App\Models\Voter;
 use Illuminate\Http\Request;
 
@@ -57,6 +58,54 @@ class VoteController extends Controller
             return redirect()->back()->with('error', 'Failed to save your vote.');
         }
 
-        return redirect()->route('result', ['eventId' => $voter->event->id]);
+        return redirect()->route('result', ['event' => $voter->event, 'token' => $voter->token]);
+    }
+
+    /**
+     * Go to result page
+     */
+    public function result(Request $request, Event $event)
+    {
+        // Authorize the user is the event's creator or the voter who already vote.
+        if (!$this->isAuthorizedToResultPage($request, $event)) {
+            abort(403, 'Unauthorized');
+        }
+
+        $data['title'] = ((now() < $event->finished_at) ? 'Real-Count': 'Voting Result') . ' of ' . $event->title . ' | ' . config('app.name');
+        $data['event'] = $event;
+
+        return view('pages.result', $data);
+    }
+
+    /**
+     * Authorize access to result page.
+     */
+    private function isAuthorizedToResultPage(Request $request, Event $event)
+    {
+        // Authorize if the user is the voter who already vote.
+        if (isset($request->token)) {
+            $voter = Voter::where('token', $request->token)->first();
+
+            if (!isset($voter) || $voter->event->id !== $event->id) {
+                return false;
+            }
+
+            if (!isset($voter->ballot)) {
+                return redirect()->route('vote', ['voterId' => $voter->id, 'token' => $voter->token]);
+            }
+
+            return true;
+        }
+
+        // Authorize the user is the event's creator
+        if (auth()->user() && auth()->user()->id !== $event->creator->id) {
+            return false;
+        }
+
+        if (auth()->user() === null) {
+            return false;
+        }
+
+        return true;
     }
 }

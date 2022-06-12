@@ -1,66 +1,70 @@
 @extends('layouts.app')
 
 @section('content')
-<div class="container">
-    <h2>Result</h2>
-    <p class="card-text"><span><img class="img-fluid" src="{{asset('assets/Calendar.png')}}" alt=""></span> 25 June 2022 at 8 am - 25 June 2022 at 5 pm</p>
-    <hr>
-    <table class="table table-borderless" style="font-size: 1.1em;">
+<div class="container py-4">
+    @if (now() < $event->finished_at)
+        <h1 class="fs-5 text-muted mb-1">Real-Count of</h1>
+    @else
+        <h1 class="fs-5 text-muted mb-1">Voting Result of</h1>
+    @endif
+    <h2 class="h1">{{ $event->title }}</h2>
+    <div class="d-flex flex-wrap mb-3">
+        <div class="d-flex gap-2 align-items-center me-3" title="Started at" style="width: 200px;">
+            <i class="fa-solid fa-calendar-day"></i>
+            <span>{{ $event->started_at->format('D, d M Y, H.i e') }}</span>
+        </div>
+        <div class="d-flex gap-2 align-items-center" title="Finished at">
+            <i class="fa-solid fa-calendar-week"></i>
+            <span>{{ $event->finished_at->format('D, d M Y, H.i e') }}</span>
+        </div>
+    </div>
+    @isset($event->description)
+        <p class="fs-6">{{ $event->description }}</p>
+    @endisset
+
+    <table class="table">
         <tbody>
           <tr>
-            <td colspan="1">Title</td>
-            <td>:</td>
-            <td>Lorem Ipsum</td>
+            <th>Total Registered Voters</th>
+            <td>{{ $event->voters->count() }}</td>
           </tr>
           <tr>
-            <td colspan="1">Description</td>
-            <td>:</td>
-            <td>Lorem ipsum dolor sit amet consectetur adipisicing elit. Aut fuga, magnam facilis, consequuntur itaque non voluptates id quasi perferendis expedita quaerat corporis, ad ipsum dolorum.</td>
+            <th>Total Incoming Votes</th>
+            <td>{{ $event->ballots->count() }}</td>
           </tr>
           <tr>
-            <td colspan="1">Total Participants</td>
-            <td>:</td>
-            <td>1000</td>
-          </tr>
-          <tr>
-            <td colspan="1">Total Vote</td>
-            <td>:</td>
-            <td>800</td>
+            <th>Incoming Votes Percentage</th>
+            <td>{{ $event->ballots->count() / $event->voters->count() * 100 }}%</td>
           </tr>
         </tbody>
     </table>
-        <div class="d-flex flex-wrap choiceCard">
-            <div class="card me-3" style="margin-bottom: 1rem; width: 18rem;">
-                <div class="cropped">
-                    <img src="{{asset('assets/imgCandidate.png')}}" alt="">
-                </div>
-                <div class="card-body">
-                    <h5 class="card-title">Special title treatment</h5>
-                    <p class="card-text mb-1">Total Vote : 250</p>
-                    <p class="card-text">Percentage who voted : 25 %</p>
-                </div>
-            </div>
-            <div class="card me-3" style="margin-bottom: 1rem; width: 18rem;">
-                <div class="cropped">
-                    <img src="{{asset('assets/imgCandidate.png')}}" alt="">
-                </div>
-                <div class="card-body">
-                    <h5 class="card-title">Special title treatment</h5>
-                    <p class="card-text mb-1">Total Vote : 250</p>
-                    <p class="card-text">Percentage who voted : 25 %</p>
-                </div>
-            </div>
-            <div class="card me-3" style="margin-bottom: 1rem; width: 18rem;">
-                <div class="cropped">
-                    <img src="{{asset('assets/imgCandidate.png')}}" alt="">
-                </div>
-                <div class="card-body">
-                    <h5 class="card-title">Special title treatment</h5>
-                    <p class="card-text mb-1">Total Vote : 250</p>
-                    <p class="card-text">Percentage who voted : 25 %</p>
+    <div class="option-list">
+        @foreach ($event->options as $option)
+            <div class="card option-item">
+                <div class="row g-0">
+                    {{-- Option Image --}}
+                    @isset($option->image_location)
+                        <div class="col-4 option-item__image-frame">
+                            <img class="option-item__image" src="{{ route('option.image', ['name' => $option->image_location]) }}" alt="{{ $option->name }}">
+                        </div>
+                    @endisset
+                    <div class="@isset($option->image_location) col-8 @endisset">
+                        <div class="card-body">
+                            <p class="card-title fs-5">{{ $option->name }}</p>
+                            <div class="d-flex justify-content-between align-items-center mb-1">
+                                <span>Total Votes</span>
+                                <span>{{ $option->ballots->count() }}</span>
+                            </div>
+                            <div class="d-flex justify-content-between align-items-center mb-1">
+                                <span>Votes Percentage</span>
+                                <span>{{ $option->ballots->count() / $event->voters->count() * 100 }}%</span>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
-        </div>
+        @endforeach
+    </div>
 </div>
 
 @endsection

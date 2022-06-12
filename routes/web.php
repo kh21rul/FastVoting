@@ -61,17 +61,6 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('/option_images/{name}', [OptionController::class, 'getImage'])
         ->name('option.image');
 
-    // Vote authorization middleware
-    Route::middleware('vote')->group(function () {
-        // Go to vote page
-        Route::get('/vote/{voterId}', [VoteController::class, 'index'])
-            ->name('vote');
-
-        // Save the vote
-        Route::post('/vote/{voterId}', [VoteController::class, 'vote'])
-            ->name('vote.save');
-    });
-
     // Event authorization middleware
     Route::middleware('event.authorized')->group(function () {
         // === Put all routes that need event authorization here ===
@@ -133,8 +122,17 @@ Route::middleware(['auth', 'verified'])->group(function () {
     });
 });
 
-// TODO: All routes in below is not used the right method and params yet
+// Vote authorization middleware
+Route::middleware('vote')->group(function () {
+    // Go to vote page
+    Route::get('/vote/{voterId}', [VoteController::class, 'index'])
+        ->name('vote');
+
+    // Save the vote
+    Route::post('/vote/{voterId}', [VoteController::class, 'vote'])
+        ->name('vote.save');
+});
+
 // Go to result page
-Route::get('/events/eventId/result', function () {
-    return view('pages.result');
-})->name('result');
+Route::get('/results/{event}', [VoteController::class, 'result'])
+    ->name('result');

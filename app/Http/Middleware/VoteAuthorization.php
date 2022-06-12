@@ -32,7 +32,8 @@ class VoteAuthorization
 
         // Check if voter has voted
         if ($voter->ballot) {
-            abort(403, 'Voter has already voted');
+            // Redirect to result page
+            return redirect()->route('result', ['event' => $voter->event, 'token' => $voter->token])->with('success', 'You have already voted.');
         }
 
         // Check if the vote is already opened
