@@ -30,12 +30,8 @@
     <p>You has been invited to vote
     <table style="background-color: #f3f4f5; width:90%;">
         <tr>
-            <td>Tittle</td>
+            <td>Title</td>
             <td><strong>{{ $voter->event->title }}</strong></td>
-        </tr>
-        <tr>
-            <td>Description</td>
-            <td><strong>{{ $voter->event->description }}</strong></td>
         </tr>
         <tr>
             <td>Invited by</td>
@@ -56,7 +52,7 @@
     </table>
     <p>Please click on the link below to vote.</p>
 
-    <a href="{{ route('vote', ['voterId' => $voter->id, 'token' => $voter->token]) }}"><strong>Vote Now</strong></a>
+    <a href="{{ route('vote', ['voterId' => $voter->id, 'token' => $voter->token]) }}" class="button"><strong>Vote Now</strong></a>
 
     <p><strong>Warning!</strong> Don't share and give this vote link to anybody.</p>
     <p>Thank you for your participation!</p>
