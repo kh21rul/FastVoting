@@ -1,65 +1,64 @@
 @extends('layouts.app')
 
 @section('content')
-<div class="container">
-    <h2>Vote Now</h2>
-    <p class="card-text"><span><img class="img-fluid" src="{{asset('assets/Calendar.png')}}" alt=""></span> 25 June 2022 at 8 am - 25 June 2022 at 5 pm</p>
-    <hr>
-    <table class="table table-borderless" style="font-size: 1.1em;">
+<div class="container py-4">
+    <h1>{{ $voter->event->title }}</h1>
+    <div class="d-flex flex-wrap mb-3">
+        <div class="d-flex gap-2 align-items-center me-3" title="Started at" style="width: 200px;">
+            <i class="fa-solid fa-calendar-day"></i>
+            <span>{{ $voter->event->started_at->format('D, d M Y, H.i e') }}</span>
+        </div>
+        <div class="d-flex gap-2 align-items-center" title="Finished at">
+            <i class="fa-solid fa-calendar-week"></i>
+            <span>{{ $voter->event->finished_at->format('D, d M Y, H.i e') }}</span>
+        </div>
+    </div>
+    @isset($voter->event->description)
+        <p class="fs-6">{{ $voter->event->description }}</p>
+    @endisset
+    <hr class="mb-4">
+
+    <h2>Your Identity</h2>
+    <table class="table table-borderless mb-4">
         <tbody>
-          <tr>
-            <td colspan="1">Title</td>
-            <td>:</td>
-            <td>Lorem Ipsum</td>
-          </tr>
-          <tr>
-            <td colspan="1">Description</td>
-            <td>:</td>
-            <td>Lorem ipsum dolor sit amet consectetur adipisicing elit. Aut fuga, magnam facilis, consequuntur itaque non voluptates id quasi perferendis expedita quaerat corporis, ad ipsum dolorum.</td>
-          </tr>
-          <tr>
-            <td colspan="1">Name</td>
-            <td>:</td>
-            <td>loremipsum</td>
-          </tr>
-          <tr>
-            <td colspan="1">email</td>
-            <td>:</td>
-            <td>loremipsum@fastvoting.com</td>
-          </tr>
+            <tr>
+                <th>Name</th>
+                <td>{{ $voter->name }}</td>
+            </tr>
+            <tr>
+                <th>Email</th>
+                <td>{{ $voter->email }}</td>
+            </tr>
         </tbody>
     </table>
-    <div class="d-flex flex-wrap choiceCard">
-        <div class="card me-3" style="margin-bottom: 1rem; width: 18rem;">
-            <div class="cropped">
-                <img src="{{asset('assets/imgCandidate.png')}}" alt="">
+
+    {{-- Option List --}}
+    <div class="option-list">
+        @foreach ($voter->event->options as $option)
+            <div class="card option-item">
+                <div class="row g-0">
+                    <div class="@isset($option->image_location) col-8 @endisset">
+                        <div class="card-body">
+                            <h5 class="card-title">{{ $option->name }}</h5>
+                            @isset($option->description)
+                                <p class="card-text">{{ $option->description }}</p>
+                            @endisset
+                            <form action="{{ route('vote.save', ['voterId' => $voter->id, 'token' => $voter->token]) }}" method="post">
+                                @csrf
+                                <input type="hidden" name="option_id" value="{{ $option->id }}">
+                                <button type="submit" class="btn btn-success">Vote</button>
+                            </form>
+                        </div>
+                    </div>
+                    {{-- Option Image --}}
+                    @isset($option->image_location)
+                        <div class="col-4 option-item__image-frame">
+                            <img class="option-item__image" src="{{ route('option.image', ['name' => $option->image_location]) }}" alt="{{ $option->name }}">
+                        </div>
+                    @endisset
+                </div>
             </div>
-            <div class="card-body">
-              <h5 class="card-title text-center">Special title treatment</h5>
-              <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
-              <a class="btn btn-success" style="width: 25%" href="{{'/events/eventId/result'}}">Vote</a>
-            </div>
-        </div>
-        <div class="card me-3" style="margin-bottom: 1rem; width: 18rem;">
-            <div class="cropped">
-                <img src="{{asset('assets/imgCandidate.png')}}" alt="">
-            </div>
-            <div class="card-body">
-              <h5 class="card-title text-center">Special title treatment</h5>
-              <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
-              <a class="btn btn-success" style="width: 25%" href="{{'/events/eventId/result'}}">Vote</a>
-            </div>
-        </div>
-        <div class="card me-3" style="margin-bottom: 1rem; width: 18rem;">
-            <div class="cropped">
-                <img src="{{asset('assets/pexels-element-digital-1550337.jpg')}}" alt="">
-            </div>
-            <div class="card-body">
-              <h5 class="card-title text-center">Special title treatment</h5>
-              <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
-              <a class="btn btn-success" style="width: 25%" href="{{'/events/eventId/result'}}">Vote</a>
-            </div>
-        </div>
+        @endforeach
     </div>
 </div>
 @endsection

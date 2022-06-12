@@ -56,13 +56,13 @@
     </table>
     <p>Please click on the link below to vote.</p>
 
-    <a href="{{ route('vote') }}" class="button"><strong>Vote Now</strong></a>
+    <a href="{{ route('vote', ['voterId' => $voter->id, 'token' => $voter->token]) }}"><strong>Vote Now</strong></a>
 
     <p><strong>Warning!</strong> Don't share and give this vote link to anybody.</p>
     <p>Thank you for your participation!</p>
     <p>FastVoting</p>
     <hr>
     <p>If you can't click on the vote link, copy and paste the following URL into your browser:</p>
-    <p>{{ route('vote') }}</p>
+    <p>{{ route('vote', ['voterId' => $voter->id, 'token' => $voter->token]) }}</p>
 </body>
 </html>

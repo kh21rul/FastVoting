@@ -7,7 +7,7 @@
     <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
-    <title>{{ config('app.name') }}</title>
+    <title>{{ $title ?? config('app.name') }}</title>
     <link rel="icon" type="image/x-icon" href="/assets/logo.png">
 
     <!-- Scripts -->
