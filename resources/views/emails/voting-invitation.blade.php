@@ -35,11 +35,7 @@
         </tr>
         <tr>
             <td>Invited by</td>
-            <td><strong>{{ $voter->event->creator->name }}</strong></td>
-        </tr>
-        <tr>
-            <td>Invited email</td>
-            <td><strong>{{ $voter->event->creator->email }}</strong></td>
+            <td><strong>{{ $voter->event->creator->name }} ({{ $voter->event->creator->email }})</strong></td>
         </tr>
         <tr>
             <td>Starting from</td>
