@@ -14,11 +14,15 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
-        // Create The Tester.
-        $this->createTester();
+        $theTester = \App\Models\User::firstWhere('email', config('seeder.tester_email'));
 
-        // Create 3 random users.
-        \App\Models\User::factory(3)->create();
+        // Create The Tester if not exists.
+        if (empty($theTester)) {
+            $theTester = $this->createTester();
+        }
+
+        // Create 5 random users.
+        \App\Models\User::factory(5)->create();
     }
 
     /**
@@ -26,7 +30,7 @@ class DatabaseSeeder extends Seeder
      */
     private function createTester()
     {
-        \App\Models\User::factory()->create([
+        return \App\Models\User::factory()->create([
             'name' => config('seeder.tester_name'),
             'email' => config('seeder.tester_email'),
             'password' => bcrypt(config('seeder.tester_password')),
