@@ -14,13 +14,23 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
-        // \App\Models\User::factory(10)->create();
+        // Create The Tester.
+        $this->createTester();
 
-        // \App\Models\User::factory()->create([
-        //     'name' => 'Test User',
-        //     'email' => 'test@example.com',
-        // ]);
+        // Create 3 random users.
+        \App\Models\User::factory(3)->create();
+    }
 
-        // \App\Models\Option::factory(10)->create();
+    /**
+     * Create an user as "The Tester".
+     */
+    private function createTester()
+    {
+        \App\Models\User::factory()->create([
+            'name' => config('seeder.tester_name'),
+            'email' => config('seeder.tester_email'),
+            'password' => bcrypt(config('seeder.tester_password')),
+            'is_admin' => config('seeder.tester_is_admin'),
+        ]);
     }
 }
