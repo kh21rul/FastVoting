@@ -61,27 +61,4 @@
         <button type="submit" class="btn btn-primary">{{ __('Add Event') }}</button>
     </form>
 </div>
-{{--
-<script>
-        $("#close-date").change(function () {
-            const startDate = document.getElementById("start-date").value;
-            const endDate = document.getElementById("close-date").value;
-
-            if ((Date.parse(startDate) > Date.parse(endDate))) {
-                alert("Close date should be greater than Start date");
-                document.getElementById("close-date").value = "";
-            }
-        });
-
-        $("#close-time").change(function () {
-            const startTime = document.getElementById("start-time").value;
-            const endTime = document.getElementById("close-t  ime").value;
-
-            if(startTime>endTime){
-                    alert('start time should be smaller');
-                    document.getElementById("close-time").value = "";
-                }
-        });
-</script>
---}}
 @endsection
