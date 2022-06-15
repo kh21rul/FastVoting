@@ -1,6 +1,6 @@
 @extends('layouts.app')
 @section('content')
-    <div class="d-flex jumbotron">
+    <div class="d-flex jumbotron py-4">
         <div class="p-2 text-center subjumbotron">
             <h1 class="font-weight-bold" style="font-size: 2em;background-color: transparent;">Make your voting event feel easy</h1>
             <p class="px-3" style="background-color: transparent;">Planning easier, practical and faster. You can determine who can vote without breaking from fraud.</p>
