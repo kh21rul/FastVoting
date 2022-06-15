@@ -2,7 +2,7 @@
 
 @section('content')
 <div class="container py-4">
-    <div class="mb-4 d-flex justify-content-between align-items-center flex-wrap">
+    <div class="mb-3 d-flex justify-content-between align-items-center flex-wrap">
         <h2>Welcome, <span>{{ Auth::user()->name }}</span>!</h2>
         <a type="button" class="btn btn-primary" href="{{ route('event.add') }}">Add Event</a>
     </div>
@@ -14,18 +14,22 @@
                 <a class="event-item card shadow-sm" href="{{ route('event.detail', ['id' => $event->id]) }}">
                     <div class="card-body">
                         <p class="h5 card-title">{{ $event->title }}</p>
-                        <div class="d-flex flex-wrap">
-                            <div class="d-flex gap-2 align-items-center me-3" title="Started at" style="width: 200px;">
-                                <i class="fa-solid fa-calendar-day"></i>
-                                <span>{{ $event->started_at->format('D, d M Y, H.i') }}</span>
+                        @isset($event->started_at)
+                            <div class="d-flex flex-wrap mb-2">
+                                <div class="d-flex gap-2 align-items-center me-3" title="Started at" style="width: 200px;">
+                                    <i class="fa-solid fa-calendar-day"></i>
+                                    <span>{{ $event->started_at->format('D, d M Y, H.i e') }}</span>
+                                </div>
+                                @isset($event->finished_at)
+                                    <div class="d-flex gap-2 align-items-center" title="Finished at">
+                                        <i class="fa-solid fa-calendar-week"></i>
+                                        <span>{{ $event->finished_at->format('D, d M Y, H.i e') }}</span>
+                                    </div>
+                                @endisset
                             </div>
-                            <div class="d-flex gap-2 align-items-center" title="Finished at">
-                                <i class="fa-solid fa-calendar-week"></i>
-                                <span>{{ $event->finished_at->format('D, d M Y, H.i') }}</span>
-                            </div>
-                        </div>
+                        @endisset
                         @if ($event->description)
-                            <p class="event-item__description card-text mt-2">{{ $event->description }}</p>
+                            <p class="event-item__description card-text">{{ $event->description }}</p>
                         @endif
                     </div>
                 </a>
