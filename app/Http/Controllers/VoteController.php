@@ -78,8 +78,13 @@ class VoteController extends Controller
 
         // Check if the event is already committed
         if (!$event->is_committed) {
-            // Redirect to detail event page.
-            return redirect()->route('event.detail', ['id' => $event->id])->with('error', 'The vote has not been committed yet.');
+            // Redirect to detail event page if the logged in user is the event's creator.
+            if (auth()->user()->id === $event->user_id) {
+                return redirect()->route('event.detail', ['id' => $event->id])->with('error', 'This event has not been committed yet.');
+            }
+
+            // Redirect to home page.
+            return redirect()->route('home')->with('error', 'This event is not committed yet. Please wait for the event creator to commit the event.');
         }
 
         $data['title'] = ((now() < $event->finished_at) ? 'Real-Count': 'Voting Result') . ' of ' . $event->title . ' | ' . config('app.name');
@@ -108,12 +113,8 @@ class VoteController extends Controller
             return true;
         }
 
-        // Authorize the user is the event's creator
-        if (auth()->user() && auth()->user()->id !== $event->creator->id) {
-            return false;
-        }
-
-        if (auth()->user() === null) {
+        // Authorize if the user is the event's creator
+        if (empty(auth()->user()) || auth()->user()->id !== $event->user_id) {
             return false;
         }
 
