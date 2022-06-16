@@ -76,6 +76,12 @@ class VoteController extends Controller
             abort(403, 'Unauthorized');
         }
 
+        // Check if the event is already committed
+        if (!$event->is_committed) {
+            // Redirect to detail event page.
+            return redirect()->route('event.detail', ['id' => $event->id])->with('error', 'The vote has not been committed yet.');
+        }
+
         $data['title'] = ((now() < $event->finished_at) ? 'Real-Count': 'Voting Result') . ' of ' . $event->title . ' | ' . config('app.name');
         $data['event'] = $event;
 
