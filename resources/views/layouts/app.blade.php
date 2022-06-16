@@ -24,6 +24,7 @@
 <body class="d-flex flex-column min-vh-100">
     <div id="app">
         @include('components.navbar')
+        @include('components.alert')
 
         <main>
             @yield('content')

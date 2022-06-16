@@ -33,6 +33,34 @@
     margin-top: 0.5rem;
 }
 
+.app-alert {
+    border-radius: 0;
+    padding: 0.25rem 0;
+    margin: 0;
+}
+
+.app-alert .container {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+}
+
+.app-alert .container > .btn-close {
+    position: static;
+    top: unset;
+    right: unset;
+    width: fit-content;
+    height: fit-content;
+    padding: 1.5rem;
+}
+
+.img-col {
+    width: 100%;
+    max-width: 560px;
+    height: auto;
+}
+
 .jumbotron {
     flex-wrap: wrap;
     padding: 0 16px 0 16px;
@@ -42,11 +70,6 @@
 
 .subjumbotron {
     background-color: transparent;
-}
-
-.description-text {
-    font-size: 1.2em;
-    padding-bottom: 0;
 }
 
 .ruler {

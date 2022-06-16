@@ -1,12 +1,10 @@
 @extends('layouts.app')
 
 @section('content')
-<div class="container">
-    <div class="d-flex flex-row">
-        <div class="pt-2"><img class="img-fluid py-2" src="{{asset('assets/iconMail.png')}}" alt="iconMail"></div>
-        <div class="p-2">
-            <h2 style="font-size: 2em;">Check Your Mail</h2>
-        </div>
+<div class="container py-4">
+    <div class="d-flex align-items-center gap-2 mb-3">
+        <i class="fa-envelope fa-solid fa-xl"></i>
+        <h1 class="m-0">Email Verification</h1>
     </div>
     <hr class="ruler">
     @if (session('resent'))
@@ -15,11 +13,11 @@
         </div>
     @endif
 
-    {{ __('Before proceeding, please check your email we have sent a for a verification link.') }}
-    {{ __('If you did not receive the email') }},
+    <p>{{ __('Before proceeding, please check your email and click the verification link.') }}</p>
+    <p>{{ __('If you did not receive the email, request a new link by click the button below.') }}</p>
     <form class="d-inline" method="POST" action="{{ route('verification.resend') }}">
         @csrf
-        <button type="submit" class="btn btn-primary btn-block my-2" style="width:100%;">{{ __('click here to request another') }}</button>.
+        <button type="submit" class="btn btn-primary btn-block my-2" style="width:100%;">{{ __('Resend Email') }}</button>.
     </form>
 </div>
 @endsection

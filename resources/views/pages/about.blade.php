@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('content')
-<div class="container">
+<div class="container py-4">
     <h2 class="text-center">About FastVoting</h2>
     <p class="text-center font-weight-light p-2" style="font-size: 1.35em;">" We can all agree on the importance of voting. "</p>
     <div class="d-flex about">

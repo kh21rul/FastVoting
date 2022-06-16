@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('content')
-<div class="container">
+<div class="container py-4">
     <section style="--bs-breadcrumb-divider: '>';" aria-label="breadcrumb">
         <ol class="breadcrumb">
             <li class="breadcrumb-item"><a href="{{ route('dashboard') }}">Dashboard</a></li>
@@ -9,7 +9,7 @@
             <li class="breadcrumb-item active" aria-current="page">Voters</li>
         </ol>
     </section>
-    
+
     <h1>Voters</h1>
     <p class="description-text">Add the participants you want to be able to choose the event you create</p>
     @if (!$event->is_committed)
