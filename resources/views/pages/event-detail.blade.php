@@ -72,7 +72,7 @@
                         <div class="row g-0">
                             <div class="@isset($option->image_location) col-8 @endisset">
                                 <div class="card-body">
-                                    <span class="card-title fs-5">{{ $option->name }}</span>
+                                    <p class="card-title fs-5 fw-bold">{{ $option->name }}</p>
                                     @isset($option->description)
                                         <p class="card-text">{{ $option->description }}</p>
                                     @endisset

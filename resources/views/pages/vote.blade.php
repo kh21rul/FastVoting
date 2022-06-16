@@ -46,7 +46,7 @@
                 <div class="row g-0">
                     <div class="@isset($option->image_location) col-8 @endisset">
                         <div class="card-body">
-                            <h5 class="card-title">{{ $option->name }}</h5>
+                            <p class="card-title fs-5 fw-bold">{{ $option->name }}</p>
                             @isset($option->description)
                                 <p class="card-text">{{ $option->description }}</p>
                             @endisset
