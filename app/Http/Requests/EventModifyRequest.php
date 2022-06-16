@@ -25,7 +25,7 @@ class EventModifyRequest extends FormRequest
     {
         return [
             'title' => ['required', 'string', 'between:8,60'],
-            'description' => ['nullable', 'string', 'max:255'],
+            'description' => ['nullable', 'string', 'max:65535'],
             'started_at' => ['nullable', 'date', 'after:now', 'required_with:finished_at'],
             'finished_at' => ['nullable', 'date', 'after:started_at', 'required_with:started_at'],
         ];

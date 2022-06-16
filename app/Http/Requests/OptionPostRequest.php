@@ -25,7 +25,7 @@ class OptionPostRequest extends FormRequest
     {
         return [
             'name' => ['required', 'string', 'between:5,60'],
-            'description' => ['nullable', 'string'],
+            'description' => ['nullable', 'string', 'max:65535'],
             'image' => ['nullable', 'image', 'mimes:jpeg,png,jpg,webp', 'max:2048'],
         ];
     }
