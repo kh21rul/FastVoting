@@ -62,14 +62,16 @@
 }
 
 .jumbotron {
-    flex-wrap: wrap;
-    padding: 0 16px 0 16px;
-    align-items: center;
-    background: linear-gradient(180deg, rgba(84, 99, 255, 0.37) 0%, rgba(66, 82, 255, 0) 101.67%);
+    color: $white;
+    background: linear-gradient(180deg, $primary 0%, $white 100%);
 }
 
 .subjumbotron {
-    background-color: transparent;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
 }
 
 .ruler {
@@ -153,11 +155,6 @@
 
     .subjumbotron {
         width: 38%;
-    }
-
-    .imgJumbotron {
-        padding-top: 2%;
-        height: 100vh;
     }
 
     p {
