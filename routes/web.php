@@ -42,20 +42,24 @@ Route::get('/about', function () {
     return view('pages.about');
 })->name('about');
 
+/*
+| Event routes
+| - route('events.index')    -> GET /events                  -> Redirected to "dashboard" page
+| - route('events.create')   -> GET /events/create           -> Go to "add new event" page
+| - route('events.store')    -> POST /events                 -> Create a new event
+| - route('events.show')     -> GET /events/{event}          -> Go to "detail event" page
+| - route('events.edit')     -> GET /events/{event}/edit     -> Go to "edit event" page
+| - route('events.update')   -> PUT /events/{event}          -> Update an event
+| - route('events.destroy')  -> DELETE /events/{event}       -> Delete an event
+*/
+Route::resource('events', EventController::class);
+
 // User authentication and email verification middleware
 Route::middleware(['auth', 'verified'])->group(function () {
     // === Put all routes that need authentication and email verification here ===
     // Go to dashboard page
     Route::get('/dashboard', [DashboardController::class, 'index'])
         ->name('dashboard');
-
-    // Go to add new event page
-    Route::get('/events/add', [EventController::class, 'add'])
-        ->name('event.add');
-
-    // Insert new event
-    Route::post('/events/add', [EventController::class, 'create'])
-        ->name('event.create');
 
     // Get the option image
     Route::get('/option_images/{name}', [OptionController::class, 'getImage'])
@@ -64,14 +68,6 @@ Route::middleware(['auth', 'verified'])->group(function () {
     // Event authorization middleware
     Route::middleware('event.authorized')->group(function () {
         // === Put all routes that need event authorization here ===
-        // Go to detail event page
-        Route::get('/events/{id}', [EventController::class, 'detail'])
-            ->name('event.detail');
-
-        // Delete the event
-        Route::delete('/events/{id}', [EventController::class, 'delete'])
-            ->name('event.delete');
-
         // Go to voters page
         Route::get('/events/{id}/voters', [VoterController::class, 'index'])
             ->name('voters');

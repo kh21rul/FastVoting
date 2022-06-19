@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Requests\EventModifyRequest;
 use App\Mail\VotingInvitation;
 use App\Models\Event;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Mail;
 
 class EventController extends Controller
@@ -20,18 +21,33 @@ class EventController extends Controller
     }
 
     /**
-     * Go to add new event page
+     * Display a listing of the resource.
+     *
+     * @return \Illuminate\Http\Response
      */
-    public function add()
+    public function index()
     {
-        $data['title'] = 'Add new event | '. config('app.name');
+        return redirect()->route('dashboard');
+    }
+
+    /**
+     * Show the form for creating a new resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function create()
+    {
+        $data['title'] = 'Add new event | ' . config('app.name');
         return view('pages.event-add', $data);
     }
 
     /**
-     * Create new event
+     * Store a newly created resource in storage.
+     *
+     * @param  \Illuminate\Http\EventModifyRequest $request
+     * @return \Illuminate\Http\Response
      */
-    public function create(EventModifyRequest $request)
+    public function store(EventModifyRequest $request)
     {
         $validatedData = $request->validated();
         $validatedData['user_id'] = auth()->user()->id;
@@ -47,29 +63,39 @@ class EventController extends Controller
     }
 
     /**
-     * Go to detail event page
+     * Display the specified resource.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
      */
-    public function detail($id)
+    public function show($id)
     {
-        $data['title'] = 'Event detail | '. config('app.name');
+        $data['title'] = 'Event detail | ' . config('app.name');
         $data['event'] = Event::find($id);
 
         return view('pages.event-detail', $data);
     }
 
     /**
-     * Go to list event page
+     * Show the form for editing the specified resource.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
      */
     public function edit($id)
     {
-        $data['title'] = 'Edit event | '. config('app.name');
+        $data['title'] = 'Edit event | ' . config('app.name');
         $data['event'] = Event::find($id);
 
         return view('pages.event-edit', $data);
     }
 
     /**
-     * Update the event
+     * Update the specified resource in storage.
+     *
+     * @param  \Illuminate\Http\EventModifyRequest $request
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
      */
     public function update(EventModifyRequest $request, $id)
     {
@@ -82,9 +108,12 @@ class EventController extends Controller
     }
 
     /**
-     * Delete the event
+     * Remove the specified resource from storage.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
      */
-    public function delete($id)
+    public function destroy($id)
     {
         return redirect()->route('dashboard')->with('error', 'Delete event feature is coming soon.');
 
