@@ -67,7 +67,7 @@ class OptionController extends Controller
             $option->save();
         }
 
-        return redirect()->route('event.detail', ['id' => $eventId]);
+        return redirect()->route('events.show', ['event' => Event::find($eventId)]);
     }
 
     /**
@@ -104,7 +104,7 @@ class OptionController extends Controller
 
         // If the option does not exist, return 404.
         if (!isset($option)) {
-            return redirect()->route('event.detail', ['id' => $eventId])->with('error', 'The option that you are trying to delete does not exist.');
+            return redirect()->route('events.show', ['event' => Event::find($eventId)])->with('error', 'The option that you are trying to delete does not exist.');
         }
 
         // Delete the option image if it exists.
@@ -118,12 +118,12 @@ class OptionController extends Controller
 
         // Delete the option and return error message if failed.
         if (!$option->delete()) {
-            return redirect()->route('event.detail', ['id' => $eventId])->with('error', 'Failed deleting option.');
+            return redirect()->route('events.show', ['event' => Event::find($eventId)])->with('error', 'Failed deleting option.');
         }
 
-        return redirect()->route('event.detail', ['id' => $eventId]);
+        return redirect()->route('events.show', ['event' => Event::find($eventId)]);
     }
-  
+
     public function edit($eventId, $optionId)
     {
         $data['title'] = 'Edit Option | ' . config('app.name');
@@ -177,6 +177,6 @@ class OptionController extends Controller
             return redirect()->back()->with('error', 'Failed updating option.');
         }
 
-        return redirect()->route('event.detail', ['id' => $eventId]);
+        return redirect()->route('events.show', ['event' => Event::find($eventId)]);
     }
 }
