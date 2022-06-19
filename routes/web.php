@@ -57,6 +57,17 @@ Route::resource('events', EventController::class)
         return redirect()->route('events.index')->with('error', 'Event you are looking for does not exist.');
     });
 
+/*
+| Option routes
+| - route('events.options.create')  -> GET /events/{event}/options/create   -> Go to "add new option" page
+| - route('events.options.store')   -> POST /events/{event}/options         -> Create a new option
+| - route('options.edit')           -> GET /options/{option}/edit           -> Go to "edit option" page
+| - route('options.update')         -> PUT /options/{option}                -> Update an option
+| - route('options.destroy')        -> DELETE /options/{option}             -> Delete an option
+*/
+Route::resource('events.options', OptionController::class)->shallow()
+    ->except(['index', 'show']);
+
 // User authentication and email verification middleware
 Route::middleware(['auth', 'verified'])->group(function () {
     // === Put all routes that need authentication and email verification here ===
@@ -85,26 +96,6 @@ Route::middleware(['auth', 'verified'])->group(function () {
             // Delete voter
             Route::delete('/events/{id}/voters/{voterId}', [VoterController::class, 'delete'])
                 ->name('voter.delete');
-
-            // Go to add option page
-            Route::get('/events/{id}/options/add', [OptionController::class, 'add'])
-                ->name('option.add');
-
-            // Create new option
-            Route::post('/events/{id}/options/add', [OptionController::class, 'create'])
-                ->name('option.create');
-
-            // Delete option
-            Route::delete('/events/{id}/options/{optionId}', [OptionController::class, 'delete'])
-                ->name('option.delete');
-
-            // Go to edit option page
-            Route::get('/events/{id}/options/{optionId}/edit', [OptionController::class, 'edit'])
-                ->name('option.edit');
-
-            // Update option
-            Route::put('/events/{id}/options/{optionId}/edit', [OptionController::class, 'update'])
-                ->name('option.update');
 
             // Commit event
             Route::post('/events/{id}/commit', [EventController::class, 'commit'])

@@ -61,7 +61,7 @@
         <div class="d-flex justify-content-between align-items-center gap-2 flex-wrap mb-3">
             <span>{{ $event->options->count() }} {{ $event->options->count() > 1 ? __('options available') : __('option available') }}</span>
             @if (!$event->is_committed)
-                <a class="btn btn-primary" href="{{ route('option.add', ['id' => $event->id]) }}">{{ __('Add Option') }}</a>
+                <a class="btn btn-primary" href="{{ route('events.options.create', ['event' => $event]) }}">{{ __('Add Option') }}</a>
             @endif
         </div>
 
@@ -79,11 +79,11 @@
                                     <div class="d-flex justify-content-start gap-2 mt-3">
                                         @if (!$event->is_committed)
                                             {{-- Edit Option Button --}}
-                                            <a class="btn btn-outline-secondary" href="{{ route('option.edit', ['id' => $event->id, 'optionId' => $option->id]) }}" title="Edit this option">
+                                            <a class="btn btn-outline-secondary" href="{{ route('options.edit', ['option' => $option]) }}" title="Edit this option">
                                                 <i class="fa-pen fa-solid">Edit</i>
                                             </a>
                                             {{-- Delete Option Button --}}
-                                            <form action="{{ route('option.delete', ['id' => $event->id, 'optionId' => $option->id]) }}" method="POST">
+                                            <form action="{{ route('options.destroy', ['option' => $option]) }}" method="POST">
                                                 @method('DELETE')
                                                 @csrf
                                                 <button class="btn btn-outline-danger" type="submit" onclick="return confirm('Are you sure to delete this \'{{ $option->name }}\' option?')" title="Delete this option">
