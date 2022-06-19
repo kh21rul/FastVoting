@@ -128,7 +128,21 @@ class OptionController extends Controller
      */
     public function destroy(Option $option)
     {
-        //
+        // Delete the option image if it exists.
+        if (isset($option->image_location)) {
+            $imagePath = storage_path('app/' . $this->imageStoragePath . '/' . $option->image_location);
+
+            if (file_exists($imagePath)) {
+                unlink($imagePath);
+            }
+        }
+
+        // Delete the option and return error message if failed.
+        if (!$option->delete()) {
+            return redirect()->route('events.show', ['event' => $option->event])->with('error', 'Failed deleting option.');
+        }
+
+        return redirect()->route('events.show', ['event' => $option->event]);
     }
 
     /**
