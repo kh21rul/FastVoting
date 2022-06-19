@@ -12,7 +12,7 @@
     <div class="d-flex align-items-center justify-content-between gap-3 mb-3">
         <h1 class="m-0">{{ $event->title }}</h1>
         @if (!$event->is_committed)
-            <a type="button" class="btn btn-outline-secondary" href="{{ route('event.edit', ['id' => $event->id]) }}" title="Edit this event">
+            <a type="button" class="btn btn-outline-secondary" href="{{ route('events.edit', ['event' => $event]) }}" title="Edit this event">
                 <i class="fa-solid fa-pen">Edit</i>
             </a>
         @endif
@@ -198,7 +198,7 @@
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">{{ __('Cancel') }}</button>
-          <form action="{{ route('event.delete', ['id' => $event->id]) }}" method="post">
+          <form action="{{ route('events.destroy', ['event' => $event]) }}" method="post">
               @csrf
               @method('DELETE')
               <button type="submit" class="btn btn-outline-danger">{{ __('Yes, Delete Now') }}</button>
