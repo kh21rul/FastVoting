@@ -5,10 +5,19 @@ namespace App\Policies;
 use App\Models\Event;
 use App\Models\User;
 use Illuminate\Auth\Access\HandlesAuthorization;
+use Illuminate\Auth\Access\Response;
 
 class EventPolicy
 {
     use HandlesAuthorization;
+
+    /**
+     * @var string[] The list of error message.
+     */
+    private $messages = [
+        'not_the_owner' => 'You are not the owner of this event',
+        'event_is_committed' => 'This event has been committed'
+    ];
 
     /**
      * Determine whether the user can view any events.
@@ -30,7 +39,15 @@ class EventPolicy
      */
     public function view(User $user, Event $event)
     {
-        return isset($user) && $user->id === $event->user_id;
+        if (empty($user)) {
+            return false;
+        }
+
+        if ($user->id !== $event->user_id) {
+            return Response::deny($this->messages['not_the_owner']);
+        }
+
+        return true;
     }
 
     /**
@@ -53,7 +70,19 @@ class EventPolicy
      */
     public function update(User $user, Event $event)
     {
-        return isset($user) && $user->id === $event->user_id && !$event->is_committed;
+        if (empty($user)) {
+            return false;
+        }
+
+        if ($user->id !== $event->user_id) {
+            return Response::deny($this->messages['not_the_owner']);
+        }
+
+        if ($event->is_committed) {
+            return Response::deny($this->messages['event_is_committed']);
+        }
+
+        return true;
     }
 
     /**
@@ -65,7 +94,15 @@ class EventPolicy
      */
     public function delete(User $user, Event $event)
     {
-        return isset($user) && $user->id === $event->user_id;
+        if (empty($user)) {
+            return false;
+        }
+
+        if ($user->id !== $event->user_id) {
+            return Response::deny($this->messages['not_the_owner']);
+        }
+
+        return true;
     }
 
     /**
