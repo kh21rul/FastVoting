@@ -19,10 +19,13 @@ class EventController extends Controller
     {
         // Require authentication and email verification
         $this->middleware(['auth', 'verified']);
+
+        // Authorize all actions.
+        $this->authorizeResource(Event::class, 'event');
     }
 
     /**
-     * Display a listing of the resource.
+     * Display a listing of the event.
      *
      * @return \Illuminate\Http\Response
      */
@@ -32,7 +35,7 @@ class EventController extends Controller
     }
 
     /**
-     * Show the form for creating a new resource.
+     * Show the form for creating a new event.
      *
      * @return \Illuminate\Http\Response
      */
@@ -43,9 +46,9 @@ class EventController extends Controller
     }
 
     /**
-     * Store a newly created resource in storage.
+     * Store a newly created event in storage.
      *
-     * @param  \Illuminate\Http\EventModifyRequest $request
+     * @param  \App\Http\Requests\EventModifyRequest $request
      * @return \Illuminate\Http\Response
      */
     public function store(EventModifyRequest $request)
@@ -64,61 +67,58 @@ class EventController extends Controller
     }
 
     /**
-     * Display the specified resource.
+     * Display the specified event.
      *
-     * @param  int  $id
+     * @param  \App\Models\Event $event The event to display.
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(Event $event)
     {
         $data['title'] = 'Event detail | ' . config('app.name');
-        $data['event'] = Event::find($id);
+        $data['event'] = $event;
 
         return view('pages.event-detail', $data);
     }
 
     /**
-     * Show the form for editing the specified resource.
+     * Show the form for editing the specified event.
      *
-     * @param  int  $id
+     * @param  \App\Models\Event $event The event to edit.
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(Event $event)
     {
         $data['title'] = 'Edit event | ' . config('app.name');
-        $data['event'] = Event::find($id);
+        $data['event'] = $event;
 
         return view('pages.event-edit', $data);
     }
 
     /**
-     * Update the specified resource in storage.
+     * Update the specified event in storage.
      *
-     * @param  \Illuminate\Http\EventModifyRequest $request
-     * @param  int  $id
+     * @param  \App\Http\Requests\EventModifyRequest $request
+     * @param  \App\Models\Event $event The event to edit.
      * @return \Illuminate\Http\Response
      */
-    public function update(EventModifyRequest $request, $id)
+    public function update(EventModifyRequest $request, Event $event)
     {
         $validatedData = $request->validated();
 
-        $event = Event::find($id);
         $event->update($validatedData);
 
         return redirect()->route('events.show', ['event' => $event]);
     }
 
     /**
-     * Remove the specified resource from storage.
+     * Remove the specified event from storage.
      *
-     * @param  int  $id
+     * @param  \App\Models\Event $event The event to delete.
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Event $event)
     {
         return redirect()->route('dashboard')->with('error', 'Delete event feature is coming soon.');
-
-        $event = Event::find($id);
 
         // TODO: Delete all entity that related to this event.
         // ...
