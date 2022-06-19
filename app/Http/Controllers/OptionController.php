@@ -23,7 +23,11 @@ class OptionController extends Controller
      */
     public function __construct()
     {
-        //
+        // Require authentication and email verification
+        $this->middleware(['auth', 'verified']);
+
+        // Authorize all actions.
+        $this->authorizeResource(Option::class, 'option');
     }
 
     /**
