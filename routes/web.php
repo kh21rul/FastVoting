@@ -75,14 +75,6 @@ Route::middleware(['auth', 'verified'])->group(function () {
         // Event editable middleware.
         Route::middleware('event.editable')->group(function () {
             // === Put all routes that need event editability here ===
-            // Go to edit event page
-            Route::get('/events/{id}/edit', [EventController::class, 'edit'])
-                ->name('event.edit');
-
-            // Update the event
-            Route::put('/events/{id}/edit', [EventController::class, 'update'])
-                ->name('event.update');
-
             // Add new voter
             Route::post('/events/{id}/voters', [VoterController::class, 'create'])
                 ->name('voter.create');
