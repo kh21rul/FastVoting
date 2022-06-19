@@ -98,26 +98,60 @@ class OptionController extends Controller
     }
 
     /**
-     * Show the form for editing the specified resource.
+     * Show the form for editing the specified option.
      *
      * @param  \App\Models\Option  $option
      * @return \Illuminate\Http\Response
      */
     public function edit(Option $option)
     {
-        //
+        $data['title'] = 'Edit Option | ' . config('app.name');
+        $data['option'] = $option;
+        $data['event'] = $option->event;
+
+        return view('pages.option-edit', $data);
     }
 
     /**
-     * Update the specified resource in storage.
+     * Update the specified option in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Option  $option
+     * @param  \App\Http\Requests\OptionPostRequest $request The request that contains the option data.
+     * @param  \App\Models\Option $option
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Option $option)
+    public function update(OptionPostRequest $request, Option $option)
     {
-        //
+        $validatedData = $request->validated();
+
+        // Check if there are any changes in the image.
+        if ($request->hasFile('image')) {
+            // Delete image old image if exists.
+            if (isset($option->image_location)) {
+                $imagePath = storage_path('app/' . $this->imageStoragePath . '/' . $option->image_location);
+
+                if (file_exists($imagePath)) {
+                    unlink($imagePath);
+                }
+            }
+
+            // Upload the new image.
+            $image = $request->file('image');
+            $imageName = time() . '_' . $image->hashName();
+            $path = $image->storeAs($this->imageStoragePath, $imageName);
+
+            if (empty($path)) {
+                return redirect()->back()->with('error', 'Failed uploading image.')->withInput();
+            }
+
+            $option->image_location = $imageName;
+        }
+
+        // Update the option and return error message if failed.
+        if (!$option->update($validatedData)) {
+            return redirect()->back()->with('error', 'Failed updating option.')->withInput();
+        }
+
+        return redirect()->route('events.show', ['event' => $option->event]);
     }
 
     /**

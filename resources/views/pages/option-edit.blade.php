@@ -10,7 +10,7 @@
         </ol>
     </section>
     <h1>Edit Option</h1>
-    <form method="POST" action="{{ route('option.update', ['id' => $event->id, 'optionId' => $option->id]) }}" enctype="multipart/form-data">
+    <form method="POST" action="{{ route('options.update', ['option' => $option]) }}" enctype="multipart/form-data">
         @csrf
         @method('PUT')
         <div class="mb-3">
