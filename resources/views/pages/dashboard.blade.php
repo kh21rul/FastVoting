@@ -4,14 +4,14 @@
 <div class="container py-4">
     <div class="mb-3 d-flex justify-content-between align-items-center flex-wrap">
         <h2>Welcome, <span>{{ Auth::user()->name }}</span>!</h2>
-        <a type="button" class="btn btn-primary" href="{{ route('event.add') }}">Add Event</a>
+        <a type="button" class="btn btn-primary" href="{{ route('events.create') }}">Add Event</a>
     </div>
 
     @if ($events->count() > 0)
         <div id="eventList" class="d-flex flex-column flex-wrap gap-3">
             {{-- Load each `event` in `events` --}}
             @foreach ($events as $event)
-                <a class="event-item card shadow-sm" href="{{ route('event.detail', ['id' => $event->id]) }}">
+                <a class="event-item card shadow-sm" href="{{ route('events.show', ['event' => $event]) }}">
                     <div class="card-body">
                         <p class="h5 card-title">{{ $event->title }}</p>
                         @isset($event->started_at)
