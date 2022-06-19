@@ -10,7 +10,7 @@
     </section>
     <h2>Add Event</h2>
     <hr>
-    <form action="{{ route('event.create') }}" method="POST">
+    <form action="{{ route('events.store') }}" method="POST">
         @csrf
         <div class="form-outline mb-4">
             <label class="form-label" for="title">
