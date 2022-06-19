@@ -10,7 +10,7 @@
         </ol>
     </section>
     <h1>Add New Option</h1>
-    <form method="post" action="{{ route('option.create', ['id' => $event->id]) }}" enctype="multipart/form-data">
+    <form method="post" action="{{ route('events.options.store', ['event' => $event]) }}" enctype="multipart/form-data">
         @csrf
         <div class="mb-3">
             <label for="name" class="form-label">Name</label>
