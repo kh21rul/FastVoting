@@ -5,12 +5,12 @@
     <section style="--bs-breadcrumb-divider: '>';" aria-label="breadcrumb">
         <ol class="breadcrumb">
             <li class="breadcrumb-item"><a href="{{ route('dashboard') }}">Dashboard</a></li>
-            <li class="breadcrumb-item"><a href="{{ route('event.detail', ['id' => $event->id]) }}">Event</a></li>
+            <li class="breadcrumb-item"><a href="{{ route('events.show', ['event' => $event]) }}">Event</a></li>
             <li class="breadcrumb-item active" aria-current="page">Edit</li>
         </ol>
     </section>
     <h1>{{ __('Edit Event') }}</h1>
-    <form action="{{ route('event.update', ['id' => $event->id]) }}" method="POST">
+    <form action="{{ route('events.update', ['event' => $event]) }}" method="POST">
         @csrf
         @method('PUT')
         <div class="form-group mb-2">
