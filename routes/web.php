@@ -52,7 +52,10 @@ Route::get('/about', function () {
 | - route('events.update')   -> PUT /events/{event}          -> Update an event
 | - route('events.destroy')  -> DELETE /events/{event}       -> Delete an event
 */
-Route::resource('events', EventController::class);
+Route::resource('events', EventController::class)
+    ->missing(function () {
+        return redirect()->route('events.index')->with('error', 'Event you are looking for does not exist.');
+    });
 
 // User authentication and email verification middleware
 Route::middleware(['auth', 'verified'])->group(function () {

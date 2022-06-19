@@ -29,9 +29,11 @@ class EventController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        return redirect()->route('dashboard');
+        return redirect()->route('dashboard')
+            ->with('error', $request->session()->pull('error'))
+            ->with('success', $request->session()->pull('success'));
     }
 
     /**
