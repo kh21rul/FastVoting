@@ -59,7 +59,7 @@ class EventController extends Controller
             return redirect()->back()->with('error', 'Failed creating new event.');
         }
 
-        return redirect()->route('event.detail', ['id' => $event->id]);
+        return redirect()->route('events.show', ['event' => $event]);
     }
 
     /**
@@ -104,7 +104,7 @@ class EventController extends Controller
         $event = Event::find($id);
         $event->update($validatedData);
 
-        return redirect()->route('event.detail', ['id' => $event->id]);
+        return redirect()->route('events.show', ['event' => $event]);
     }
 
     /**
@@ -127,7 +127,7 @@ class EventController extends Controller
 
         // TODO: Redirect to Detail Event page if failed
         // if ($event == 0) {
-        //     return redirect()->route('event.detail', ['id' => $id])->with('error', 'Failed to delete this event.');
+        //     return redirect()->route('events.show', ['event' => $event])->with('error', 'Failed to delete this event.');
         // }
 
         // TODO: Redirect to Dashboard page if success
@@ -143,7 +143,7 @@ class EventController extends Controller
 
         // Check if all commit checklist is fulfilled.
         if (!$event->isAllCommitChecklistFulfilled()) {
-            return redirect()->route('event.detail', ['id' => $id])->with('error', 'There are requirement that not fulfilled yet.');
+            return redirect()->route('events.show', ['event' => $event])->with('error', 'There are requirement that not fulfilled yet.');
         }
 
         // Commit the event
@@ -162,9 +162,9 @@ class EventController extends Controller
         }
 
         if ($failedDelivery > 0) {
-            return redirect()->route('event.detail', ['id' => $id])->with('error', 'Failed sending email to ' . $failedDelivery . ' voters.');
+            return redirect()->route('events.show', ['event' => $event])->with('error', 'Failed sending email to ' . $failedDelivery . ' voters.');
         }
 
-        return redirect()->route('event.detail', ['id' => $id])->with('success', 'Voting invitation email has been sent to all voters.');
+        return redirect()->route('events.show', ['event' => $event])->with('success', 'Voting invitation email has been sent to all voters.');
     }
 }
