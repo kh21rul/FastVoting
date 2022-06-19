@@ -16,7 +16,7 @@
                         <p class="h5 card-title">{{ $event->title }}</p>
                         @isset($event->started_at)
                             <div class="d-flex flex-wrap mb-2">
-                                <div class="d-flex gap-2 align-items-center me-3" title="Started at" style="width: 200px;">
+                                <div class="d-flex gap-2 align-items-center me-3" title="Started at" style="width: 320px;">
                                     <i class="fa-solid fa-calendar-day"></i>
                                     <span>{{ $event->started_at->format('D, d M Y, H.i e') }}</span>
                                 </div>
