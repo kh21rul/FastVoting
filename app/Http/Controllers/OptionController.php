@@ -196,9 +196,29 @@ class OptionController extends Controller
      */
     public function getImage(Request $request, Option $option)
     {
-        // TODO: Verify if the user is authorized to get the image as the owner or the voter.
-        // ...
+        // Verify if the user is authorized to get the image as the voter.
+        if ($request->has('voterId') && $request->has('token')) {
+            $voter = \App\Models\Voter::find($request->voterId);
 
+            if (empty($voter)) {
+                abort(404);
+            }
+
+            if ($voter->token !== $request->token) {
+                abort(401, 'Token is invalid');
+            }
+
+            if ($voter->event->id !== $option->event->id) {
+                abort(403, 'You don\'t have access to this event');
+            }
+        } else {
+            // Verify if the user is authorized to get the image as the owner.
+            if (empty(auth()->user()) || auth()->user()->id !== $option->event->user_id) {
+                abort(403, 'You don\'t have access to this event');
+            }
+        }
+
+        // Verify if the image exists.
         $path = storage_path('app/' . $this->imageStoragePath . '/' . $option->image_location);
 
         if (! file_exists($path)) {

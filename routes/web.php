@@ -82,6 +82,9 @@ Route::resource('events.options', OptionController::class)->shallow()
 /*
 | Get the option image
 | - route('options.image') -> GET /options/{option}/image
+|
+| To access this route as a voter, add `voterId` and the `token` to the parameters.
+| For example: route('options.image', ['option' => $option, 'voterId' => 1, 'token' => 'abc123'])
 */
 Route::get('/options/{option}/image', [OptionController::class, 'getImage'])
     ->name('options.image')
