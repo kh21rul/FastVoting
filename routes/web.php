@@ -68,6 +68,15 @@ Route::resource('events', EventController::class)
 Route::resource('events.options', OptionController::class)->shallow()
     ->except(['index', 'show']);
 
+/*
+| Voter routes
+| - route('events.voters.index')   -> GET /events/{event}/voters    -> Go to "voters" page and add new voter form
+| - route('events.voters.store')   -> POST /events/{event}/voters   -> Create a new voter
+| - route('voters.destroy')        -> DELETE /voters/{voter}        -> Delete a voter
+*/
+Route::resource('events.voters', VoterController::class)->shallow()
+    ->except(['create', 'show', 'edit', 'update']);
+
 // User authentication and email verification middleware
 Route::middleware(['auth', 'verified'])->group(function () {
     // === Put all routes that need authentication and email verification here ===
@@ -82,21 +91,10 @@ Route::middleware(['auth', 'verified'])->group(function () {
     // Event authorization middleware
     Route::middleware('event.authorized')->group(function () {
         // === Put all routes that need event authorization here ===
-        // Go to voters page
-        Route::get('/events/{id}/voters', [VoterController::class, 'index'])
-            ->name('voters');
 
         // Event editable middleware.
         Route::middleware('event.editable')->group(function () {
             // === Put all routes that need event editability here ===
-            // Add new voter
-            Route::post('/events/{id}/voters', [VoterController::class, 'create'])
-                ->name('voter.create');
-
-            // Delete voter
-            Route::delete('/events/{id}/voters/{voterId}', [VoterController::class, 'delete'])
-                ->name('voter.delete');
-
             // Commit event
             Route::post('/events/{id}/commit', [EventController::class, 'commit'])
                 ->name('event.commit');

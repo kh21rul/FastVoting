@@ -116,7 +116,7 @@
         <h2>{{ __('Voters') }}</h2>
         <div class="d-flex justify-content-between align-items-center gap-2 flex-wrap mb-3">
             <span>{{ $event->voters->count() }} {{ $event->voters->count() > 1 ? __('registered voters') : __('registered voter')  }}</span>
-            <a class="btn btn-primary" href="{{ route('voters', ['id' => $event->id]) }}">{{ __('Show All') }}</a>
+            <a class="btn btn-primary" href="{{ route('events.voters.index', ['event' => $event]) }}">{{ __('Show All') }}</a>
         </div>
 
         @if ($event->voters->count() > 0)

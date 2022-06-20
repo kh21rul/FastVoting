@@ -14,7 +14,7 @@
     <p class="description-text">Add the participants you want to be able to choose the event you create</p>
     @if (!$event->is_committed)
         <section class="my-3">
-            <form class="card" action="{{ route('voters', ['id' => $event->id]) }}" method="post">
+            <form class="card" action="{{ route('events.voters.store', ['event' => $event]) }}" method="post">
                 @csrf
                 <div class="card-body">
                     <h2>Add Voter</h2>
@@ -62,7 +62,7 @@
                             @if ($event->is_committed)
                                 {{-- TODO: Resend vote link email --}}
                             @else
-                                <form action="{{ route('voter.delete', ['id' => $event->id, 'voterId' => $voter->id]) }}" method="post">
+                                <form action="{{ route('voters.destroy', ['voter' => $voter]) }}" method="post">
                                     @csrf
                                     @method('DELETE')
                                     <button class="btn btn-outline-danger" type="submit" title="Remove Voter">
