@@ -101,17 +101,14 @@ Route::get('/options/{option}/image', [OptionController::class, 'getImage'])
 Route::resource('events.voters', VoterController::class)->shallow()
     ->except(['create', 'show', 'edit', 'update']);
 
-// Vote authorization middleware
-Route::middleware('vote')->group(function () {
-    // Go to vote page
-    Route::get('/vote/{voterId}', [VoteController::class, 'index'])
-        ->name('vote');
+// Go to vote page
+Route::get('/vote/{voterId}', [VoteController::class, 'index'])
+    ->name('vote');
 
-    // Save the vote
-    Route::post('/vote/{voterId}', [VoteController::class, 'vote'])
-        ->name('vote.save');
-});
+// Save the vote
+Route::post('/vote/{voterId}', [VoteController::class, 'vote'])
+    ->name('vote.save');
 
 // Go to result page
-Route::get('/results/{event}', [VoteController::class, 'result'])
-    ->name('result');
+Route::get('/results/{voterId}', [VoteController::class, 'result'])
+    ->name('vote.result');

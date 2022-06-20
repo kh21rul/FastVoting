@@ -45,7 +45,7 @@
                     {{-- Option Image --}}
                     @isset($option->image_location)
                         <div class="col-4 option-item__image-frame">
-                            <img class="option-item__image" src="{{ route('options.image', ['option' => $option]) }}" alt="{{ $option->name }}">
+                            <img class="option-item__image" src="{{ route('options.image', ['option' => $option, 'voterId' => $voter->id, 'token' => $voter->token]) }}" alt="{{ $option->name }}">
                         </div>
                     @endisset
                     <div class="@isset($option->image_location) col-8 @endisset">
