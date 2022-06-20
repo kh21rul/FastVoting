@@ -24,7 +24,8 @@ class OptionController extends Controller
     public function __construct()
     {
         // Require authentication and email verification
-        $this->middleware(['auth', 'verified']);
+        $this->middleware(['auth', 'verified'])
+            ->except(['getImage']);
 
         // Authorize all actions.
         $this->authorizeResource(Option::class, 'option');
@@ -189,25 +190,18 @@ class OptionController extends Controller
     /**
      * Get the option image.
      *
-     * @param string $name The image name.
+     * @param  \Illuminate\Http\Request $request
+     * @param  \App\Models\Option $option The option that the image belongs to.
      * @return \Symfony\Component\HttpFoundation\BinaryFileResponse
      */
-    public function getImage($name)
+    public function getImage(Request $request, Option $option)
     {
-        $option = Option::where('image_location', $name)->first();
-
-        if (empty($option)) {
-            abort(404);
-        }
-
-        // Verify if the user is authorized to get the image.
-        if ($option->event->creator->id !== auth()->user()->id) {
-            abort(403);
-        }
+        // TODO: Verify if the user is authorized to get the image as the owner or the voter.
+        // ...
 
         $path = storage_path('app/' . $this->imageStoragePath . '/' . $option->image_location);
 
-        if (!file_exists($path)) {
+        if (! file_exists($path)) {
             abort(404, 'Image may have been moved or deleted');
         }
 

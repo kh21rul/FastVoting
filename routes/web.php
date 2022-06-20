@@ -73,6 +73,16 @@ Route::resource('events.options', OptionController::class)->shallow()
     ->except(['index', 'show']);
 
 /*
+| Get the option image
+| - route('options.image') -> GET /options/{option}/image
+*/
+Route::get('/options/{option}/image', [OptionController::class, 'getImage'])
+    ->name('options.image')
+    ->missing(function () {
+        abort(404, 'Option image you are looking for does not exist');
+    });
+
+/*
 | Voter routes
 | - route('events.voters.index')   -> GET /events/{event}/voters    -> Go to "voters" page and add new voter form
 | - route('events.voters.store')   -> POST /events/{event}/voters   -> Create a new voter
@@ -83,10 +93,7 @@ Route::resource('events.voters', VoterController::class)->shallow()
 
 // User authentication and email verification middleware
 Route::middleware(['auth', 'verified'])->group(function () {
-    // === Put all routes that need authentication and email verification here ===
-    // Get the option image
-    Route::get('/option_images/{name}', [OptionController::class, 'getImage'])
-        ->name('option.image');
+    // === Put all routes that need authentication and email verification here ==
 
     // Event authorization middleware
     Route::middleware('event.authorized')->group(function () {
