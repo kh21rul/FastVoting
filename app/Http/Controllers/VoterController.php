@@ -22,8 +22,8 @@ class VoterController extends Controller
         // Authorize all actions.
         $this->authorizeResource(Voter::class, 'voter');
 
-        // TODO: Ensure if event is editable to create new voter.
-        // $this->middleware('event.editable')->only(['create', 'store']);
+        // Ensure if event is editable to create new voter.
+        $this->middleware('event.editable')->only(['create', 'store']);
     }
 
     /**
