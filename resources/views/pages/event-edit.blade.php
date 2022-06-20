@@ -34,22 +34,22 @@
         <div class="form-group mb-2">
             <label for="startedAt" class="form-label">Started At</label>
             <input type="datetime-local" class="form-control @error('started_at') is-invalid @enderror" id="startedAt" name="started_at" placeholder="Started At" min="{{ Date::now()->format('Y-m-d H:i') }}" value="{{ old('started_at') ?? $event->started_at }}">
-            <p class="form-text">This date using UTC timezone.</p>
             @error('started_at')
                 <span class="invalid-feedback" role="alert">
                     <strong>{{ $message }}</strong>
                 </span>
             @enderror
+            <p class="form-text">This date using UTC timezone.</p>
         </div>
         <div class="form-group mb-3">
             <label for="finishedAt" class="form-label">Finished At</label>
             <input type="datetime-local" class="form-control @error('finished_at') is-invalid @enderror" id="finishedAt" name="finished_at" placeholder="Finished At" value="{{ old('finished_at') ?? $event->finished_at }}">
-            <p class="form-text">This date using UTC timezone.</p>
             @error('finished_at')
                 <span class="invalid-feedback" role="alert">
                     <strong>{{ $message }}</strong>
                 </span>
             @enderror
+            <p class="form-text">This date using UTC timezone.</p>
         </div>
         <button type="submit" class="btn btn-primary">{{ __('Edit Event') }}</button>
     </form>
