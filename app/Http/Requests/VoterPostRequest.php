@@ -25,7 +25,7 @@ class VoterPostRequest extends FormRequest
     {
         return [
             'name' => ['required', 'string', 'between:5,60'],
-            'email' => ['required', 'email:rfc,dns', 'max:255', 'unique:voters,email,NULL,id,event_id,' . $this->route('id')],
+            'email' => ['required', 'email:rfc,dns', 'max:255', 'unique:voters,email,NULL,id,event_id,' . $this->event->id],
         ];
     }
 
