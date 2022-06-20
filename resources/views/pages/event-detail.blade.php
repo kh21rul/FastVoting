@@ -11,7 +11,7 @@
 
     <div class="d-flex align-items-center justify-content-between gap-3 mb-3">
         <h1 class="m-0">{{ $event->title }}</h1>
-        @if (!$event->is_committed)
+        @if (! $event->is_committed)
             <a type="button" class="btn btn-outline-secondary" href="{{ route('events.edit', ['event' => $event]) }}" title="Edit this event">
                 <i class="fa-solid fa-pen">Edit</i>
             </a>
@@ -60,7 +60,7 @@
         <h2>{{ __('Options') }}</h2>
         <div class="d-flex justify-content-between align-items-center gap-2 flex-wrap mb-3">
             <span>{{ $event->options->count() }} {{ $event->options->count() > 1 ? __('options available') : __('option available') }}</span>
-            @if (!$event->is_committed)
+            @if (! $event->is_committed)
                 <a class="btn btn-primary" href="{{ route('events.options.create', ['event' => $event]) }}">{{ __('Add Option') }}</a>
             @endif
         </div>
@@ -77,7 +77,7 @@
                                         <p class="card-text">{{ $option->description }}</p>
                                     @endisset
                                     <div class="d-flex justify-content-start gap-2 mt-3">
-                                        @if (!$event->is_committed)
+                                        @if (! $event->is_committed)
                                             {{-- Edit Option Button --}}
                                             <a class="btn btn-outline-secondary" href="{{ route('options.edit', ['option' => $option]) }}" title="Edit this option">
                                                 <i class="fa-pen fa-solid">Edit</i>
@@ -141,7 +141,7 @@
     {{-- Commit --}}
     <section class="mb-4">
         <h2>{{ __('Commit Event') }}</h2>
-        @if (!$event->is_committed)
+        @if (! $event->is_committed)
             <div class="p-3 bg-white border mt-3">
                 <p>Commit this event to start the voting at the time you specify. We will send a voting link to each voter's email.</p>
                 <p>Before commit, make sure you fulfill this requirement:</p>
@@ -160,8 +160,9 @@
 
                 <p><strong class="text-danger">Warning!</strong> You <strong>can't change</strong> the event's detail, the options, and the voters after you commit this event.</p>
                 @if ($event->isAllCommitChecklistFulfilled())
-                    <form action="{{ route('event.commit', ['id' => $event->id]) }}" method="POST">
+                    <form action="{{ route('events.commit', ['event' => $event]) }}" method="POST">
                         @csrf
+                        @method('PUT')
                         <button type="submit" class="btn btn-outline-danger">{{ __('Commit Event') }}</button>
                     </form>
                 @else

@@ -139,13 +139,13 @@ class EventController extends Controller
 
     /**
      * Commit the event
+     *
+     * @param  \App\Models\Event $event The event to commit.
      */
-    public function commit($id)
+    public function commit(Event $event)
     {
-        $event = Event::find($id);
-
         // Check if all commit checklist is fulfilled.
-        if (!$event->isAllCommitChecklistFulfilled()) {
+        if (! $event->isAllCommitChecklistFulfilled()) {
             return redirect()->route('events.show', ['event' => $event])->with('error', 'There are requirement that not fulfilled yet.');
         }
 
@@ -159,7 +159,7 @@ class EventController extends Controller
         foreach ($event->voters as $voter) {
             $sentMessage = Mail::to($voter->email)->send(new VotingInvitation($voter));
 
-            if (!isset($sentMessage)) {
+            if (empty($sentMessage)) {
                 $failedDelivery += 1;
             }
         }

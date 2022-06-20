@@ -62,6 +62,13 @@ Route::resource('events', EventController::class)
     });
 
 /*
+| Commit an event
+| route('events.commit') -> PUT /events/{event}/commit
+*/
+Route::put('/events/{event}/commit', [EventController::class, 'commit'])
+    ->name('events.commit');
+
+/*
 | Option routes
 | - route('events.options.create')  -> GET /events/{event}/options/create   -> Go to "add new option" page
 | - route('events.options.store')   -> POST /events/{event}/options         -> Create a new option
@@ -90,24 +97,6 @@ Route::get('/options/{option}/image', [OptionController::class, 'getImage'])
 */
 Route::resource('events.voters', VoterController::class)->shallow()
     ->except(['create', 'show', 'edit', 'update']);
-
-// User authentication and email verification middleware
-Route::middleware(['auth', 'verified'])->group(function () {
-    // === Put all routes that need authentication and email verification here ==
-
-    // Event authorization middleware
-    Route::middleware('event.authorized')->group(function () {
-        // === Put all routes that need event authorization here ===
-
-        // Event editable middleware.
-        Route::middleware('event.editable')->group(function () {
-            // === Put all routes that need event editability here ===
-            // Commit event
-            Route::post('/events/{id}/commit', [EventController::class, 'commit'])
-                ->name('event.commit');
-        });
-    });
-});
 
 // Vote authorization middleware
 Route::middleware('vote')->group(function () {
