@@ -55,6 +55,54 @@
         </table>
     </section>
 
+    {{-- Vote Result --}}
+    @if ($event->is_committed)
+        <section class="mb-4">
+            <h2>Vote Result</h2>
+
+            @if ($event->started_at->isPast())
+                <table class="table">
+                    <tbody>
+                    <tr>
+                        <th>Total Registered Voters</th>
+                        <td>{{ $event->voters->count() }}</td>
+                    </tr>
+                    <tr>
+                        <th>Total Incoming Votes</th>
+                        <td>{{ $event->ballots->count() }}</td>
+                    </tr>
+                    <tr>
+                        <th>Incoming Votes Percentage</th>
+                        <td>{{ $event->ballots->count() / $event->voters->count() * 100 }}%</td>
+                    </tr>
+                    </tbody>
+                </table>
+                <div class="option-list">
+                    @foreach ($event->options as $option)
+                        <div class="card option-item">
+                            <div class="card-body">
+                                <p class="card-title fs-5">{{ $option->name }}</p>
+                                <div class="d-flex justify-content-between align-items-center mb-1">
+                                    <span>Total Votes</span>
+                                    <span>{{ $option->ballots->count() }}</span>
+                                </div>
+                                <div class="d-flex justify-content-between align-items-center mb-1">
+                                    <span>Votes Percentage</span>
+                                    <span>{{ $option->ballots->count() / $event->voters->count() * 100 }}%</span>
+                                </div>
+                            </div>
+                        </div>
+                    @endforeach
+                </div>
+
+            @else
+                <div class="card p-3 text-center mt-3">
+                    <span class="text-muted">{{ __('The vote result will be available after the event has started') }}</span>
+                </div>
+            @endif
+        </section>
+    @endif
+
     {{-- Options --}}
     <section class="mb-4">
         <h2>{{ __('Options') }}</h2>
@@ -139,9 +187,9 @@
     </section>
 
     {{-- Commit --}}
-    <section class="mb-4">
-        <h2>{{ __('Commit Event') }}</h2>
-        @if (! $event->is_committed)
+    @if (! $event->is_committed)
+        <section class="mb-4">
+            <h2>{{ __('Commit Event') }}</h2>
             <div class="p-3 bg-white border mt-3">
                 <p>Commit this event to start the voting at the time you specify. We will send a voting link to each voter's email.</p>
                 <p>Before commit, make sure you fulfill this requirement:</p>
@@ -169,12 +217,8 @@
                     <button type="button" class="btn btn-outline-danger" disabled>{{ __('Commit Event') }}</button>
                 @endif
             </div>
-        @else
-            <div class="p-3 bg-white border mb-3 text-center border border-success">
-                <span class="text-success">This event has been committed.</span>
-            </div>
-        @endif
-    </section>
+        </section>
+    @endif
 
     {{-- Delete Event --}}
     <section class="mb-4">
