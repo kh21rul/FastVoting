@@ -4,7 +4,7 @@
 <div class="container py-4">
     <h1>{{ $voter->event->title }}</h1>
     <div class="d-flex flex-wrap mb-3">
-        <div class="d-flex gap-2 align-items-center me-3" title="Started at" style="width: 200px;">
+        <div class="d-flex gap-2 align-items-center me-3" title="Started at" style="width: 320px;">
             <i class="fa-solid fa-calendar-day"></i>
             <span>{{ $voter->event->started_at->format('D, d M Y, H.i e') }}</span>
         </div>
