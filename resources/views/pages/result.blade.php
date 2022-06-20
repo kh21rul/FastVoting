@@ -9,7 +9,7 @@
     @endif
     <h2 class="h1">{{ $event->title }}</h2>
     <div class="d-flex flex-wrap mb-3">
-        <div class="d-flex gap-2 align-items-center me-3" title="Started at" style="width: 200px;">
+        <div class="d-flex gap-2 align-items-center me-3" title="Started at" style="width: 320px;">
             <i class="fa-solid fa-calendar-day"></i>
             <span>{{ $event->started_at->format('D, d M Y, H.i e') }}</span>
         </div>
@@ -45,7 +45,7 @@
                     {{-- Option Image --}}
                     @isset($option->image_location)
                         <div class="col-4 option-item__image-frame">
-                            <img class="option-item__image" src="{{ route('option.image', ['name' => $option->image_location]) }}" alt="{{ $option->name }}">
+                            <img class="option-item__image" src="{{ route('options.image', ['option' => $option, 'voterId' => $voter->id, 'token' => $voter->token]) }}" alt="{{ $option->name }}">
                         </div>
                     @endisset
                     <div class="@isset($option->image_location) col-8 @endisset">

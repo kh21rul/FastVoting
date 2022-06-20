@@ -2,11 +2,10 @@
 
 namespace App\Http\Middleware;
 
-use App\Models\Voter;
 use Closure;
 use Illuminate\Http\Request;
 
-class VoteAuthorization
+class VerifyVoterToken
 {
     /**
      * Handle an incoming request.
@@ -17,29 +16,21 @@ class VoteAuthorization
      */
     public function handle(Request $request, Closure $next)
     {
+        if (empty($request->voterId) || empty($request->token)) {
+            abort(400, 'Voter ID or token is missing');
+        }
+
         // Get voter detail from database
-        $voter = Voter::find($request->voterId);
+        $voter = \App\Models\Voter::find($request->voterId);
 
         // Check if voter exists
-        if (!$voter) {
+        if (empty($voter)) {
             abort(404, 'Voter not found');
         }
 
         // Check if token is valid
         if ($voter->token !== $request->token) {
             abort(401, 'Token is invalid');
-        }
-
-        // Check if voter has voted
-        if ($voter->ballot) {
-            // Redirect to result page
-            return redirect()->route('result', ['event' => $voter->event, 'token' => $voter->token])->with('success', 'You have already voted.');
-        }
-
-        // Check if the vote is not closed yet
-        if ($voter->event->finished_at->isPast()) {
-            // Redirect to result page
-            return redirect()->route('result', ['event' => $voter->event, 'token' => $voter->token])->with('error', 'The vote has been closed.');
         }
 
         return $next($request);

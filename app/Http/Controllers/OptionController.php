@@ -5,8 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Requests\OptionPostRequest;
 use App\Models\Event;
 use App\Models\Option;
-use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
-use Symfony\Component\HttpKernel\Exception\UnauthorizedHttpException;
+use Illuminate\Http\Request;
 
 class OptionController extends Controller
 {
@@ -24,33 +23,58 @@ class OptionController extends Controller
      */
     public function __construct()
     {
+        // Require authentication and email verification
+        $this->middleware(['auth', 'verified'])
+            ->except(['getImage']);
+
+        // Authorize all actions.
+        $this->authorizeResource(Option::class, 'option');
+
+        // Ensure if event is editable to create new option.
+        $this->middleware('event.editable')->only(['create', 'store']);
+    }
+
+    /**
+     * Display a listing of the resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function index()
+    {
         //
     }
 
     /**
-     * Go to add new option page
+     * Show the form for creating a new resource.
+     *
+     * @param  \App\Models\Event $event The event that the option belongs to.
+     * @return \Illuminate\Http\Response
      */
-    public function add($eventId)
+    public function create(Event $event)
     {
         $data['title'] = 'Add New Option | ' . config('app.name');
-        $data['event'] = Event::find($eventId);
+        $data['event'] = $event;
 
         return view('pages.option-add', $data);
     }
 
     /**
-     * Create new option
+     * Store a newly created resource in storage.
+     *
+     * @param  \App\Http\Requests\OptionPostRequest $request The request that contains the option data.
+     * @param  \App\Models\Event $event The event that the option belongs to.
+     * @return \Illuminate\Http\Response
      */
-    public function create(OptionPostRequest $request, $eventId)
+    public function store(OptionPostRequest $request, Event $event)
     {
         $validatedData = $request->validated();
-        $validatedData['event_id'] = $eventId;
+        $validatedData['event_id'] = $event->id;
 
         // Create a new option.
         $option = Option::create($validatedData);
 
-        if (!isset($option)) {
-            return redirect()->back()->with('error', 'Failed creating new option.');
+        if (empty($option)) {
+            return redirect()->back()->with('error', 'Failed creating new option.')->withInput();
         }
 
         // Upload image.
@@ -59,7 +83,7 @@ class OptionController extends Controller
             $imageName = time() . '_' . $image->hashName();
             $path = $image->storeAs($this->imageStoragePath, $imageName);
 
-            if (!isset($path)) {
+            if (empty($path)) {
                 return redirect()->back()->with('error', 'Failed uploading image.')->withInput();
             }
 
@@ -67,46 +91,85 @@ class OptionController extends Controller
             $option->save();
         }
 
-        return redirect()->route('event.detail', ['id' => $eventId]);
+        return redirect()->route('events.show', ['event' => $event]);
     }
 
     /**
-     * Get the option image.
+     * Display the specified resource.
      *
-     * @param string $name The image name.
-     * @return \Symfony\Component\HttpFoundation\BinaryFileResponse
+     * @param  \App\Models\Option  $option
+     * @return \Illuminate\Http\Response
      */
-    public function getImage($name)
+    public function show(Option $option)
     {
-        $option = Option::where('image_location', $name)->first();
-
-        if (!isset($option)) {
-            throw new NotFoundHttpException();
-        }
-
-        // Verify if the user is authorized to get the image.
-        if ($option->event->creator != auth()->user()) {
-            throw new UnauthorizedHttpException('Unauthorized');
-        }
-
-        $path = storage_path('app/' . $this->imageStoragePath . '/' . $option->image_location);
-
-        if (!file_exists($path)) {
-            throw new NotFoundHttpException('Image may have been moved or deleted');
-        }
-
-        return response()->file($path);
+        //
     }
 
-    public function delete($eventId, $optionId)
+    /**
+     * Show the form for editing the specified option.
+     *
+     * @param  \App\Models\Option  $option
+     * @return \Illuminate\Http\Response
+     */
+    public function edit(Option $option)
     {
-        $option = Option::find($optionId);
+        $data['title'] = 'Edit Option | ' . config('app.name');
+        $data['option'] = $option;
+        $data['event'] = $option->event;
 
-        // If the option does not exist, return 404.
-        if (!isset($option)) {
-            return redirect()->route('event.detail', ['id' => $eventId])->with('error', 'The option that you are trying to delete does not exist.');
+        return view('pages.option-edit', $data);
+    }
+
+    /**
+     * Update the specified option in storage.
+     *
+     * @param  \App\Http\Requests\OptionPostRequest $request The request that contains the option data.
+     * @param  \App\Models\Option $option
+     * @return \Illuminate\Http\Response
+     */
+    public function update(OptionPostRequest $request, Option $option)
+    {
+        $validatedData = $request->validated();
+
+        // Check if there are any changes in the image.
+        if ($request->hasFile('image')) {
+            // Delete image old image if exists.
+            if (isset($option->image_location)) {
+                $imagePath = storage_path('app/' . $this->imageStoragePath . '/' . $option->image_location);
+
+                if (file_exists($imagePath)) {
+                    unlink($imagePath);
+                }
+            }
+
+            // Upload the new image.
+            $image = $request->file('image');
+            $imageName = time() . '_' . $image->hashName();
+            $path = $image->storeAs($this->imageStoragePath, $imageName);
+
+            if (empty($path)) {
+                return redirect()->back()->with('error', 'Failed uploading image.')->withInput();
+            }
+
+            $option->image_location = $imageName;
         }
 
+        // Update the option and return error message if failed.
+        if (!$option->update($validatedData)) {
+            return redirect()->back()->with('error', 'Failed updating option.')->withInput();
+        }
+
+        return redirect()->route('events.show', ['event' => $option->event]);
+    }
+
+    /**
+     * Remove the specified resource from storage.
+     *
+     * @param  \App\Models\Option  $option
+     * @return \Illuminate\Http\Response
+     */
+    public function destroy(Option $option)
+    {
         // Delete the option image if it exists.
         if (isset($option->image_location)) {
             $imagePath = storage_path('app/' . $this->imageStoragePath . '/' . $option->image_location);
@@ -118,65 +181,50 @@ class OptionController extends Controller
 
         // Delete the option and return error message if failed.
         if (!$option->delete()) {
-            return redirect()->route('event.detail', ['id' => $eventId])->with('error', 'Failed deleting option.');
+            return redirect()->route('events.show', ['event' => $option->event])->with('error', 'Failed deleting option.');
         }
 
-        return redirect()->route('event.detail', ['id' => $eventId]);
-    }
-  
-    public function edit($eventId, $optionId)
-    {
-        $data['title'] = 'Edit Option | ' . config('app.name');
-        $data['event'] = Event::find($eventId);
-        $data['option'] = Option::find($optionId);
-
-        return view('pages.option-edit', $data);
+        return redirect()->route('events.show', ['event' => $option->event]);
     }
 
-    public function update(OptionPostRequest $request, $eventId, $optionId)
+    /**
+     * Get the option image.
+     *
+     * @param  \Illuminate\Http\Request $request
+     * @param  \App\Models\Option $option The option that the image belongs to.
+     * @return \Symfony\Component\HttpFoundation\BinaryFileResponse
+     */
+    public function getImage(Request $request, Option $option)
     {
-        $validatedData = $request->validated();
-        $validatedData['event_id'] = $eventId;
+        // Verify if the user is authorized to get the image as the voter.
+        if ($request->has('voterId') && $request->has('token')) {
+            $voter = \App\Models\Voter::find($request->voterId);
 
-        // Update the option.
-        $option = Option::find($optionId);
-
-        if (!isset($option)) {
-            return redirect()->back()->with('error', 'Failed updating option.');
-        }
-
-        // Check if there are any changes in the image.
-        if ($request->hasFile('image')) {
-            // Delete image old image if it exists.
-            if (isset($option->image_location)) {
-                $imagePath = storage_path('app/' . $this->imageStoragePath . '/' . $option->image_location);
-
-                if (file_exists($imagePath)) {
-                    unlink($imagePath);
-                }
-
-                $option->image_location = null;
+            if (empty($voter)) {
+                abort(404);
             }
 
-            // Upload image.
-            if ($request->hasFile('image')) {
-                $image = $request->file('image');
-                $imageName = time() . '_' . $image->hashName();
-                $path = $image->storeAs($this->imageStoragePath, $imageName);
+            if ($voter->token !== $request->token) {
+                abort(401, 'Token is invalid');
+            }
 
-                if (!isset($path)) {
-                    return redirect()->back()->with('error', 'Failed uploading image.')->withInput();
-                }
-
-                $option->image_location = $imageName;
+            if ($voter->event->id !== $option->event->id) {
+                abort(403, 'You don\'t have access to this event');
+            }
+        } else {
+            // Verify if the user is authorized to get the image as the owner.
+            if (empty(auth()->user()) || auth()->user()->id !== $option->event->user_id) {
+                abort(403, 'You don\'t have access to this event');
             }
         }
 
+        // Verify if the image exists.
+        $path = storage_path('app/' . $this->imageStoragePath . '/' . $option->image_location);
 
-        if (!$option->update($validatedData)) {
-            return redirect()->back()->with('error', 'Failed updating option.');
+        if (! file_exists($path)) {
+            abort(404, 'Image may have been moved or deleted');
         }
 
-        return redirect()->route('event.detail', ['id' => $eventId]);
+        return response()->file($path);
     }
 }

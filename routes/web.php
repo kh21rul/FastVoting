@@ -42,97 +42,73 @@ Route::get('/about', function () {
     return view('pages.about');
 })->name('about');
 
-// User authentication and email verification middleware
-Route::middleware(['auth', 'verified'])->group(function () {
-    // === Put all routes that need authentication and email verification here ===
-    // Go to dashboard page
-    Route::get('/dashboard', [DashboardController::class, 'index'])
-        ->name('dashboard');
+// Go to dashboard page
+Route::get('/dashboard', [DashboardController::class, 'index'])
+    ->name('dashboard');
 
-    // Go to add new event page
-    Route::get('/events/add', [EventController::class, 'add'])
-        ->name('event.add');
-
-    // Insert new event
-    Route::post('/events/add', [EventController::class, 'create'])
-        ->name('event.create');
-
-    // Get the option image
-    Route::get('/option_images/{name}', [OptionController::class, 'getImage'])
-        ->name('option.image');
-
-    // Event authorization middleware
-    Route::middleware('event.authorized')->group(function () {
-        // === Put all routes that need event authorization here ===
-        // Go to detail event page
-        Route::get('/events/{id}', [EventController::class, 'detail'])
-            ->name('event.detail');
-
-        // Delete the event
-        Route::delete('/events/{id}', [EventController::class, 'delete'])
-            ->name('event.delete');
-
-        // Go to voters page
-        Route::get('/events/{id}/voters', [VoterController::class, 'index'])
-            ->name('voters');
-
-        // Event editable middleware.
-        Route::middleware('event.editable')->group(function () {
-            // === Put all routes that need event editability here ===
-            // Go to edit event page
-            Route::get('/events/{id}/edit', [EventController::class, 'edit'])
-                ->name('event.edit');
-
-            // Update the event
-            Route::put('/events/{id}/edit', [EventController::class, 'update'])
-                ->name('event.update');
-
-            // Add new voter
-            Route::post('/events/{id}/voters', [VoterController::class, 'create'])
-                ->name('voter.create');
-
-            // Delete voter
-            Route::delete('/events/{id}/voters/{voterId}', [VoterController::class, 'delete'])
-                ->name('voter.delete');
-
-            // Go to add option page
-            Route::get('/events/{id}/options/add', [OptionController::class, 'add'])
-                ->name('option.add');
-
-            // Create new option
-            Route::post('/events/{id}/options/add', [OptionController::class, 'create'])
-                ->name('option.create');
-
-            // Delete option
-            Route::delete('/events/{id}/options/{optionId}', [OptionController::class, 'delete'])
-                ->name('option.delete');
-
-            // Go to edit option page
-            Route::get('/events/{id}/options/{optionId}/edit', [OptionController::class, 'edit'])
-                ->name('option.edit');
-
-            // Update option
-            Route::put('/events/{id}/options/{optionId}/edit', [OptionController::class, 'update'])
-                ->name('option.update');
-
-            // Commit event
-            Route::post('/events/{id}/commit', [EventController::class, 'commit'])
-                ->name('event.commit');
-        });
+/*
+| Event routes
+| - route('events.index')    -> GET /events                  -> Redirected to "dashboard" page
+| - route('events.create')   -> GET /events/create           -> Go to "add new event" page
+| - route('events.store')    -> POST /events                 -> Create a new event
+| - route('events.show')     -> GET /events/{event}          -> Go to "detail event" page
+| - route('events.edit')     -> GET /events/{event}/edit     -> Go to "edit event" page
+| - route('events.update')   -> PUT /events/{event}          -> Update an event
+| - route('events.destroy')  -> DELETE /events/{event}       -> Delete an event
+*/
+Route::resource('events', EventController::class)
+    ->missing(function () {
+        return redirect()->route('events.index')->with('error', 'Event you are looking for does not exist.');
     });
-});
 
-// Vote authorization middleware
-Route::middleware('vote')->group(function () {
-    // Go to vote page
-    Route::get('/vote/{voterId}', [VoteController::class, 'index'])
-        ->name('vote');
+/*
+| Commit an event
+| route('events.commit') -> PUT /events/{event}/commit
+*/
+Route::put('/events/{event}/commit', [EventController::class, 'commit'])
+    ->name('events.commit');
 
-    // Save the vote
-    Route::post('/vote/{voterId}', [VoteController::class, 'vote'])
-        ->name('vote.save');
-});
+/*
+| Option routes
+| - route('events.options.create')  -> GET /events/{event}/options/create   -> Go to "add new option" page
+| - route('events.options.store')   -> POST /events/{event}/options         -> Create a new option
+| - route('options.edit')           -> GET /options/{option}/edit           -> Go to "edit option" page
+| - route('options.update')         -> PUT /options/{option}                -> Update an option
+| - route('options.destroy')        -> DELETE /options/{option}             -> Delete an option
+*/
+Route::resource('events.options', OptionController::class)->shallow()
+    ->except(['index', 'show']);
+
+/*
+| Get the option image
+| - route('options.image') -> GET /options/{option}/image
+|
+| To access this route as a voter, add `voterId` and the `token` to the parameters.
+| For example: route('options.image', ['option' => $option, 'voterId' => 1, 'token' => 'abc123'])
+*/
+Route::get('/options/{option}/image', [OptionController::class, 'getImage'])
+    ->name('options.image')
+    ->missing(function () {
+        abort(404, 'Option image you are looking for does not exist');
+    });
+
+/*
+| Voter routes
+| - route('events.voters.index')   -> GET /events/{event}/voters    -> Go to "voters" page and add new voter form
+| - route('events.voters.store')   -> POST /events/{event}/voters   -> Create a new voter
+| - route('voters.destroy')        -> DELETE /voters/{voter}        -> Delete a voter
+*/
+Route::resource('events.voters', VoterController::class)->shallow()
+    ->except(['create', 'show', 'edit', 'update']);
+
+// Go to vote page
+Route::get('/vote/{voterId}', [VoteController::class, 'index'])
+    ->name('vote');
+
+// Save the vote
+Route::post('/vote/{voterId}', [VoteController::class, 'vote'])
+    ->name('vote.save');
 
 // Go to result page
-Route::get('/results/{event}', [VoteController::class, 'result'])
-    ->name('result');
+Route::get('/results/{voterId}', [VoteController::class, 'result'])
+    ->name('vote.result');

@@ -5,12 +5,12 @@
     <section style="--bs-breadcrumb-divider: '>';" aria-label="breadcrumb">
         <ol class="breadcrumb">
             <li class="breadcrumb-item"><a href="{{ route('dashboard') }}">Dashboard</a></li>
-            <li class="breadcrumb-item"><a href="{{ route('event.detail', ['id' => $event->id]) }}">Event</a></li>
+            <li class="breadcrumb-item"><a href="{{ route('events.show', ['event' => $event]) }}">Event</a></li>
             <li class="breadcrumb-item active" aria-current="page">Add New Option</li>
         </ol>
     </section>
     <h1>Add New Option</h1>
-    <form method="post" action="{{ route('option.create', ['id' => $event->id]) }}" enctype="multipart/form-data">
+    <form method="post" action="{{ route('events.options.store', ['event' => $event]) }}" enctype="multipart/form-data">
         @csrf
         <div class="mb-3">
             <label for="name" class="form-label">Name</label>

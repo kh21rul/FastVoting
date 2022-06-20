@@ -15,13 +15,17 @@ class VoteController extends Controller
      */
     public function __construct()
     {
-        //
+        // Authenticate the voter
+        $this->middleware('vote.auth');
+
+        // Check if the voter can vote
+        $this->middleware('vote.can')->except('result');
     }
 
     /**
      * Go to vote page
      */
-    public function index(Request $request, $voterId)
+    public function index(Request $request, string $voterId)
     {
         $voter = Voter::find($voterId);
 
@@ -33,22 +37,17 @@ class VoteController extends Controller
 
     /**
      * Save the vote
+     *
      * @param Request $request
      * @param string $voterId
-     *
      * @return \Illuminate\Http\RedirectResponse
      */
-    public function vote(Request $request, $voterId)
+    public function vote(Request $request, string $voterId)
     {
         $voter = Voter::find($voterId);
 
-        // Check if the event is already started
-        if ($voter->event->started_at->isFuture()) {
-            return redirect()->route('vote', ['voterId' => $voter->id, 'token' => $voter->token])->with('error', 'The vote has been closed.');
-        }
-
         // Check if the selected option is valid
-        if (!$voter->event->options->contains($request->option_id)) {
+        if (! $voter->event->options->contains($request->option_id)) {
             return redirect()->back()->with('error', 'The selected option is invalid.');
         }
 
@@ -59,65 +58,33 @@ class VoteController extends Controller
             'option_id' => $request->option_id,
         ]);
 
-        if (!isset($ballot)) {
+        if (empty($ballot)) {
             return redirect()->back()->with('error', 'Failed to save your vote.');
         }
 
-        return redirect()->route('result', ['event' => $voter->event, 'token' => $voter->token]);
+        return redirect()->route('vote.result', ['voterId' => $voter->id, 'token' => $voter->token]);
     }
 
     /**
-     * Go to result page
+     * Go to the result page
+     *
+     * @param Request $request
+     * @param string $voterId
+     * @return \Illuminate\Http\RedirectResponse
      */
-    public function result(Request $request, Event $event)
+    public function result(Request $request, string $voterId)
     {
-        // Authorize the user is the event's creator or the voter who already vote.
-        if (!$this->isAuthorizedToResultPage($request, $event)) {
-            abort(403, 'Unauthorized');
+        $voter = Voter::find($voterId);
+
+        // Check if voter has already voted
+        if (empty($voter->ballot)) {
+            return redirect()->route('vote', ['voterId' => $voter->id, 'token' => $voter->token]);
         }
 
-        // Check if the event is already committed
-        if (!$event->is_committed) {
-            // Redirect to detail event page if the logged in user is the event's creator.
-            if (auth()->user()->id === $event->user_id) {
-                return redirect()->route('event.detail', ['id' => $event->id])->with('error', 'This event has not been committed yet.');
-            }
-
-            // Redirect to home page.
-            return redirect()->route('home')->with('error', 'This event is not committed yet. Please wait for the event creator to commit the event.');
-        }
-
-        $data['title'] = ((now() < $event->finished_at) ? 'Real-Count': 'Voting Result') . ' of ' . $event->title . ' | ' . config('app.name');
-        $data['event'] = $event;
+        $data['title'] = ($voter->event->finished_at->isFuture() ? 'Real-Count' : 'Voting Result') . ' of ' . $voter->event->title . ' | ' . config('app.name');
+        $data['voter'] = $voter;
+        $data['event'] = $voter->event;
 
         return view('pages.result', $data);
-    }
-
-    /**
-     * Authorize access to result page.
-     */
-    private function isAuthorizedToResultPage(Request $request, Event $event)
-    {
-        // Authorize if the user is the voter who already vote.
-        if (isset($request->token)) {
-            $voter = Voter::where('token', $request->token)->first();
-
-            if (!isset($voter) || $voter->event->id !== $event->id) {
-                return false;
-            }
-
-            if (!isset($voter->ballot)) {
-                return redirect()->route('vote', ['voterId' => $voter->id, 'token' => $voter->token]);
-            }
-
-            return true;
-        }
-
-        // Authorize if the user is the event's creator
-        if (empty(auth()->user()) || auth()->user()->id !== $event->user_id) {
-            return false;
-        }
-
-        return true;
     }
 }

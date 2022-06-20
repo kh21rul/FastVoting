@@ -11,8 +11,8 @@
 
     <div class="d-flex align-items-center justify-content-between gap-3 mb-3">
         <h1 class="m-0">{{ $event->title }}</h1>
-        @if (!$event->is_committed)
-            <a type="button" class="btn btn-outline-secondary" href="{{ route('event.edit', ['id' => $event->id]) }}" title="Edit this event">
+        @if (! $event->is_committed)
+            <a type="button" class="btn btn-outline-secondary" href="{{ route('events.edit', ['event' => $event]) }}" title="Edit this event">
                 <i class="fa-solid fa-pen">Edit</i>
             </a>
         @endif
@@ -55,13 +55,61 @@
         </table>
     </section>
 
+    {{-- Vote Result --}}
+    @if ($event->is_committed)
+        <section class="mb-4">
+            <h2>Vote Result</h2>
+
+            @if ($event->started_at->isPast())
+                <table class="table">
+                    <tbody>
+                    <tr>
+                        <th>Total Registered Voters</th>
+                        <td>{{ $event->voters->count() }}</td>
+                    </tr>
+                    <tr>
+                        <th>Total Incoming Votes</th>
+                        <td>{{ $event->ballots->count() }}</td>
+                    </tr>
+                    <tr>
+                        <th>Incoming Votes Percentage</th>
+                        <td>{{ $event->ballots->count() / $event->voters->count() * 100 }}%</td>
+                    </tr>
+                    </tbody>
+                </table>
+                <div class="option-list">
+                    @foreach ($event->options as $option)
+                        <div class="card option-item">
+                            <div class="card-body">
+                                <p class="card-title fs-5">{{ $option->name }}</p>
+                                <div class="d-flex justify-content-between align-items-center mb-1">
+                                    <span>Total Votes</span>
+                                    <span>{{ $option->ballots->count() }}</span>
+                                </div>
+                                <div class="d-flex justify-content-between align-items-center mb-1">
+                                    <span>Votes Percentage</span>
+                                    <span>{{ $option->ballots->count() / $event->voters->count() * 100 }}%</span>
+                                </div>
+                            </div>
+                        </div>
+                    @endforeach
+                </div>
+
+            @else
+                <div class="card p-3 text-center mt-3">
+                    <span class="text-muted">{{ __('The vote result will be available after the event has started') }}</span>
+                </div>
+            @endif
+        </section>
+    @endif
+
     {{-- Options --}}
     <section class="mb-4">
         <h2>{{ __('Options') }}</h2>
         <div class="d-flex justify-content-between align-items-center gap-2 flex-wrap mb-3">
             <span>{{ $event->options->count() }} {{ $event->options->count() > 1 ? __('options available') : __('option available') }}</span>
-            @if (!$event->is_committed)
-                <a class="btn btn-primary" href="{{ route('option.add', ['id' => $event->id]) }}">{{ __('Add Option') }}</a>
+            @if (! $event->is_committed)
+                <a class="btn btn-primary" href="{{ route('events.options.create', ['event' => $event]) }}">{{ __('Add Option') }}</a>
             @endif
         </div>
 
@@ -77,13 +125,13 @@
                                         <p class="card-text">{{ $option->description }}</p>
                                     @endisset
                                     <div class="d-flex justify-content-start gap-2 mt-3">
-                                        @if (!$event->is_committed)
+                                        @if (! $event->is_committed)
                                             {{-- Edit Option Button --}}
-                                            <a class="btn btn-outline-secondary" href="{{ route('option.edit', ['id' => $event->id, 'optionId' => $option->id]) }}" title="Edit this option">
+                                            <a class="btn btn-outline-secondary" href="{{ route('options.edit', ['option' => $option]) }}" title="Edit this option">
                                                 <i class="fa-pen fa-solid">Edit</i>
                                             </a>
                                             {{-- Delete Option Button --}}
-                                            <form action="{{ route('option.delete', ['id' => $event->id, 'optionId' => $option->id]) }}" method="POST">
+                                            <form action="{{ route('options.destroy', ['option' => $option]) }}" method="POST">
                                                 @method('DELETE')
                                                 @csrf
                                                 <button class="btn btn-outline-danger" type="submit" onclick="return confirm('Are you sure to delete this \'{{ $option->name }}\' option?')" title="Delete this option">
@@ -97,7 +145,7 @@
                             {{-- Option Image --}}
                             @isset($option->image_location)
                                 <div class="col-4 option-item__image-frame">
-                                    <img class="option-item__image" src="{{ route('option.image', ['name' => $option->image_location]) }}" alt="{{ $option->name }}">
+                                    <img class="option-item__image" src="{{ route('options.image', ['option' => $option]) }}" alt="{{ $option->name }}">
                                 </div>
                             @endisset
                         </div>
@@ -116,7 +164,7 @@
         <h2>{{ __('Voters') }}</h2>
         <div class="d-flex justify-content-between align-items-center gap-2 flex-wrap mb-3">
             <span>{{ $event->voters->count() }} {{ $event->voters->count() > 1 ? __('registered voters') : __('registered voter')  }}</span>
-            <a class="btn btn-primary" href="{{ route('voters', ['id' => $event->id]) }}">{{ __('Show All') }}</a>
+            <a class="btn btn-primary" href="{{ route('events.voters.index', ['event' => $event]) }}">{{ __('Show All') }}</a>
         </div>
 
         @if ($event->voters->count() > 0)
@@ -139,9 +187,9 @@
     </section>
 
     {{-- Commit --}}
-    <section class="mb-4">
-        <h2>{{ __('Commit Event') }}</h2>
-        @if (!$event->is_committed)
+    @if (! $event->is_committed)
+        <section class="mb-4">
+            <h2>{{ __('Commit Event') }}</h2>
             <div class="p-3 bg-white border mt-3">
                 <p>Commit this event to start the voting at the time you specify. We will send a voting link to each voter's email.</p>
                 <p>Before commit, make sure you fulfill this requirement:</p>
@@ -160,20 +208,17 @@
 
                 <p><strong class="text-danger">Warning!</strong> You <strong>can't change</strong> the event's detail, the options, and the voters after you commit this event.</p>
                 @if ($event->isAllCommitChecklistFulfilled())
-                    <form action="{{ route('event.commit', ['id' => $event->id]) }}" method="POST">
+                    <form action="{{ route('events.commit', ['event' => $event]) }}" method="POST">
                         @csrf
+                        @method('PUT')
                         <button type="submit" class="btn btn-outline-danger">{{ __('Commit Event') }}</button>
                     </form>
                 @else
                     <button type="button" class="btn btn-outline-danger" disabled>{{ __('Commit Event') }}</button>
                 @endif
             </div>
-        @else
-            <div class="p-3 bg-white border mb-3 text-center border border-success">
-                <span class="text-success">This event has been committed.</span>
-            </div>
-        @endif
-    </section>
+        </section>
+    @endif
 
     {{-- Delete Event --}}
     <section class="mb-4">
@@ -198,7 +243,7 @@
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">{{ __('Cancel') }}</button>
-          <form action="{{ route('event.delete', ['id' => $event->id]) }}" method="post">
+          <form action="{{ route('events.destroy', ['event' => $event]) }}" method="post">
               @csrf
               @method('DELETE')
               <button type="submit" class="btn btn-outline-danger">{{ __('Yes, Delete Now') }}</button>
