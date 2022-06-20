@@ -13,7 +13,8 @@ class DashboardController extends Controller
      */
     public function __construct()
     {
-        //
+        // Require authentication and email verification
+        $this->middleware(['auth', 'verified']);
     }
 
     /**

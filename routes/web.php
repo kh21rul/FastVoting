@@ -42,6 +42,10 @@ Route::get('/about', function () {
     return view('pages.about');
 })->name('about');
 
+// Go to dashboard page
+Route::get('/dashboard', [DashboardController::class, 'index'])
+    ->name('dashboard');
+
 /*
 | Event routes
 | - route('events.index')    -> GET /events                  -> Redirected to "dashboard" page
@@ -80,10 +84,6 @@ Route::resource('events.voters', VoterController::class)->shallow()
 // User authentication and email verification middleware
 Route::middleware(['auth', 'verified'])->group(function () {
     // === Put all routes that need authentication and email verification here ===
-    // Go to dashboard page
-    Route::get('/dashboard', [DashboardController::class, 'index'])
-        ->name('dashboard');
-
     // Get the option image
     Route::get('/option_images/{name}', [OptionController::class, 'getImage'])
         ->name('option.image');
