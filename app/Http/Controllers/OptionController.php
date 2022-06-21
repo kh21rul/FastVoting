@@ -10,13 +10,6 @@ use Illuminate\Http\Request;
 class OptionController extends Controller
 {
     /**
-     * The image storage path.
-     *
-     * @var string
-     */
-    private $imageStoragePath = 'private/images/options';
-
-    /**
      * Create a new controller instance.
      *
      * @return void
@@ -24,8 +17,7 @@ class OptionController extends Controller
     public function __construct()
     {
         // Require authentication and email verification
-        $this->middleware(['auth', 'verified'])
-            ->except(['getImage']);
+        $this->middleware(['auth', 'verified'])->except(['getImage']);
 
         // Authorize all actions.
         $this->authorizeResource(Option::class, 'option');
@@ -81,7 +73,7 @@ class OptionController extends Controller
         if ($request->hasFile('image')) {
             $image = $request->file('image');
             $imageName = time() . '_' . $image->hashName();
-            $path = $image->storeAs($this->imageStoragePath, $imageName);
+            $path = $image->storeAs(Option::IMAGE_STORAGE_PATH, $imageName);
 
             if (empty($path)) {
                 return redirect()->back()->with('error', 'Failed uploading image.')->withInput();
@@ -135,7 +127,7 @@ class OptionController extends Controller
         if ($request->hasFile('image')) {
             // Delete image old image if exists.
             if (isset($option->image_location)) {
-                $imagePath = storage_path('app/' . $this->imageStoragePath . '/' . $option->image_location);
+                $imagePath = storage_path('app/' . Option::IMAGE_STORAGE_PATH . '/' . $option->image_location);
 
                 if (file_exists($imagePath)) {
                     unlink($imagePath);
@@ -145,7 +137,7 @@ class OptionController extends Controller
             // Upload the new image.
             $image = $request->file('image');
             $imageName = time() . '_' . $image->hashName();
-            $path = $image->storeAs($this->imageStoragePath, $imageName);
+            $path = $image->storeAs(Option::IMAGE_STORAGE_PATH, $imageName);
 
             if (empty($path)) {
                 return redirect()->back()->with('error', 'Failed uploading image.')->withInput();
@@ -155,7 +147,7 @@ class OptionController extends Controller
         }
 
         // Update the option and return error message if failed.
-        if (!$option->update($validatedData)) {
+        if (! $option->update($validatedData)) {
             return redirect()->back()->with('error', 'Failed updating option.')->withInput();
         }
 
@@ -170,17 +162,8 @@ class OptionController extends Controller
      */
     public function destroy(Option $option)
     {
-        // Delete the option image if it exists.
-        if (isset($option->image_location)) {
-            $imagePath = storage_path('app/' . $this->imageStoragePath . '/' . $option->image_location);
-
-            if (file_exists($imagePath)) {
-                unlink($imagePath);
-            }
-        }
-
         // Delete the option and return error message if failed.
-        if (!$option->delete()) {
+        if (! $option->delete()) {
             return redirect()->route('events.show', ['event' => $option->event])->with('error', 'Failed deleting option.');
         }
 
@@ -219,7 +202,7 @@ class OptionController extends Controller
         }
 
         // Verify if the image exists.
-        $path = storage_path('app/' . $this->imageStoragePath . '/' . $option->image_location);
+        $path = storage_path('app/' . Option::IMAGE_STORAGE_PATH . '/' . $option->image_location);
 
         if (! file_exists($path)) {
             abort(404, 'Image may have been moved or deleted');

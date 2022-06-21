@@ -11,6 +11,13 @@ class Option extends Model
     use HasFactory, Uuids;
 
     /**
+     * The image storage path.
+     *
+     * @var string
+     */
+    const IMAGE_STORAGE_PATH = 'private/images/options';
+
+    /**
      * Indicates if the model should be timestamped.
      *
      * @var bool
@@ -55,6 +62,25 @@ class Option extends Model
     protected $attributes = [
         //
     ];
+
+    /**
+     * Bootstrap the model and its traits.
+     */
+    protected static function boot()
+    {
+        parent::boot();
+
+        // Delete the image before deleting the option (if exist).
+        static::deleting(function ($option) {
+            if (isset($option->image_location)) {
+                $imagePath = storage_path('app/' . self::IMAGE_STORAGE_PATH . '/' . $option->image_location);
+
+                if (file_exists($imagePath)) {
+                    unlink($imagePath);
+                }
+            }
+        });
+    }
 
     /**
      * Get the event that this option belongs to.
