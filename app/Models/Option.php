@@ -57,6 +57,32 @@ class Option extends Model
     ];
 
     /**
+     * The default image storage path.
+     *
+     * @var string
+     */
+    public static $imageStoragePath = 'private/images/options';
+
+    /**
+     * Bootstrap the model and its traits.
+     */
+    protected static function boot()
+    {
+        parent::boot();
+
+        // Delete the image before deleting the option (if exist).
+        static::deleting(function ($option) {
+            if (isset($option->image_location)) {
+                $imagePath = storage_path('app/' . static::$imageStoragePath . '/' . $option->image_location);
+
+                if (file_exists($imagePath)) {
+                    unlink($imagePath);
+                }
+            }
+        });
+    }
+
+    /**
      * Get the event that this option belongs to.
      */
     public function event()
