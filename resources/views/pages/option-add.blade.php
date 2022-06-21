@@ -23,7 +23,8 @@
         </div>
         <div class="mb-3">
             <label for="description" class="form-label">Description</label>
-            <textarea class="form-control @error('description') is-invalid @enderror" id="description" name="description">{{ old('description') }}</textarea>
+            <input id="description" type="hidden" name="description" value="{{ old('description') }}">
+            <trix-editor input="description"></trix-editor>
             @error('description')
                 <span class="invalid-feedback" role="alert">
                     <strong>{{ $message }}</strong>
@@ -33,7 +34,7 @@
         <div class="mb-3">
             <label for="image" class="form-label">Image</label>
             <input class="form-control @error('image') is-invalid @enderror" type="file" id="image" name="image">
-             @error('image')
+            @error('image')
                 <span class="invalid-feedback" role="alert">
                     <strong>{{ $message }}</strong>
                 </span>
@@ -42,5 +43,12 @@
         <button type="submit" class="btn btn-primary">Add Option</button>
     </form>
 </div>
+
+{{-- mematikan fitur upload file pada trix editor --}}
+<script>
+    document.addEventListener('trix-file-accept', function(e) {
+        e.preventDefault();
+    })
+</script>
 
 @endsection

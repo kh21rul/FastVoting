@@ -122,7 +122,7 @@
                                 <div class="card-body">
                                     <p class="card-title fs-5 fw-bold">{{ $option->name }}</p>
                                     @isset($option->description)
-                                        <p class="card-text">{{ $option->description }}</p>
+                                        <p class="card-text">{!! $option->description !!}</p>
                                     @endisset
                                     <div class="d-flex justify-content-start gap-2 mt-3">
                                         @if (! $event->is_committed)

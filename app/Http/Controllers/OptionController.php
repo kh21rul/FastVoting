@@ -147,7 +147,7 @@ class OptionController extends Controller
         }
 
         // Update the option and return error message if failed.
-        if (! $option->update($validatedData)) {
+        if (!$option->update($validatedData)) {
             return redirect()->back()->with('error', 'Failed updating option.')->withInput();
         }
 
@@ -163,7 +163,7 @@ class OptionController extends Controller
     public function destroy(Option $option)
     {
         // Delete the option and return error message if failed.
-        if (! $option->delete()) {
+        if (!$option->delete()) {
             return redirect()->route('events.show', ['event' => $option->event])->with('error', 'Failed deleting option.');
         }
 
@@ -204,7 +204,7 @@ class OptionController extends Controller
         // Verify if the image exists.
         $path = storage_path('app/' . Option::IMAGE_STORAGE_PATH . '/' . $option->image_location);
 
-        if (! file_exists($path)) {
+        if (!file_exists($path)) {
             abort(404, 'Image may have been moved or deleted');
         }
 
