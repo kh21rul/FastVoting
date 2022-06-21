@@ -72,10 +72,6 @@ class VoterController extends Controller
                 ->with('error', 'Failed adding new voter.');
         }
 
-        // Generate token.
-        $voter->token = \Illuminate\Support\Str::random(100);
-        $voter->save();
-
         return redirect()->route('events.voters.index', ['event' => $event]);
     }
 

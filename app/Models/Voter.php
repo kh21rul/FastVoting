@@ -70,4 +70,15 @@ class Voter extends Model
     {
         return $this->hasOne(Ballot::class);
     }
+
+    /**
+     * Generate new token and save it to the database.
+     *
+     * @return bool Returns `true` if the token is generated and saved successfully.
+     */
+    public function generateToken()
+    {
+        $this->token = \Illuminate\Support\Str::random(100);
+        return $this->save();
+    }
 }
