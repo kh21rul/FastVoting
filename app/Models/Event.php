@@ -59,6 +59,21 @@ class Event extends Model
     ];
 
     /**
+     * Bootstrap the model and its traits.
+     */
+    protected static function boot()
+    {
+        parent::boot();
+
+        // Deleting all the ballots, options, and voters when the event is deleted.
+        static::deleting(function ($event) {
+            $event->ballots->each->delete();
+            $event->options->each->delete();
+            $event->voters->each->delete();
+        });
+    }
+
+    /**
      * Get the checklist before commit the event.
      */
     public function getCommitChecklist()

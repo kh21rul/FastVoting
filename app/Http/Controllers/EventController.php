@@ -120,21 +120,13 @@ class EventController extends Controller
      */
     public function destroy(Event $event)
     {
-        return redirect()->route('dashboard')->with('error', 'Delete event feature is coming soon.');
+        // Delete this event and return error message if failed.
+        if (! $event->delete()) {
+            return redirect()->back()->with('error', 'Failed deleting event.');
+        }
 
-        // TODO: Delete all entity that related to this event.
-        // ...
-
-        // TODO: Delete this event
-        // ...
-
-        // TODO: Redirect to Detail Event page if failed
-        // if ($event == 0) {
-        //     return redirect()->route('events.show', ['event' => $event])->with('error', 'Failed to delete this event.');
-        // }
-
-        // TODO: Redirect to Dashboard page if success
-        // return redirect()->route('dashboard')->with('success', 'One event has been deleted.');
+        // Redirect to Dashboard page if success
+        return redirect()->route('dashboard')->with('success', 'One event has been deleted.');
     }
 
     /**
