@@ -1,4 +1,5 @@
 require('./bootstrap');
+require('./trix')
 
 const navbarToggler = document.querySelector('.navbar-toggler');
 
@@ -12,3 +13,8 @@ if (navbarToggler) {
         }
     });
 }
+
+// Disable the file input button when clicked.
+document.addEventListener('trix-file-accept', function (e) {
+    e.preventDefault();
+})

@@ -21,16 +21,6 @@
     {{-- Font-Awesome Icons --}}
     <script src="{{ asset('vendor/fontawesome/fontawesome-icons.min.js') }}" defer></script>
 
-    {{-- Trix Editor --}}
-    <link rel="stylesheet" type="text/css" href="/css/trix.css">
-    <script type="text/javascript" src="/js/trix.js"></script>
-
-    <style>
-        trix-toolbar [data-trix-button-group="file-tools"] {
-            display: none;
-        }
-    </style>
-
 </head>
 <body class="d-flex flex-column min-vh-100">
     <div id="app">

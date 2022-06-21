@@ -44,11 +44,4 @@
     </form>
 </div>
 
-{{-- mematikan fitur upload file pada trix editor --}}
-<script>
-    document.addEventListener('trix-file-accept', function(e) {
-        e.preventDefault();
-    })
-</script>
-
 @endsection
