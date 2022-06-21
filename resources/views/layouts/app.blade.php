@@ -9,6 +9,8 @@
 
     <title>{{ $title ?? config('app.name') }}</title>
     <link rel="icon" type="image/x-icon" href="/assets/logo.png">
+    <link rel="apple-touch-icon" href="{{ asset('assets/logo.png') }}">
+    <link rel="manifest" href="{{ asset('web-manifest.json') }}">
 
     <!-- Scripts -->
     <script src="{{ mix('js/manifest.js') }}" defer></script>
