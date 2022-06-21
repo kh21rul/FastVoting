@@ -3,10 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\EventModifyRequest;
-use App\Mail\VotingInvitation;
 use App\Models\Event;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Mail;
 
 class EventController extends Controller
 {
@@ -149,13 +147,8 @@ class EventController extends Controller
         $failedDelivery = 0;
 
         foreach ($event->voters as $voter) {
-            // Generate voter's token
-            $voter->generateToken();
-
             // Send voting invitation email to voter
-            $sentMessage = Mail::to($voter->email)->send(new VotingInvitation($voter));
-
-            if (empty($sentMessage)) {
+            if (! $voter->sendInvitationEmail()) {
                 $failedDelivery += 1;
             }
         }

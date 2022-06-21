@@ -2,9 +2,11 @@
 
 namespace App\Models;
 
+use App\Mail\VotingInvitation;
 use App\Traits\Uuids;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\Mail;
 
 class Voter extends Model
 {
@@ -76,9 +78,26 @@ class Voter extends Model
      *
      * @return bool Returns `true` if the token is generated and saved successfully.
      */
-    public function generateToken()
+    private function generateToken()
     {
         $this->token = \Illuminate\Support\Str::random(100);
         return $this->save();
+    }
+
+    /**
+     * Send voting invitation email to the voter.
+     *
+     * @return bool Returns `true` if the email is sent successfully.
+     */
+    public function sendInvitationEmail()
+    {
+        // Generate new token everytime send invitation email.
+        if ($this->generateToken()) {
+            // Send email to the voter.
+            $pendingMail = Mail::to($this->email);
+            return $pendingMail->send(new VotingInvitation($this)) !== null;
+        }
+
+        return false;
     }
 }
