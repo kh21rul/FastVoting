@@ -1,0 +1,9 @@
+*
+!.gitignore
+!.htaccess
+!index.php
+!robots.txt
+!assets/
+!css/
+!js/
+!vendor/
