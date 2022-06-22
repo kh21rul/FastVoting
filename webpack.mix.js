@@ -1,6 +1,7 @@
 const mix = require('laravel-mix');
 const WebpackPwaManifest = require('webpack-pwa-manifest');
 const path = require('path');
+require('laravel-mix-workbox');
 
 /*
  |--------------------------------------------------------------------------
@@ -23,6 +24,10 @@ mix.copyDirectory('resources/assets', 'public/assets');
 
 // Copy all third-party vendors to public folder
 mix.copyDirectory('resources/vendor', 'public/vendor');
+
+// Generate service worker
+// Documentation: https://github.com/speniti/laravel-mix-workbox
+mix.generateSW();
 
 // Other plugins
 mix.webpackConfig({
