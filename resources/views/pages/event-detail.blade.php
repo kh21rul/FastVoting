@@ -38,12 +38,12 @@
             </div>
         </div>
 
-        <hr>
-
         @isset($event->description)
             {!! $event->description !!}
         @endisset
     </section>
+
+    <hr>
 
     {{-- Vote Result --}}
     @if ($event->is_committed)

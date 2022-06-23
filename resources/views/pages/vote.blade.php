@@ -21,12 +21,12 @@
             </div>
         @endif
 
-        <hr>
-
         @isset($voter->event->description)
             {!! $voter->event->description !!}
         @endisset
     </section>
+
+    <hr>
 
     {{-- Ballot --}}
     <section class="mb-4">
