@@ -28,7 +28,8 @@
             <label for="description" class="form-label">
                 <span>Description</span>
             </label>
-            <textarea class="form-control @error('description') is-invalid @enderror" id="description" name="description" placeholder="Enter the description event">{{ old('description') }}</textarea>
+            <input id="description" type="hidden" name="description" value="{{ old('description') }}">
+            <trix-editor input="description"></trix-editor>
             @error('description')
                 <span class="invalid-feedback" role="alert">
                     <strong>{{ $message }}</strong>

@@ -24,7 +24,6 @@
         </div>
         <div class="mb-3">
             <label for="description" class="form-label">Description</label>
-            {{-- <textarea class="form-control @error('description') is-invalid @enderror" id="description" name="description">{{ old('description') ?? $option->description }}</textarea> --}}
             <input id="description" type="hidden" name="description" value="{{ old('description', $option->description) }}">
             <trix-editor input="description"></trix-editor>
             @error('description')

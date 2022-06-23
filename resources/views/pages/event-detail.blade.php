@@ -9,51 +9,41 @@
         </ol>
     </section>
 
-    <div class="d-flex align-items-center justify-content-between gap-3 mb-3">
-        <h1 class="m-0">{{ $event->title }}</h1>
-        @if (! $event->is_committed)
-            <a type="button" class="btn btn-outline-secondary" href="{{ route('events.edit', ['event' => $event]) }}" title="Edit this event">
-                <i class="fa-solid fa-pen">Edit</i>
-            </a>
-        @endif
-    </div>
+    <section class="mb-4">
+        <div class="d-flex align-items-center justify-content-between gap-3 mb-3">
+            <h1 class="m-0 fw-bold">{{ $event->title }}</h1>
+            @if (! $event->is_committed)
+                <a type="button" class="btn btn-outline-secondary" href="{{ route('events.edit', ['event' => $event]) }}" title="Edit this event">
+                    <i class="fa-solid fa-pen">Edit</i>
+                </a>
+            @endif
+        </div>
 
-    <section class="table-responsive mb-4">
-        <table class="table m-0" style="font-size: 1.1em">
-            <tbody>
-              <tr>
-                <td colspan="1">Started at</td>
-                <td>
-                    @if ($event->started_at)
-                        {{ $event->started_at->format('D, j M Y H:i:s e') }}
-                    @else
-                        <span class="text-muted">{{ __('Not set') }}</span>
-                    @endif
-                </td>
-              </tr>
-              <tr>
-                <td colspan="1">Finished at</td>
-                <td>
-                    @if ($event->finished_at)
-                        {{ $event->finished_at->format('D, j M Y H:i:s e') }}
-                    @else
-                        <span class="text-muted">{{ __('Not set') }}</span>
-                    @endif
-                </td>
-              </tr>
-              <tr>
-                <td colspan="1">Description</td>
-                <td>
-                    @if ($event->description)
-                        {{ $event->description }}
-                    @else
-                        <span class="text-muted">{{ __('Not set') }}</span>
-                    @endif
-                </td>
-              </tr>
-            </tbody>
-        </table>
+        <div class="d-flex flex-wrap mb-3 gap-2">
+            <div class="d-flex gap-2 align-items-center me-3" title="Started at">
+                <i class="fa-solid fa-calendar-day fa-lg"></i>
+                @if ($event->started_at)
+                    <span>{{ $event->started_at->format('D, j M Y H:i:s e') }}</span>
+                @else
+                    <span class="text-muted">{{ __('Not set') }}</span>
+                @endif
+            </div>
+            <div class="d-flex gap-2 align-items-center" title="Finished at">
+                <i class="fa-solid fa-calendar-week fa-lg"></i>
+                @if ($event->finished_at)
+                    <span>{{ $event->finished_at->format('D, j M Y H:i:s e') }}</span>
+                @else
+                    <span class="text-muted">{{ __('Not set') }}</span>
+                @endif
+            </div>
+        </div>
+
+        @isset($event->description)
+            {!! $event->description !!}
+        @endisset
     </section>
+
+    <hr>
 
     {{-- Vote Result --}}
     @if ($event->is_committed)
