@@ -29,7 +29,7 @@
                             </div>
                         @endisset
                         @if ($event->description)
-                            <p class="event-item__description card-text">{{ strip_tags($event->description) }}</p>
+                            <p class="event-item__description card-text">{{ strip_tags(str_replace(['<div>', '<br>', '<li>'], ' ', $event->description)) }}</p>
                         @endif
                     </div>
                 </a>
