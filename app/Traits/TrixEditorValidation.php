@@ -11,11 +11,15 @@ trait TrixEditorValidation
     /**
      * Validate the given input from trix editor.
      *
-     * @param string $input The input to validate.
+     * @param string|null $input The input to validate.
      * @return string The validated input.
      */
-    public function validateTrixInput(string $input)
+    public function validateTrixInput($input): string
     {
+        if (empty($input)) {
+            return '';
+        }
+
         return strip_tags($input, $this->trixEditorTags);
     }
 }
