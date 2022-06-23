@@ -2,10 +2,13 @@
 
 namespace App\Http\Requests;
 
+use App\Traits\TrixEditorValidation;
 use Illuminate\Foundation\Http\FormRequest;
 
 class OptionPostRequest extends FormRequest
 {
+    use TrixEditorValidation;
+
     /**
      * Determine if the user is authorized to make this request.
      *
@@ -38,10 +41,7 @@ class OptionPostRequest extends FormRequest
     protected function prepareForValidation()
     {
         $this->merge([
-            'description' => strip_tags($this->description, [
-                // Allowed tags
-                '<div>', '<strong>', '<em>', '<p>', '<a>', '<del>', '<br>', '<pre>', '<blockquote>', '<h1>', '<ul>', '<ol>', '<li>'
-            ]),
+            'description' => $this->validateTrixInput($this->description),
         ]);
     }
 }
