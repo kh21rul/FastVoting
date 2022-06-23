@@ -48,7 +48,7 @@
                         <div class="card-body">
                             <p class="card-title fs-5 fw-bold">{{ $option->name }}</p>
                             @isset($option->description)
-                                <p class="card-text">{{ $option->description }}</p>
+                                <p class="card-text">{!! $option->description !!}</p>
                             @endisset
                             @if ($voter->event->started_at->isPast())
                                 <form action="{{ route('vote.save', ['voterId' => $voter->id, 'token' => $voter->token]) }}" method="post">
