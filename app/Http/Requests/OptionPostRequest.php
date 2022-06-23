@@ -40,7 +40,11 @@ class OptionPostRequest extends FormRequest
         $this->merge([
             'description' => strip_tags($this->description, [
                 // Allowed tags
+<<<<<<< HEAD
                 '<div>', '<strong>', '<em>', '<p>', '<a>', '<del>', '<br>', '<pre>', '<blockquote>', '<h1>', '<ul>', '<li>'
+=======
+                '<div>', '<strong>', '<em>', '<p>', '<a>', '<del>', '<br>', '<pre>', '<blockquote>', '<h1>', '<ul>', '<ol>', '<li>'
+>>>>>>> 4f2cf85ddb7dae647315d770d7c49d08765a5b4b
             ]),
         ]);
     }
