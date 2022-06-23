@@ -2,10 +2,13 @@
 
 namespace App\Http\Requests;
 
+use App\Traits\TrixEditorValidation;
 use Illuminate\Foundation\Http\FormRequest;
 
 class EventModifyRequest extends FormRequest
 {
+    use TrixEditorValidation;
+
     /**
      * Determine if the user is authorized to make this request.
      *
@@ -29,5 +32,17 @@ class EventModifyRequest extends FormRequest
             'started_at' => ['nullable', 'date', 'after:now', 'required_with:finished_at'],
             'finished_at' => ['nullable', 'date', 'after:started_at', 'required_with:started_at'],
         ];
+    }
+
+    /**
+     * Prepare the data for validation.
+     *
+     * @return void
+     */
+    protected function prepareForValidation()
+    {
+        $this->merge([
+            'description' => $this->validateTrixInput($this->description),
+        ]);
     }
 }
