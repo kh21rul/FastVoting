@@ -12,7 +12,7 @@
     <hr>
     <form action="{{ route('events.store') }}" method="POST">
         @csrf
-        <div class="form-outline mb-4">
+        <div class="form-outline mb-3">
             <label class="form-label" for="title">
               <span>Title</span>
               <span style="color:red;font-weight:bold">*</span>
@@ -24,7 +24,7 @@
                 </span>
             @enderror
         </div>
-        <div class="form-outline mb-4">
+        <div class="form-outline mb-3">
             <label for="description" class="form-label">
                 <span>Description</span>
             </label>
@@ -36,18 +36,33 @@
                 </span>
             @enderror
         </div>
-        <div class="form-outline mb-2">
+        <div class="form-outline mb-3">
+            <label for="timezone" class="form-label">Timezone</label>
+            <input type="text" list="timezoneList" class="form-control @error('timezone') is-invalid @enderror" id="timezone" name="timezone" placeholder="Set the event timezone" value="{{ old('timezone') }}">
+            <datalist id="timezoneList">
+                @foreach (DateTimeZone::listIdentifiers() as $timezone)
+                    <option value="{{ $timezone }}">{{ $timezone }} ({{ now($timezone)->getOffsetString() }})</option>
+                @endforeach
+            </datalist>
+            @error('timezone')
+                <span class="invalid-feedback" role="alert">
+                    <strong>{{ $message }}</strong>
+                </span>
+            @enderror
+            <span class="form-text">Set the timezone for this event. For example: <b>Asia/Jakarta</b> or <b>UTC</b></span>
+        </div>
+        <div class="form-outline mb-3">
             <label for="startedAt" class="form-label">
               <span>Started At</span>
               <span style="color:red;font-weight:bold">*</span>
             </label>
-            <input type="datetime-local" class="form-control @error('started_at') is-invalid @enderror" id="startedAt" name="started_at" placeholder="Started At" min="{{ Date::now()->format('Y-m-d H:i') }}" value="{{ old('started_at') }}">
+            <input type="datetime-local" class="form-control @error('started_at') is-invalid @enderror" id="startedAt" name="started_at" placeholder="Started At" value="{{ old('started_at') }}">
             @error('started_at')
                 <span class="invalid-feedback" role="alert">
                     <strong>{{ $message }}</strong>
                 </span>
             @enderror
-            <span class="form-text">This date using UTC timezone.</span>
+            <span class="form-text">The start time should be more than now.</span>
         </div>
         <div class="form-outline mb-3">
             <label for="finishedAt" class="form-label">Finished At</label>
@@ -57,7 +72,7 @@
                     <strong>{{ $message }}</strong>
                 </span>
             @enderror
-            <span class="form-text">This date using UTC timezone.</span>
+            <span class="form-text">The finish time should be more than the start time.</span>
         </div>
         <button type="submit" class="btn btn-primary">{{ __('Add Event') }}</button>
     </form>
