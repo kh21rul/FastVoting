@@ -5,6 +5,7 @@ namespace App\Models;
 use App\Traits\Uuids;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Carbon;
 
 class Event extends Model
 {
@@ -75,6 +76,50 @@ class Event extends Model
     }
 
     /**
+     * Override the started_at setter.
+     */
+    public function setStartedAtAttribute($value)
+    {
+        $this->attributes['started_at'] = empty($value) ? null : Carbon::parse($value);
+    }
+
+    /**
+     * Override the finished_at setter.
+     */
+    public function setFinishedAtAttribute($value)
+    {
+        $this->attributes['finished_at'] = empty($value) ? null : Carbon::parse($value);
+    }
+
+    /**
+     * Override the started_at getter.
+     *
+     * @return Carbon
+     */
+    public function getStartedAtAttribute()
+    {
+        if (empty($this->attributes['started_at'])) {
+            return null;
+        }
+
+        return Carbon::parse($this->attributes['started_at'])->setTimezone($this->attributes['timezone']);
+    }
+
+    /**
+     * Override the finished_at getter.
+     *
+     * @return Carbon
+     */
+    public function getFinishedAtAttribute()
+    {
+        if (empty($this->attributes['finished_at'])) {
+            return null;
+        }
+
+        return Carbon::parse($this->attributes['finished_at'])->setTimezone($this->attributes['timezone']);
+    }
+
+    /**
      * Get the checklist before commit the event.
      */
     public function getCommitChecklist()
@@ -82,11 +127,11 @@ class Event extends Model
         return [
             [
                 'name' => 'The event has a start time after the current time.',
-                'is_fulfilled' => $this->started_at && $this->started_at > now(),
+                'is_fulfilled' => $this->started_at && $this->started_at->isFuture(),
             ],
             [
                 'name' => 'The event has a finish time after the start time.',
-                'is_fulfilled' => $this->finished_at && $this->finished_at > $this->started_at,
+                'is_fulfilled' => $this->finished_at && $this->finished_at->greaterThan($this->started_at),
             ],
             [
                 'name' => 'The event has at least two options',
