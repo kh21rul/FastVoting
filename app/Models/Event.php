@@ -28,6 +28,7 @@ class Event extends Model
         'description',
         'started_at',
         'finished_at',
+        'timezone',
     ];
 
     /**

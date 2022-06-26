@@ -20,6 +20,7 @@ return new class extends Migration
             $table->text('description')->nullable();
             $table->timestamp('started_at')->nullable();
             $table->timestamp('finished_at')->nullable();
+            $table->string('timezone')->nullable()->default('UTC');
             $table->boolean('is_committed')->default(false);
         });
     }
