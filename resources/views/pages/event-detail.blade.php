@@ -107,8 +107,14 @@
             <div class="option-list">
                 @foreach ($event->options as $option)
                     <div class="option-item card">
-                        <div class="row g-0">
-                            <div class="@isset($option->image_location) col-8 @endisset">
+                            {{-- Option Image --}}
+                            @isset($option->image_location)
+                                <div class="option-item__image-frame">
+                                    <img src="{{ route('options.image', ['option' => $option]) }}" class="mb-3 w-100" alt="" height="250">
+                                    {{-- <img class="option-item__image" src="{{ route('options.image', ['option' => $option]) }}" alt="{{ $option->name }}"> --}}
+                                </div>
+                            @endisset
+                            <div class="@isset($option->image_location) @endisset">
                                 <div class="card-body">
                                     <p class="card-title fs-5 fw-bold">{{ $option->name }}</p>
                                     @isset($option->description)
@@ -132,13 +138,6 @@
                                     </div>
                                 </div>
                             </div>
-                            {{-- Option Image --}}
-                            @isset($option->image_location)
-                                <div class="col-4 option-item__image-frame">
-                                    <img class="option-item__image" src="{{ route('options.image', ['option' => $option]) }}" alt="{{ $option->name }}">
-                                </div>
-                            @endisset
-                        </div>
                     </div>
                 @endforeach
             </div>
