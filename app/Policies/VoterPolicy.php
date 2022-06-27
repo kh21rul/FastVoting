@@ -23,11 +23,24 @@ class VoterPolicy
      * Determine whether the user can view any models.
      *
      * @param  \App\Models\User  $user
+     * @param  \App\Models\Event  $event The event that the voter belongs to.
      * @return \Illuminate\Auth\Access\Response|bool
      */
-    public function viewAny(User $user)
+    public function viewAny(User $user, \App\Models\Event $event)
     {
-        return isset($user);
+        if (empty($user)) {
+            return false;
+        }
+
+        if ($user->id !== $event->user_id) {
+            return $this->deny($this->messages['not_the_event_owner']);
+        }
+
+        if ($event->is_committed) {
+            return $this->deny($this->messages['event_is_committed']);
+        }
+
+        return true;
     }
 
     /**

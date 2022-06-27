@@ -34,7 +34,7 @@ class VoterController extends Controller
     protected function resourceAbilityMap()
     {
         return collect(parent::resourceAbilityMap())
-            ->except(['store'])
+            ->except(['index', 'store'])
             ->all();
     }
 
@@ -47,6 +47,8 @@ class VoterController extends Controller
      */
     public function index(Request $request, Event $event)
     {
+        $this->authorize('viewAny', [Voter::class, $event]);
+
         $data['title'] = 'Voters | ' . config('app.name');
         $data['event'] = $event;
 
