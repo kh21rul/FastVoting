@@ -27,6 +27,18 @@ class VoterController extends Controller
     }
 
     /**
+     * Get the map of resource methods to ability names.
+     *
+     * @return array
+     */
+    protected function resourceAbilityMap()
+    {
+        return collect(parent::resourceAbilityMap())
+            ->except(['store'])
+            ->all();
+    }
+
+    /**
      * Display a listing of the voter.
      *
      * @param \Illuminate\Http\Request $request
@@ -60,6 +72,8 @@ class VoterController extends Controller
      */
     public function store(VoterPostRequest $request, Event $event)
     {
+        $this->authorize('create', [Voter::class, $event]);
+
         // Validate the request.
         $validatedData = $request->validated();
         $validatedData['event_id'] = $event->id;
