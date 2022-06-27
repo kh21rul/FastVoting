@@ -27,6 +27,18 @@ class OptionController extends Controller
     }
 
     /**
+     * Get the map of resource methods to ability names.
+     *
+     * @return array
+     */
+    protected function resourceAbilityMap()
+    {
+        return collect(parent::resourceAbilityMap())
+            ->except(['create', 'store'])
+            ->all();
+    }
+
+    /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
@@ -44,6 +56,8 @@ class OptionController extends Controller
      */
     public function create(Event $event)
     {
+        $this->authorize('create', [Option::class, $event]);
+
         $data['title'] = 'Add New Option | ' . config('app.name');
         $data['event'] = $event;
 
@@ -59,6 +73,8 @@ class OptionController extends Controller
      */
     public function store(OptionPostRequest $request, Event $event)
     {
+        $this->authorize('create', [Option::class, $event]);
+
         $validatedData = $request->validated();
         $validatedData['event_id'] = $event->id;
 
