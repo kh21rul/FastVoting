@@ -10,7 +10,7 @@
         <div id="userList" class="user-list">
             {{-- Load each `user` in `users` --}}
             @foreach ($users as $user)
-                <a class="user-item card shadow-sm" href="">
+                <a class="user-item card shadow-sm" href="{{ route('users.events.index', ['user' => $user]) }}">
                     <div class="card-body">
                         <p class="card-title fs-5">{{ $user->name }}</p>
                         <span class="card-text">{{ $user->email }}</span>

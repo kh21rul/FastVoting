@@ -2,9 +2,23 @@
 
 @section('content')
 <div class="container py-4">
+    {{-- Show breadcrumb Events Page --}}
+    @if (Auth::user()->is_admin)
+        <section style="--bs-breadcrumb-divider: '>';" aria-label="breadcrumb">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a href="{{ route('dashboard') }}">Dashboard</a></li>
+                <li class="breadcrumb-item active" aria-current="page">Events</li>
+            </ol>
+        </section>
+    @endif
+
     <div class="mb-3 d-flex justify-content-between align-items-center flex-wrap">
-        <h2>Welcome, <span>{{ Auth::user()->name }}</span>!</h2>
-        <a type="button" class="btn btn-primary" href="{{ route('events.create') }}">Add Event</a>
+        @if (Auth::user()->is_admin)
+            <h2>{{ $user->name }}{{ __('\'s Events') }}</h2>
+        @else
+            <h2>Welcome, <span>{{ Auth::user()->name }}</span>!</h2>
+            <a type="button" class="btn btn-primary" href="{{ route('events.create') }}">Add Event</a>
+        @endif
     </div>
 
     @if ($events->count() > 0)
@@ -37,7 +51,13 @@
         </div>
     @else
         <div class="text-center border p-4 bg-light">
-            <p class="text-muted mb-0">You haven't created any events yet</p>
+            <p class="text-muted mb-0">
+                @if (Auth::user()->is_admin)
+                    There are not any events
+                @else
+                    You haven't created any events yet
+                @endif
+            </p>
         </div>
     @endif
 </div>

@@ -6,6 +6,7 @@ use App\Http\Controllers\VoterController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\OptionController;
+use App\Http\Controllers\UserController;
 use App\Http\Controllers\VoteController;
 
 /*
@@ -45,6 +46,12 @@ Route::get('/about', function () {
 // Go to dashboard page
 Route::get('/dashboard', [DashboardController::class, 'index'])
     ->name('dashboard');
+
+/*
+| Go to events page for admins.
+*/
+Route::get('/users/{user}/events', [EventController::class, 'index'])
+    ->name('users.events.index');
 
 /*
 | Event routes
