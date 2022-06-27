@@ -5,7 +5,6 @@ namespace App\Policies;
 use App\Models\Option;
 use App\Models\User;
 use Illuminate\Auth\Access\HandlesAuthorization;
-use Illuminate\Auth\Access\Response;
 
 class OptionPolicy
 {
@@ -44,7 +43,7 @@ class OptionPolicy
         }
 
         if ($user->id !== $option->event->user_id) {
-            return Response::deny($this->messages['not_the_owner']);
+            return $this->deny($this->messages['not_the_owner']);
         }
 
         return true;
@@ -75,11 +74,11 @@ class OptionPolicy
         }
 
         if ($user->id !== $option->event->user_id) {
-            return Response::deny($this->messages['not_the_owner']);
+            return $this->deny($this->messages['not_the_owner']);
         }
 
         if ($option->event->is_committed) {
-            return Response::deny($this->messages['event_is_committed']);
+            return $this->deny($this->messages['event_is_committed']);
         }
 
         return true;
@@ -99,11 +98,11 @@ class OptionPolicy
         }
 
         if ($user->id !== $option->event->user_id) {
-            return Response::deny($this->messages['not_the_owner']);
+            return $this->deny($this->messages['not_the_owner']);
         }
 
         if ($option->event->is_committed) {
-            return Response::deny($this->messages['event_is_committed']);
+            return $this->deny($this->messages['event_is_committed']);
         }
 
         return true;

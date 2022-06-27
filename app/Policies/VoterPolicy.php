@@ -5,7 +5,6 @@ namespace App\Policies;
 use App\Models\User;
 use App\Models\Voter;
 use Illuminate\Auth\Access\HandlesAuthorization;
-use Illuminate\Auth\Access\Response;
 
 class VoterPolicy
 {
@@ -79,11 +78,11 @@ class VoterPolicy
         }
 
         if ($user->id !== $voter->event->user_id) {
-            return Response::deny($this->messages['not_the_owner']);
+            return $this->deny($this->messages['not_the_owner']);
         }
 
         if ($voter->event->is_committed) {
-            return Response::deny($this->messages['event_is_committed']);
+            return $this->deny($this->messages['event_is_committed']);
         }
 
         return true;
