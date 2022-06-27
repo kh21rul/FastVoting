@@ -87,12 +87,18 @@
     flex-wrap: wrap;
 }
 
-.event-item {
+.user-list {
+    display: grid;
+    grid-template-columns: 1fr;
+    grid-row-gap: 1rem;
+}
+
+.event-item, .user-item {
     color: $black;
     text-decoration: none;
 }
 
-.event-item:hover {
+.event-item:hover, .user-item:hover {
     color: $black;
     background-color: $gray-100;
 }
@@ -144,7 +150,7 @@
         width: 49%;
     }
 
-    .option-list {
+    .user-list, .option-list {
         grid-template-columns: repeat(2, 1fr);
         column-gap: 1.5rem;
     }
