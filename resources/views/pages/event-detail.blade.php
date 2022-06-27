@@ -104,12 +104,17 @@
         </div>
 
         @if ($event->options->count() > 0)
-            <div class="option-list">
+            <div class="col-4 flex-wrap option-lists d-flex justify-content-start gap-5 w-100 "  >
                 @foreach ($event->options as $option)
-                    <div class="option-item card">
-                        <div class="row g-0">
-                            <div class="@isset($option->image_location) col-8 @endisset">
-                                <div class="card-body">
+                    <div class="option-item shadow p-1 mb-2 bg-white rounded w-25 ">
+                        <div class="w-100">
+                            <div class="@isset($option->image_location) @endisset w-100">
+                                <div class="card-body w-100">
+                                    @isset($option->image_location)
+                                        <div class="col option-item__image-frame">
+                                    <img class="option-item__image w-50 h-100 m-2" src="{{ route('options.image', ['option' => $option]) }}" alt="{{ $option->name }}">
+                                </div>
+                            @endisset
                                     <p class="card-title fs-5 fw-bold">{{ $option->name }}</p>
                                     @isset($option->description)
                                         <p class="card-text">{!! $option->description !!}</p>
@@ -129,15 +134,12 @@
                                                 </button>
                                             </form>
                                         @endif
+
                                     </div>
                                 </div>
+
                             </div>
                             {{-- Option Image --}}
-                            @isset($option->image_location)
-                                <div class="col-4 option-item__image-frame">
-                                    <img class="option-item__image" src="{{ route('options.image', ['option' => $option]) }}" alt="{{ $option->name }}">
-                                </div>
-                            @endisset
                         </div>
                     </div>
                 @endforeach
