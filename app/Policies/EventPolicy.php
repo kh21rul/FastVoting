@@ -42,6 +42,11 @@ class EventPolicy
             return false;
         }
 
+        // Allow the admin to view the event.
+        if ($user->is_admin) {
+            return true;
+        }
+
         if ($user->id !== $event->user_id) {
             return $this->deny($this->messages['not_the_owner']);
         }
