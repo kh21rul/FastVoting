@@ -108,12 +108,16 @@
                 @foreach ($event->options as $option)
                     <div class="option-item card">
                             {{-- Option Image --}}
-                            @isset($option->image_location)
+                            @if($option->image_location)
                                 <div class="option-item__image-frame">
                                     <img src="{{ route('options.image', ['option' => $option]) }}" class="w-100" alt="" height="250" style="object-fit: cover;">
-                                    {{-- <img class="option-item__image" src="{{ route('options.image', ['option' => $option]) }}" alt="{{ $option->name }}"> --}}
                                 </div>
-                            @endisset
+                            @else
+                                <div class="option-item__image-frame">
+                                    <img src="{{ asset('assets/image-option.jpg') }}" class="w-100" alt="" height="250" style="object-fit: cover;">
+                                </div>
+                            @endif
+                            {{-- Option Name --}}
                             <div class="@isset($option->image_location) @endisset">
                                 <div class="card-body">
                                     <p class="card-title fs-5 fw-bold">{{ $option->name }}</p>
