@@ -60,6 +60,19 @@ class User extends Authenticatable implements MustVerifyEmail
     ];
 
     /**
+     * Bootstrap the model and its traits.
+     */
+    protected static function boot()
+    {
+        parent::boot();
+
+        // Deleting all the ballots, options, and voters when the event is deleted.
+        static::deleting(function ($user) {
+            $user->events->each->delete();
+        });
+    }
+
+    /**
      * Get the user's events.
      */
     public function events()

@@ -15,6 +15,7 @@
     <div class="mb-3 d-flex justify-content-between align-items-center flex-wrap">
         @if (Auth::user()->is_admin)
             <h2>{{ $user->name }}{{ __('\'s Events') }}</h2>
+            <button type="button" class="btn btn-outline-danger" data-bs-toggle="modal" data-bs-target="#deleteConfirmationModal">Delete User</button>
         @else
             <h2>Welcome, <span>{{ Auth::user()->name }}</span>!</h2>
             <a type="button" class="btn btn-primary" href="{{ route('events.create') }}">Add Event</a>
@@ -61,4 +62,30 @@
         </div>
     @endif
 </div>
+
+<!-- Modal -->
+@if (Auth::user()->is_admin)
+    <div class="modal fade" id="deleteConfirmationModal" tabindex="-1" aria-labelledby="deleteConfirmationModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="deleteConfirmationModalLabel">{{ __('Delete This User?') }}</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    {{ __('You are going to delete this user. Are you sure with this?') }}
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">{{ __('Cancel') }}</button>
+                    <form action="{{ route('users.destroy', ['user' => $user]) }}" method="post">
+                        @csrf
+                        @method('DELETE')
+                        <button type="submit" class="btn btn-outline-danger">{{ __('Yes, Delete Now') }}</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+@endif
+
 @endsection
