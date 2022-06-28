@@ -23,7 +23,7 @@ class OptionController extends Controller
         $this->authorizeResource(Option::class, 'option');
 
         // Ensure if event is editable to create new option.
-        $this->middleware('event.editable')->only(['create', 'store']);
+        $this->middleware('event.editable')->except(['getImage']);
     }
 
     /**
