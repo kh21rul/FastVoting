@@ -34,12 +34,12 @@ class EventController extends Controller
     {
         // Authorize to see the user's event if the logged user is an admin.
         if (auth()->user()->is_admin && isset($user)) {
-            $data['title'] = $user->name . '\'s Events | ' . config('app.name');
+            $data['title'] = $user->name . ' | ' . config('app.name');
             $data['user'] = $user;
             $data['events'] = $user->events;
 
             // Return the Events Page view.
-            return view('pages.dashboard', $data);
+            return view('pages.user-detail', $data);
         }
 
         // Redirect to dashboard page
