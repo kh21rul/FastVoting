@@ -32,6 +32,11 @@ class VoterPolicy
             return false;
         }
 
+        // Allow the admin to view all voters.
+        if ($user->is_admin) {
+            return true;
+        }
+
         if ($user->id !== $event->user_id) {
             return $this->deny($this->messages['not_the_event_owner']);
         }
