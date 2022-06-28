@@ -4,8 +4,11 @@
 <div class="container py-4">
     <section style="--bs-breadcrumb-divider: '>';" aria-label="breadcrumb">
         <ol class="breadcrumb">
-          <li class="breadcrumb-item"><a href="{{ route('dashboard') }}">Dashboard</a></li>
-          <li class="breadcrumb-item active" aria-current="page">Event</li>
+            <li class="breadcrumb-item"><a href="{{ route('dashboard') }}">Dashboard</a></li>
+            @if (auth()->user()->is_admin)
+                <li class="breadcrumb-item"><a href="{{ route('users.show', ['user' => $event->creator]) }}">User</a></li>
+            @endif
+            <li class="breadcrumb-item active" aria-current="page">Event</li>
         </ol>
     </section>
 
