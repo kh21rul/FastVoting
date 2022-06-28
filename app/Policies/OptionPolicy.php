@@ -145,4 +145,36 @@ class OptionPolicy
     {
         return false;
     }
+
+    /**
+     * Determine whether the user can access the option image.
+     *
+     * @param \App\Models\User $user The user who is trying to access the image.
+     * @param \App\Models\Option $option The option that the image belongs to.
+     * @param \Illuminate\Support\Facades\Request $request The request object. Used to get the voter's credentials (`voterId` and `token`).
+     */
+    public function getImage(?User $user, Option $option, $request = null)
+    {
+        // Allow access for the admins.
+        if (optional($user)->is_admin) {
+            return true;
+        }
+
+        // Allow access for the owner.
+        if (optional($user)->id === $option->event->user_id) {
+            return true;
+        }
+
+        // Allow access for the authenticated voters.
+        if (optional($request)->has('voterId') && optional($request)->has('token')) {
+            $voter = \App\Models\Voter::find(optional($request)->voterId);
+
+            // Authenticate the voter.
+            if (optional($voter)->token === optional($request)->token) {
+                return true;
+            }
+        }
+
+        return false;
+    }
 }
