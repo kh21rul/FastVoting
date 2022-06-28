@@ -2,6 +2,13 @@
 
 @section('content')
 <div class="container py-4">
+    <section style="--bs-breadcrumb-divider: '>';" aria-label="breadcrumb">
+        <ol class="breadcrumb">
+          <li class="breadcrumb-item"><a href="{{ route('home') }}">Home</a></li>
+          <li class="breadcrumb-item active" aria-current="page">About</li>
+        </ol>
+    </section>
+
     <h2 class="mb-3 text-center">About FastVoting</h2>
     <p class="subtitle text-center">" We can all agree on the importance of voting. "</p>
     <div class="d-flex about">
@@ -15,28 +22,28 @@
     <div class="py-5 team4">
         <div class="container">
             <div class="row justify-content-center mb-4">
-                <div class="col-md-7 text-center">
-                <h2 class="mb-3">Experienced & Professional Team</h2>
-                <p class="subtitle">You can relay on our amazing features list and also our customer services will be great experience for you without doubt and in no-time</p>
+                <div class="text-center">
+                <h2 class="mb-3">Our Team</h2>
+                <p class="subtitle">These people work on making FastVoting</p>
                 </div>
             </div>
             <div class="row">
                 <div class="col-lg-3 mb-4">
                     <div class="row">
                         <div class="col-md-12">
-                            <img src="{{ asset('assets/IMG20210522163312.jpg')}}" alt="wrapkit" class="img-fluid rounded-circle"/>
+                            <img src="{{ asset('assets/IMG20210522163312.jpg')}}" alt="wrapkit" class="img-fluid rounded-circle mx-auto d-block imgTeam"/>
                         </div>
                         <div class="col-md-12 text-center">
                             <div class="pt-2">
-                                <h5 class="mt-4 font-weight-medium mb-0">Arif Hendrawan Priliyanto</h5>
-                                <h6 class="subtitle mb-2">Frontend Developer</h6>
-                                <ul class="list-inline mb-1">
-                                    <li class="list-inline-item"><a href="#" class="text-decoration-none d-block px-1"><i class="fa-brands fa-facebook-square"></i></a></li>
-                                    <li class="list-inline-item"><a href="#" class="text-decoration-none d-block px-1"><i class="fa-brands fa-twitter-square"></i></a></li>
-                                    <li class="list-inline-item"><a href="#" class="text-decoration-none d-block px-1"><i class="fa-brands fa-instagram-square"></i></a></li>
-                                    <li class="list-inline-item"><a href="#" class="text-decoration-none d-block px-1"><i class="fa-brands fa-linkedin"></i></a></li>
-                                </ul>
-                                <p>You can relay on our amazing features list and also our customer services will be great experience.</p>
+                                <h5 class="mt-4 font-weight-medium mb-0">Fityandhiya Islam Nugroho</h5>
+                                <h6 class="subtitle mb-2">Backend Developer</h6>
+                                <div class="d-flex justify-content-center">
+                                    <a href="https://www.linkedin.com/in/fityannugroho" class="socialMedia px-1" target="_blank"><i class="fa-brands fa-linkedin" style="font-size: 1.5em;"></i></a>
+                                    <a href="https://www.twitter.com/fityannugroho" class="socialMedia px-1" target="_blank"><i class="fa-brands fa-twitter-square" style="font-size: 1.5em;"></i></a>
+                                    <a href="mailto:fityannugroho@gmail.com" class="socialMedia px-1" target="_blank"><i class="fa-solid fa-square-envelope" style="font-size: 1.5em;"></i></a>
+                                    <a href="https://github.com/fityannugroho" class="socialMedia px-1" target="_blank"><i class="fa-brands fa-github-square" style="font-size: 1.5em;"></i></a>
+                                </div>
+                                <p>"Voting that is safe and free from fraud can increase voter satisfaction and confidence in the results obtained"</p>
                             </div>
                         </div>
                     </div>
@@ -44,19 +51,18 @@
                 <div class="col-lg-3 mb-4">
                     <div class="row">
                         <div class="col-md-12">
-                            <img src="{{ asset('assets/IMG20210522163312.jpg')}}" alt="wrapkit" class="img-fluid rounded-circle"/>
+                            <img src="{{ asset('assets/IMG20210522163312.jpg')}}" alt="wrapkit" class="img-fluid rounded-circle mx-auto d-block imgTeam"/>
                         </div>
                         <div class="col-md-12 text-center">
                             <div class="pt-2">
                                 <h5 class="mt-4 font-weight-medium mb-0">Arif Hendrawan Priliyanto</h5>
                                 <h6 class="subtitle mb-2">Frontend Developer</h6>
-                                <ul class="list-inline mb-1">
-                                    <li class="list-inline-item"><a href="#" class="text-decoration-none d-block px-1"><i class="fa-brands fa-facebook-square"></i></a></li>
-                                    <li class="list-inline-item"><a href="#" class="text-decoration-none d-block px-1"><i class="fa-brands fa-twitter-square"></i></a></li>
-                                    <li class="list-inline-item"><a href="#" class="text-decoration-none d-block px-1"><i class="fa-brands fa-instagram-square"></i></a></li>
-                                    <li class="list-inline-item"><a href="#" class="text-decoration-none d-block px-1"><i class="fa-brands fa-linkedin"></i></a></li>
-                                </ul>
-                                <p>You can relay on our amazing features list and also our customer services will be great experience.</p>
+                                <div class="d-flex justify-content-center">
+                                    <a href="https:www.linkedin.com/in/arif-hendrawan-priliyanto-3b0b20163" class="socialMedia px-1" target="_blank"><i class="fa-brands fa-linkedin" style="font-size: 1.5em;"></i></a>
+                                    <a href="mailto:arifhendrawan023@gmail.com" class="socialMedia px-1" target="_blank"><i class="fa-solid fa-square-envelope" style="font-size: 1.5em;"></i></a>
+                                    <a href="https://github.com/arifhendrawan023" class="socialMedia px-1" target="_blank"><i class="fa-brands fa-github-square" style="font-size: 1.5em;"></i></a>
+                                </div>
+                                <p>"Voting that is safe and free from fraud can increase voter satisfaction and confidence in the results obtained"</p>
                             </div>
                         </div>
                     </div>
@@ -64,19 +70,19 @@
                 <div class="col-lg-3 mb-4">
                     <div class="row">
                         <div class="col-md-12">
-                            <img src="{{ asset('assets/IMG20210522163312.jpg')}}" alt="wrapkit" class="img-fluid rounded-circle"/>
+                            <img src="{{ asset('assets/IMG20210522163312.jpg')}}" alt="wrapkit" class="img-fluid rounded-circle mx-auto d-block imgTeam"/>
                         </div>
                         <div class="col-md-12 text-center">
                             <div class="pt-2">
-                                <h5 class="mt-4 font-weight-medium mb-0">Arif Hendrawan Priliyanto</h5>
-                                <h6 class="subtitle mb-2">Frontend Developer</h6>
-                                <ul class="list-inline mb-1">
-                                    <li class="list-inline-item"><a href="#" class="text-decoration-none d-block px-1"><i class="fa-brands fa-facebook-square"></i></a></li>
-                                    <li class="list-inline-item"><a href="#" class="text-decoration-none d-block px-1"><i class="fa-brands fa-twitter-square"></i></a></li>
-                                    <li class="list-inline-item"><a href="#" class="text-decoration-none d-block px-1"><i class="fa-brands fa-instagram-square"></i></a></li>
-                                    <li class="list-inline-item"><a href="#" class="text-decoration-none d-block px-1"><i class="fa-brands fa-linkedin"></i></a></li>
-                                </ul>
-                                <p>You can relay on our amazing features list and also our customer services will be great experience.</p>
+                                <h5 class="mt-4 font-weight-medium mb-0">Khairul Aqram</h5>
+                                <h6 class="subtitle mb-2">Backend Developer</h6>
+                                <div class="d-flex justify-content-center">
+                                    <a href="https://www.linkedin.com/in/khairul-aqram-2b890b228/" class="socialMedia px-1" target="_blank"><i class="fa-brands fa-linkedin" style="font-size: 1.5em;"></i></a>
+                                    <a href="https://twitter.com/KhairulAqram21" class="socialMedia px-1" target="_blank"><i class="fa-brands fa-twitter-square" style="font-size: 1.5em;"></i></a>
+                                    <a href="https://www.facebook.com/khairul.aqram.9/" class="socialMedia px-1" target="_blank"><i class="fa-brands fa-facebook-square" style="font-size: 1.5em;"></i></a>
+                                    <a href="https://www.instagram.com/khairul_aqram21/" class="socialMedia px-1" target="_blank"><i class="fa-brands fa-instagram-square" style="font-size: 1.5em;"></i></a>
+                                </div>
+                                <p>"The weakest thing about participating in elections is only using the right to vote. Be a sovereign voter, keep an eye on the pilkada, keep your voice"</p>
                             </div>
                         </div>
                     </div>
@@ -84,19 +90,19 @@
                 <div class="col-lg-3 mb-4">
                     <div class="row">
                         <div class="col-md-12">
-                            <img src="{{ asset('assets/IMG20210522163312.jpg')}}" alt="wrapkit" class="img-fluid rounded-circle"/>
+                            <img src="{{ asset('assets/IMG20210522163312.jpg')}}" alt="wrapkit" class="img-fluid rounded-circle mx-auto d-block imgTeam"/>
                         </div>
                         <div class="col-md-12 text-center">
                             <div class="pt-2">
-                                <h5 class="mt-4 font-weight-medium mb-0">Arif Hendrawan Priliyanto</h5>
+                                <h5 class="mt-4 font-weight-medium mb-0">Physco Sea Raflisoghi</h5>
                                 <h6 class="subtitle mb-2">Frontend Developer</h6>
-                                <ul class="list-inline mb-1">
-                                    <li class="list-inline-item"><a href="#" class="text-decoration-none d-block px-1"><i class="fa-brands fa-facebook-square"></i></a></li>
-                                    <li class="list-inline-item"><a href="#" class="text-decoration-none d-block px-1"><i class="fa-brands fa-twitter-square"></i></a></li>
-                                    <li class="list-inline-item"><a href="#" class="text-decoration-none d-block px-1"><i class="fa-brands fa-instagram-square"></i></a></li>
-                                    <li class="list-inline-item"><a href="#" class="text-decoration-none d-block px-1"><i class="fa-brands fa-linkedin"></i></a></li>
-                                </ul>
-                                <p>You can relay on our amazing features list and also our customer services will be great experience.</p>
+                                <div class="d-flex justify-content-center">
+                                    <a href="#" class="socialMedia px-1"><i class="fa-brands fa-linkedin" style="font-size: 1.5em;"></i></a>
+                                    <a href="#" class="socialMedia px-1"><i class="fa-brands fa-twitter-square" style="font-size: 1.5em;"></i></a>
+                                    <a href="#" class="socialMedia px-1"><i class="fa-brands fa-instagram-square" style="font-size: 1.5em;"></i></a>
+                                    <a href="#" class="socialMedia px-1"><i class="fa-brands fa-linkedin" style="font-size: 1.5em;"></i></a>
+                                </div>
+                                <p>"Voting that is safe and free from fraud can increase voter satisfaction and confidence in the results obtained"</p>
                             </div>
                         </div>
                     </div>

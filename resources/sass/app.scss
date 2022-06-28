@@ -131,6 +131,10 @@
     height: 20vh;
 }
 
+.imgTeam {
+    width: 75%;
+}
+
 @media (min-width: 768px) {
     .navbar .navbar-nav.nav-left {
         margin-top: 0;
@@ -167,6 +171,10 @@
     .descriptionAbout {
         width: 48%;
     }
+
+    .imgTeam {
+        width: 90%;
+    }
 }
 
 // Disable the file button in trix editor
@@ -174,41 +182,8 @@ trix-toolbar [data-trix-button-group="file-tools"] {
     display: none;
 }
 
-.team4 {
-    font-family: "Montserrat", sans-serif;
-    color: #8d97ad;
-    font-weight: 300;
-}
-
-.team4 h1, .team4 h2, .team4 h3, .team4 h4, .team4 h5, .team4 h6 {
-color: #3e4555;
-}
-
-.team4 .font-weight-medium {
-    font-weight: 500;
-}
-
-.team4 h5 {
-    line-height: 22px;
-    font-size: 18px;
-}
-
 .team4 .subtitle {
     color: #8d97ad;
     line-height: 24px;
-        font-size: 13px;
 }
 
-.team4 ul li a {
-    color: #8d97ad;
-    padding-right: 15px;
-    -webkit-transition: 0.1s ease-in;
-    -o-transition: 0.1s ease-in;
-    transition: 0.1s ease-in;
-}
-
-.team4 ul li a:hover {
-    -webkit-transform: translate3d(0px, -5px, 0px);
-    transform: translate3d(0px, -5px, 0px);
-        color: #316ce8;
-}
