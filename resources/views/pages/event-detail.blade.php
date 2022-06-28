@@ -3,7 +3,7 @@
 @section('content')
 <div class="container py-4">
     <section style="--bs-breadcrumb-divider: '>';" aria-label="breadcrumb">
-        <ol class="breadcrumb">
+        <ol class="breadcrumb" style="text-decoration: none">
           <li class="breadcrumb-item"><a href="{{ route('dashboard') }}">Dashboard</a></li>
           <li class="breadcrumb-item active" aria-current="page">Event</li>
         </ol>
@@ -110,7 +110,7 @@
                             {{-- Option Image --}}
                             @isset($option->image_location)
                                 <div class="option-item__image-frame">
-                                    <img src="{{ route('options.image', ['option' => $option]) }}" class="mb-3 w-100" alt="" height="250">
+                                    <img src="{{ route('options.image', ['option' => $option]) }}" class="w-100" alt="" height="250" style="object-fit: cover;">
                                     {{-- <img class="option-item__image" src="{{ route('options.image', ['option' => $option]) }}" alt="{{ $option->name }}"> --}}
                                 </div>
                             @endisset

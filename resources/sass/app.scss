@@ -131,6 +131,10 @@
     height: 20vh;
 }
 
+a {
+    text-decoration: none;
+}
+
 @media (min-width: 768px) {
     .navbar .navbar-nav.nav-left {
         margin-top: 0;
