@@ -133,11 +133,15 @@
                                 </div>
                             </div>
                             {{-- Option Image --}}
-                            @isset($option->image_location)
+                            @if($option->image_location)
                                 <div class="col-4 option-item__image-frame">
                                     <img class="option-item__image" src="{{ route('options.image', ['option' => $option]) }}" alt="{{ $option->name }}">
                                 </div>
-                            @endisset
+                            @else
+                                <div class="col-4 option-item__image-frame">
+                                    <img class="option-item__image" src="{{ asset('assets/image-option.jpg') }}" alt="">
+                                </div>
+                            @endif
                         </div>
                     </div>
                 @endforeach
