@@ -43,10 +43,10 @@
     {{-- EVENTS SECTION --}}
     <section class="mb-4">
         <h2 class="mb-3">Events</h2>
-        @if ($events->count() > 0)
+        @if ($user->events->count() > 0)
             <div id="eventList" class="d-flex flex-column flex-wrap gap-3">
                 {{-- Load each `event` in `events` --}}
-                @foreach ($events as $event)
+                @foreach ($user->events as $event)
                     <a class="event-item card shadow-sm" href="{{ route('events.show', ['event' => $event]) }}">
                         <div class="card-body">
                             <p class="h5 card-title">{{ $event->title }}</p>

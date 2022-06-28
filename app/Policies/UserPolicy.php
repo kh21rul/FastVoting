@@ -29,7 +29,12 @@ class UserPolicy
      */
     public function view(User $user, User $model)
     {
-        //
+        // Allow admin to view the user detail.
+        if (auth()->user()->is_admin) {
+            return true;
+        }
+
+        return false;
     }
 
     /**

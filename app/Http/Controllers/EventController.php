@@ -4,7 +4,6 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\EventModifyRequest;
 use App\Models\Event;
-use App\Models\User;
 use Illuminate\Http\Request;
 
 class EventController extends Controller
@@ -27,21 +26,10 @@ class EventController extends Controller
      * Display a listing of the event.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\User  $user  The user who owns the event.
      * @return \Illuminate\Http\Response
      */
-    public function index(Request $request, ?User $user = null)
+    public function index(Request $request)
     {
-        // Authorize to see the user's event if the logged user is an admin.
-        if (auth()->user()->is_admin && isset($user)) {
-            $data['title'] = $user->name . ' | ' . config('app.name');
-            $data['user'] = $user;
-            $data['events'] = $user->events;
-
-            // Return the Events Page view.
-            return view('pages.user-detail', $data);
-        }
-
         // Redirect to dashboard page
         return redirect()->route('dashboard')
             ->with('error', $request->session()->pull('error'))

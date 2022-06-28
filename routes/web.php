@@ -49,16 +49,11 @@ Route::get('/dashboard', [DashboardController::class, 'index'])
 
 /*
 | User routes
-| - route('users.destroy')  -> DELETE /users/{user}       -> Delete an user
+| - route('users.show')     -> GET /users/{user}            -> Go to "detail user" page
+| - route('users.destroy')  -> DELETE /users/{user}         -> Delete an user
 */
 Route::resource('users', UserController::class)
-    ->only(['destroy']);
-
-/*
-| Go to events page for admins.
-*/
-Route::get('/users/{user}/events', [EventController::class, 'index'])
-    ->name('users.events.index');
+    ->only(['show', 'destroy']);
 
 /*
 | Event routes

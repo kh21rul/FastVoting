@@ -60,7 +60,10 @@ class UserController extends Controller
      */
     public function show(User $user)
     {
-        //
+        $data['title'] = $user->name . ' | ' . config('app.name');
+        $data['user'] = $user;
+
+        return view('pages.user-detail', $data);
     }
 
     /**
