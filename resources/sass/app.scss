@@ -173,3 +173,8 @@
 trix-toolbar [data-trix-button-group="file-tools"] {
     display: none;
 }
+
+// Disable Heading button in trix editor
+.trix-button--icon-heading-1 {
+    display: none;
+}

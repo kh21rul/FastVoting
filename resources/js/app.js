@@ -19,6 +19,14 @@ document.addEventListener('trix-file-accept', function (e) {
     e.preventDefault();
 })
 
+// disable the heading1 in the trix editor
+document.addEventListener('trix-change', function (e) {
+    if (e.target.tagName === 'H1') {
+        e.preventDefault();
+    }
+})
+
+
 // Check that service workers are supported
 if ('serviceWorker' in navigator) {
     window.addEventListener('load', () => {
