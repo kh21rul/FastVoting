@@ -5,7 +5,7 @@ namespace App\Traits;
 trait TrixEditorValidation
 {
     private array $trixEditorTags = [
-        '<div>', '<strong>', '<em>', '<p>', '<a>', '<del>', '<br>', '<pre>', '<blockquote>', '<h1>', '<ul>', '<ol>', '<li>'
+        '<div>', '<strong>', '<em>', '<p>', '<a>', '<del>', '<br>', '<pre>', '<blockquote>', '<ul>', '<ol>', '<li>'
     ];
 
     /**
