@@ -17,7 +17,9 @@ class IsEventEditable
      */
     public function handle(Request $request, Closure $next)
     {
-        $event = $request->event;
+        $event = $request->event
+            ?? optional($request->option)->event
+            ?? optional($request->voter)->event;
 
         // Ensure if the event is not committed yet.
         if ($event->is_committed) {
