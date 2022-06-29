@@ -102,45 +102,41 @@
                 <a class="btn btn-primary" href="{{ route('events.options.create', ['event' => $event]) }}">{{ __('Add Option') }}</a>
             @endif
         </div>
-
         @if ($event->options->count() > 0)
-            <div class="col-4 flex-wrap option-lists d-flex justify-content-start gap-5 w-100 "  >
+            <div class="option-lists"  >
                 @foreach ($event->options as $option)
-                    <div class="option-item shadow p-1 mb-2 bg-white rounded w-25 ">
-                        <div class="w-100">
-                            <div class="@isset($option->image_location) @endisset w-100">
-                                <div class="card-body w-100">
+                    <div class="option-items shadow p-1 mb-2 bg-white rounded ">
+                            <div class="p-4 @isset($option->image_location) @endisset">
+                                <div class="card-body__option" >
                                     @isset($option->image_location)
                                         <div class="col option-item__image-frame">
                                     <img class="option-item__image w-50 h-100 m-2" src="{{ route('options.image', ['option' => $option]) }}" alt="{{ $option->name }}">
                                 </div>
                             @endisset
-                                    <p class="card-title fs-5 fw-bold">{{ $option->name }}</p>
-                                    @isset($option->description)
-                                        <p class="card-text">{!! $option->description !!}</p>
-                                    @endisset
-                                    <div class="d-flex justify-content-start gap-2 mt-3">
-                                        @if (! $event->is_committed)
-                                            {{-- Edit Option Button --}}
-                                            <a class="btn btn-outline-secondary" href="{{ route('options.edit', ['option' => $option]) }}" title="Edit this option">
-                                                <i class="fa-pen fa-solid">Edit</i>
-                                            </a>
-                                            {{-- Delete Option Button --}}
-                                            <form action="{{ route('options.destroy', ['option' => $option]) }}" method="POST">
-                                                @method('DELETE')
-                                                @csrf
-                                                <button class="btn btn-outline-danger" type="submit" onclick="return confirm('Are you sure to delete this \'{{ $option->name }}\' option?')" title="Delete this option">
-                                                    <i class="fa-trash fa-solid">Delete</i>
-                                                </button>
-                                            </form>
-                                        @endif
-
-                                    </div>
-                                </div>
-
+                                    <p class="card-title__option fw-bold">{{ $option->name }}</p>
                             </div>
+                                @isset($option->description)
+                                    <p class="card-text">{!! $option->description !!}</p>
+                                @endisset
                             {{-- Option Image --}}
+                            <div class="btn-container">
+                                @if (! $event->is_committed)
+                                    {{-- Edit Option Button --}}
+                                    <a class="btn btn-outline-secondary px-4 py-3" href="{{ route('options.edit', ['option' => $option]) }}" title="Edit this option">
+                                        <i class="fa-pen fa-solid">Edit</i>
+                                    </a>
+                                    {{-- Delete Option Button --}}
+                                    <form action="{{ route('options.destroy', ['option' => $option]) }}" method="POST">
+                                        @method('DELETE')
+                                        @csrf
+                                        <button class="btn btn-outline-danger px-4 py-3" type="submit" onclick="return confirm('Are you sure to delete this \'{{ $option->name }}\' option?')" title="Delete this option">
+                                            <i class="fa-trash fa-solid">Delete</i>
+                                        </button>
+                                    </form>
+                                @endif
+                            </div>
                         </div>
+
                     </div>
                 @endforeach
             </div>

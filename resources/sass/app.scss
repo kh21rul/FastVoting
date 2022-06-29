@@ -111,6 +111,12 @@
     gap: 1rem;
 }
 
+.option-lists {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 1rem;
+}
+
 .option-item {
     width: 100%;
     overflow: hidden;
@@ -118,9 +124,28 @@
     height: fit-content;
 }
 
+.option-items {
+    width: 100%;
+    overflow: hidden;
+    border-radius: 0.5rem;
+    height: fit-content;
+}
+
+.card-body__option {
+    margin-left: 15%;
+
+}
+
+.btn-container {
+    margin-left: 28%;
+    column-gap: 10px;
+    display: flex;
+}
+
 .option-item__image-frame {
     overflow: hidden;
     height: 100%;
+    width: 400px;
 }
 
 .option-item__image {
@@ -129,6 +154,25 @@
     width: 100%;
     min-height: 100px;
     height: 20vh;
+}
+
+.card-title__option {
+    padding-left: 17%;
+    width: 180px;
+}
+
+@media (max-width: 414px) {
+    .option-lists {
+        grid-template-columns: 1fr;
+        column-gap: 1rem;
+    }
+}
+
+@media (min-width: 414px) {
+    .option-lists {
+        grid-template-columns: 1fr;
+        column-gap: 1rem;
+    }
 }
 
 @media (min-width: 768px) {
@@ -148,6 +192,11 @@
         grid-template-columns: repeat(2, 1fr);
         column-gap: 1.5rem;
     }
+
+    .option-lists {
+        grid-template-columns: 1fr 1fr;
+        column-gap: 1rem;
+    }
 }
 
 @media (min-width: 992px) {
@@ -166,6 +215,11 @@
 
     .descriptionAbout {
         width: 48%;
+    }
+
+    .option-lists {
+        grid-template-columns: 1fr 1fr 1fr;
+        column-gap: 1rem;
     }
 }
 
