@@ -14,7 +14,23 @@
 
     <section class="mb-4">
         <div class="d-flex align-items-center justify-content-between gap-3 mb-3">
-            <h1 class="m-0 fw-bold">{{ $event->title }}</h1>
+            <div class="d-flex flex-wrap align-items-center gap-1">
+                {{-- Event Title --}}
+                <h1 class="fw-bold me-3">{{ $event->title }}</h1>
+                {{-- Event status badge --}}
+                @if ($event->is_committed)
+                    @if ($event->finished_at->isPast())
+                        <span class="badge fs-6 rounded-pill bg-danger" title="This event is closed">{{ __('Closed') }}</span>
+                    @elseif ($event->started_at->isPast())
+                        <span class="badge fs-6 rounded-pill bg-success" title="This event is opened">{{ __('Opened') }}</span>
+                    @else
+                        <span class="badge fs-6 rounded-pill bg-primary" title="This event will start at the appointed time">{{ __('Waiting') }}</span>
+                    @endif
+                @else
+                    <span class="badge fs-6 rounded-pill bg-secondary" title="This event is uncommitted">{{ __('Uncommitted') }}</span>
+                @endif
+            </div>
+
             @if ($event->isEditable())
                 <a type="button" class="btn btn-outline-secondary" href="{{ route('events.edit', ['event' => $event]) }}" title="Edit this event">
                     <i class="fa-solid fa-pen">Edit</i>
