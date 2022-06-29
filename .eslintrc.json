@@ -1,0 +1,29 @@
+{
+    "env": {
+        "browser": true,
+        "commonjs": true,
+        "es2021": true,
+        "node": true
+    },
+    "extends": [
+        "airbnb-base",
+        "plugin:import/recommended"
+    ],
+    "parserOptions": {
+        "ecmaVersion": "latest"
+    },
+    "rules": {
+        "import/extensions": 0,
+        "import/no-unresolved": 0,
+        "import/no-extraneous-dependencies": 0,
+        "class-methods-use-this": 0,
+        "no-underscore-dangle": 0,
+        "linebreak-style": 0,
+        "import/prefer-default-export": 0
+    },
+    "ignorePatterns": [
+        "node_modules/",
+        "public/",
+        "vendor/"
+    ]
+}
