@@ -3,7 +3,7 @@
 @section('content')
 <div class="container py-4">
     <section style="--bs-breadcrumb-divider: '>';" aria-label="breadcrumb">
-        <ol class="breadcrumb">
+        <ol class="breadcrumb" style="text-decoration: none">
           <li class="breadcrumb-item"><a href="{{ route('dashboard') }}">Dashboard</a></li>
           <li class="breadcrumb-item active" aria-current="page">Event</li>
         </ol>
@@ -107,8 +107,17 @@
             <div class="option-list">
                 @foreach ($event->options as $option)
                     <div class="option-item card">
-                        <div class="row g-0">
-                            <div class="@isset($option->image_location) col-8 @endisset">
+                            {{-- Option Image --}}
+                            <div class="option-item__image-frame">
+                                @if ($option->image_location)
+                                    <img src="{{ route('options.image', ['option' => $option]) }}" class="option-item__image" alt="{{ $option->name }}">
+                                @else
+                                    {{-- Default image --}}
+                                    <img src="{{ asset('assets/image-option.jpg') }}" class="option-item__image" alt="No image">
+                                @endif
+                            </div>
+                            {{-- Option Name --}}
+                            <div class="@isset($option->image_location) @endisset">
                                 <div class="card-body">
                                     <p class="card-title fs-5 fw-bold">{{ $option->name }}</p>
                                     @isset($option->description)
@@ -132,6 +141,7 @@
                                     </div>
                                 </div>
                             </div>
+<<<<<<< HEAD
                             {{-- Option Image --}}
                             @if($option->image_location)
                                 <div class="col-4 option-item__image-frame">
@@ -143,6 +153,8 @@
                                 </div>
                             @endif
                         </div>
+=======
+>>>>>>> f07ca31c85face0056352ac88ab7c44a110be917
                     </div>
                 @endforeach
             </div>
