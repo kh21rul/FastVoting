@@ -59,7 +59,7 @@
                     </div>
                     <button class="btn btn-primary btn-lg btn-block" type="submit">{{ __('Register') }}</button>
                 </form>
-                <span class="mt-2">Already have an account ? <a href="{{ route('login') }}" class="link-info">Login</a></span>
+                <span class="mt-2">Already have an account ? <a href="{{ route('login') }}" class="app-link">Login</a></span>
             </div>
         </div>
       </div>

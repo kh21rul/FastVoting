@@ -12,6 +12,17 @@
 // Bootstrap
 @import '~bootstrap/scss/bootstrap';
 
+.app-link,
+.breadcrumb-item a {
+    color: $primary;
+    text-decoration: none;
+}
+
+.app-link:hover,
+.breadcrumb-item a:hover {
+    font-weight: bold;
+}
+
 .navbar {
     position: sticky;
     position: -webkit-sticky;

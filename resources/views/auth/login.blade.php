@@ -41,12 +41,12 @@
                             <label class="form-check-label" for="remember">{{ __('Remember Me') }}</label>
                         </div>
                         @if (Route::has('password.request'))
-                            <span><a class="link-info" href="{{ route('password.request') }}">{{ __('Forgot your password?') }}</a></span>
+                            <span><a class="app-link" href="{{ route('password.request') }}">{{ __('Forgot your password?') }}</a></span>
                         @endif
                     </div>
                     <button type="submit" class="btn btn-primary btn-lg btn-block">{{ __('Login') }}</button>
                 </form>
-                <span>Don't have an account? <a href="{{ route('register') }}" class="link-info">Register Now</a></span>
+                <span>Don't have an account? <a href="{{ route('register') }}" class="app-link">Register Now</a></span>
             </div>
         </div>
     </div>
