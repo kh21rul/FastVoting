@@ -143,6 +143,16 @@ class Event extends Model
     }
 
     /**
+     * Override the `options` getter that returns the sorted options by name as default.
+     *
+     * @return \Illuminate\Database\Eloquent\Collection
+     */
+    public function getOptionsAttribute()
+    {
+        return $this->options()->get()->sortBy('name');
+    }
+
+    /**
      * Get the checklist before commit the event.
      */
     public function getCommitChecklist()
