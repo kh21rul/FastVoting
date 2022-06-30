@@ -1,4 +1,5 @@
 @extends('layouts.app')
+@include('components.trix-editor')
 
 @section('content')
 <div class="container py-4">

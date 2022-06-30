@@ -12,9 +12,6 @@
 // Bootstrap
 @import '~bootstrap/scss/bootstrap';
 
-// Trix editor
-@import 'trix';
-
 .navbar {
     position: sticky;
     position: -webkit-sticky;
@@ -120,7 +117,7 @@
 
 .option-item__image-frame {
     overflow: hidden;
-    height: 100%;
+    height: 50%;
 }
 
 .option-item__image {
@@ -128,7 +125,7 @@
     object-position: center;
     width: 100%;
     min-height: 100px;
-    height: 20vh;
+    height: 32vh;
 }
 
 .imgTeam {
@@ -175,6 +172,10 @@
     .imgTeam {
         width: 90%;
     }
+
+    .option-list {
+        grid-template-columns: repeat(3, 1fr);
+    }
 }
 
 // Disable the file button in trix editor
@@ -187,3 +188,7 @@ trix-toolbar [data-trix-button-group="file-tools"] {
     line-height: 24px;
 }
 
+// Disable Heading button in trix editor
+.trix-button--icon-heading-1 {
+    display: none;
+}
