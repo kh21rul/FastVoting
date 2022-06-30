@@ -23,7 +23,19 @@ class OptionController extends Controller
         $this->authorizeResource(Option::class, 'option');
 
         // Ensure if event is editable to create new option.
-        $this->middleware('event.editable')->only(['create', 'store']);
+        $this->middleware('event.editable')->except(['getImage']);
+    }
+
+    /**
+     * Get the map of resource methods to ability names.
+     *
+     * @return array
+     */
+    protected function resourceAbilityMap()
+    {
+        return collect(parent::resourceAbilityMap())
+            ->except(['create', 'store'])
+            ->all();
     }
 
     /**
@@ -44,6 +56,8 @@ class OptionController extends Controller
      */
     public function create(Event $event)
     {
+        $this->authorize('create', [Option::class, $event]);
+
         $data['title'] = 'Add New Option | ' . config('app.name');
         $data['event'] = $event;
 
@@ -59,6 +73,8 @@ class OptionController extends Controller
      */
     public function store(OptionPostRequest $request, Event $event)
     {
+        $this->authorize('create', [Option::class, $event]);
+
         $validatedData = $request->validated();
         $validatedData['event_id'] = $event->id;
 
@@ -179,27 +195,8 @@ class OptionController extends Controller
      */
     public function getImage(Request $request, Option $option)
     {
-        // Verify if the user is authorized to get the image as the voter.
-        if ($request->has('voterId') && $request->has('token')) {
-            $voter = \App\Models\Voter::find($request->voterId);
-
-            if (empty($voter)) {
-                abort(404);
-            }
-
-            if ($voter->token !== $request->token) {
-                abort(401, 'Token is invalid');
-            }
-
-            if ($voter->event->id !== $option->event->id) {
-                abort(403, 'You don\'t have access to this event');
-            }
-        } else {
-            // Verify if the user is authorized to get the image as the owner.
-            if (empty(auth()->user()) || auth()->user()->id !== $option->event->user_id) {
-                abort(403, 'You don\'t have access to this event');
-            }
-        }
+        // Authorize user to get the option image.
+        $this->authorize('getImage', [Option::class, $option, $request]);
 
         // Verify if the image exists.
         $path = storage_path('app/' . Option::IMAGE_STORAGE_PATH . '/' . $option->image_location);

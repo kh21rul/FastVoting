@@ -76,6 +76,29 @@ class Event extends Model
     }
 
     /**
+     * Check if a user is the owner of the event.
+     * If there are no user given, the logged in user will be used.
+     *
+     * @param  \App\Models\User  $user The user to check.
+     * @return bool
+     */
+    public function isAuthorized(?User $user = null)
+    {
+        $user = $user ?? auth()->user();
+        return $this->user_id === $user->id;
+    }
+
+    /**
+     * Check if the event is editable by the owner.
+     *
+     * @return bool
+     */
+    public function isEditable()
+    {
+        return $this->isAuthorized() && ! $this->is_committed;
+    }
+
+    /**
      * Override the started_at setter.
      */
     public function setStartedAtAttribute($value)

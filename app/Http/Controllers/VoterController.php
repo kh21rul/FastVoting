@@ -23,7 +23,19 @@ class VoterController extends Controller
         $this->authorizeResource(Voter::class, 'voter');
 
         // Ensure if event is editable to create new voter.
-        $this->middleware('event.editable')->only(['create', 'store']);
+        $this->middleware('event.editable')->except(['index']);
+    }
+
+    /**
+     * Get the map of resource methods to ability names.
+     *
+     * @return array
+     */
+    protected function resourceAbilityMap()
+    {
+        return collect(parent::resourceAbilityMap())
+            ->except(['index', 'store'])
+            ->all();
     }
 
     /**
@@ -35,6 +47,8 @@ class VoterController extends Controller
      */
     public function index(Request $request, Event $event)
     {
+        $this->authorize('viewAny', [Voter::class, $event]);
+
         $data['title'] = 'Voters | ' . config('app.name');
         $data['event'] = $event;
 
@@ -60,6 +74,8 @@ class VoterController extends Controller
      */
     public function store(VoterPostRequest $request, Event $event)
     {
+        $this->authorize('create', [Voter::class, $event]);
+
         // Validate the request.
         $validatedData = $request->validated();
         $validatedData['event_id'] = $event->id;

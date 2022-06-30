@@ -6,6 +6,9 @@
     <section style="--bs-breadcrumb-divider: '>';" aria-label="breadcrumb">
         <ol class="breadcrumb">
             <li class="breadcrumb-item"><a href="{{ route('dashboard') }}">Dashboard</a></li>
+            @if (auth()->user()->is_admin)
+                <li class="breadcrumb-item"><a href="{{ route('users.show', ['user' => $event->creator]) }}">User</a></li>
+            @endif
             <li class="breadcrumb-item"><a href="{{ route('events.show', ['event' => $event]) }}">Event</a></li>
             <li class="breadcrumb-item active" aria-current="page">Edit</li>
         </ol>

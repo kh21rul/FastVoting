@@ -25,10 +25,12 @@ class EventController extends Controller
     /**
      * Display a listing of the event.
      *
+     * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
     public function index(Request $request)
     {
+        // Redirect to dashboard page
         return redirect()->route('dashboard')
             ->with('error', $request->session()->pull('error'))
             ->with('success', $request->session()->pull('success'));

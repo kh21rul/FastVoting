@@ -25,9 +25,27 @@ class DashboardController extends Controller
     public function index()
     {
         $user = auth()->user();
+
+        if ($user->is_admin) {
+            return $this->admin();
+        }
+
         $data['title'] = 'Dashboard | ' . config('app.name');
         $data['events'] = $user->events;
 
         return view('pages.dashboard', $data);
+    }
+
+    /**
+     * Go to dashboard admin page.
+     *
+     * @return \Illuminate\Contracts\Support\Renderable
+     */
+    protected function admin()
+    {
+        $data['title'] = 'Dashboard Admin | ' . config('app.name');
+        $data['users'] = \App\Models\User::all()->sortBy('name');
+
+        return view('pages.dashboard-admin', $data);
     }
 }
