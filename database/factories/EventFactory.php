@@ -24,6 +24,7 @@ class EventFactory extends Factory
             'description' => $this->faker->paragraphs(3, true),
             'started_at' => $this->faker->dateTimeBetween('-1 days'),
             'finished_at' => $this->faker->dateTimeBetween('now', '+1 days'),
+            'timezone' => $this->faker->timezone,
         ];
     }
 }
