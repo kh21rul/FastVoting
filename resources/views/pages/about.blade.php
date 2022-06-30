@@ -31,7 +31,7 @@
                 <div class="col-lg-3 mb-4">
                     <div class="row">
                         <div class="col-md-12">
-                            <img src="{{ asset('assets/IMG20210522163312.jpg')}}" alt="wrapkit" class="img-fluid rounded-circle mx-auto d-block imgTeam"/>
+                            <img src="{{ asset('assets/fityan.png')}}" alt="Fityandhiya Islam Nugroho" class="img-fluid rounded-circle mx-auto d-block imgTeam"/>
                         </div>
                         <div class="col-md-12 text-center">
                             <div class="pt-2">
@@ -43,7 +43,7 @@
                                     <a href="mailto:fityannugroho@gmail.com" class="socialMedia px-1" target="_blank"><i class="fa-solid fa-square-envelope" style="font-size: 1.5em;"></i></a>
                                     <a href="https://github.com/fityannugroho" class="socialMedia px-1" target="_blank"><i class="fa-brands fa-github-square" style="font-size: 1.5em;"></i></a>
                                 </div>
-                                <p>"Voting that is safe and free from fraud can increase voter satisfaction and confidence in the results obtained"</p>
+                                <p>"Voting is the easiest way to accept the aspirations of many people"</p>
                             </div>
                         </div>
                     </div>
@@ -51,7 +51,7 @@
                 <div class="col-lg-3 mb-4">
                     <div class="row">
                         <div class="col-md-12">
-                            <img src="{{ asset('assets/IMG20210522163312.jpg')}}" alt="wrapkit" class="img-fluid rounded-circle mx-auto d-block imgTeam"/>
+                            <img src="{{ asset('assets/Arif.png')}}" alt="Arif Hendrawan Priliyanto" class="img-fluid rounded-circle mx-auto d-block imgTeam"/>
                         </div>
                         <div class="col-md-12 text-center">
                             <div class="pt-2">
@@ -70,7 +70,7 @@
                 <div class="col-lg-3 mb-4">
                     <div class="row">
                         <div class="col-md-12">
-                            <img src="{{ asset('assets/IMG20210522163312.jpg')}}" alt="wrapkit" class="img-fluid rounded-circle mx-auto d-block imgTeam"/>
+                            <img src="{{ asset('assets/Aqram.png')}}" alt="Khairul Aqram" class="img-fluid rounded-circle mx-auto d-block imgTeam"/>
                         </div>
                         <div class="col-md-12 text-center">
                             <div class="pt-2">
@@ -90,19 +90,19 @@
                 <div class="col-lg-3 mb-4">
                     <div class="row">
                         <div class="col-md-12">
-                            <img src="{{ asset('assets/IMG20210522163312.jpg')}}" alt="wrapkit" class="img-fluid rounded-circle mx-auto d-block imgTeam"/>
+                            <img src="{{ asset('assets/sea.png')}}" alt="Physco Sea Raflisoghi" class="img-fluid rounded-circle mx-auto d-block imgTeam"/>
                         </div>
                         <div class="col-md-12 text-center">
                             <div class="pt-2">
                                 <h5 class="mt-4 font-weight-medium mb-0">Physco Sea Raflisoghi</h5>
                                 <h6 class="subtitle mb-2">Frontend Developer</h6>
                                 <div class="d-flex justify-content-center">
-                                    <a href="#" class="socialMedia px-1"><i class="fa-brands fa-linkedin" style="font-size: 1.5em;"></i></a>
-                                    <a href="#" class="socialMedia px-1"><i class="fa-brands fa-twitter-square" style="font-size: 1.5em;"></i></a>
-                                    <a href="#" class="socialMedia px-1"><i class="fa-brands fa-instagram-square" style="font-size: 1.5em;"></i></a>
-                                    <a href="#" class="socialMedia px-1"><i class="fa-brands fa-linkedin" style="font-size: 1.5em;"></i></a>
+                                    <a href="https://www.linkedin.com/in/physco-sea-raflisoghi-a85214218/" class="socialMedia px-1" target="_blank"><i class="fa-brands fa-linkedin" style="font-size: 1.5em;"></i></a>
+                                    <a href="https://www.instagram.com/physcose_a/" class="socialMedia px-1" target="_blank"><i class="fa-brands fa-instagram-square" style="font-size: 1.5em;"></i></a>
+                                    <a href="mailto:physcosea11@gmail.com" class="socialMedia px-1" target="_blank"><i class="fa-solid fa-square-envelope" style="font-size: 1.5em;"></i></a>
+                                    <a href="https://github.com/PhyscoSeaR" class="socialMedia px-1" target="_blank"><i class="fa-brands fa-github-square" style="font-size: 1.5em;"></i></a>
                                 </div>
-                                <p>"Voting that is safe and free from fraud can increase voter satisfaction and confidence in the results obtained"</p>
+                                <p>"Hopefully this application can help users in making a vote"</p>
                             </div>
                         </div>
                     </div>
