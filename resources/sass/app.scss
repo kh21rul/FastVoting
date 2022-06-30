@@ -117,7 +117,7 @@
 
 .option-item__image-frame {
     overflow: hidden;
-    height: 100%;
+    height: 50%;
 }
 
 .option-item__image {
@@ -125,7 +125,7 @@
     object-position: center;
     width: 100%;
     min-height: 100px;
-    height: 20vh;
+    height: 32vh;
 }
 
 @media (min-width: 768px) {
@@ -163,6 +163,10 @@
 
     .descriptionAbout {
         width: 48%;
+    }
+
+    .option-list {
+        grid-template-columns: repeat(3, 1fr);
     }
 }
 
