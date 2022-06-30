@@ -171,6 +171,10 @@ a {
     .descriptionAbout {
         width: 48%;
     }
+
+    .option-list {
+        grid-template-columns: repeat(3, 1fr);
+    }
 }
 
 // Disable the file button in trix editor
