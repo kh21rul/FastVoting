@@ -1,5 +1,4 @@
 require('./bootstrap');
-require('./trix')
 
 const navbarToggler = document.querySelector('.navbar-toggler');
 
