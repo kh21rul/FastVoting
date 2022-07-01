@@ -37,11 +37,11 @@
                             <div class="pt-2">
                                 <h5 class="mt-4 font-weight-medium mb-0">Fityandhiya Islam Nugroho</h5>
                                 <h6 class="subtitle mb-2">Backend Developer</h6>
-                                <div class="d-flex justify-content-center">
-                                    <a href="https://www.linkedin.com/in/fityannugroho" class="socialMedia px-1" target="_blank"><i class="fa-brands fa-linkedin" style="font-size: 1.5em;"></i></a>
-                                    <a href="https://www.twitter.com/fityannugroho" class="socialMedia px-1" target="_blank"><i class="fa-brands fa-twitter-square" style="font-size: 1.5em;"></i></a>
-                                    <a href="mailto:fityannugroho@gmail.com" class="socialMedia px-1" target="_blank"><i class="fa-solid fa-square-envelope" style="font-size: 1.5em;"></i></a>
-                                    <a href="https://github.com/fityannugroho" class="socialMedia px-1" target="_blank"><i class="fa-brands fa-github-square" style="font-size: 1.5em;"></i></a>
+                                <div class="d-flex justify-content-center gap-2 mb-2">
+                                    <a href="https://www.linkedin.com/in/fityannugroho" target="_blank"><i class="fa-brands fa-linkedin fs-2"></i></a>
+                                    <a href="https://www.twitter.com/fityannugroho" target="_blank"><i class="fa-brands fa-twitter-square fs-2"></i></a>
+                                    <a href="mailto:fityannugroho@gmail.com" target="_blank"><i class="fa-solid fa-square-envelope fs-2"></i></a>
+                                    <a href="https://github.com/fityannugroho" target="_blank"><i class="fa-brands fa-github-square fs-2"></i></a>
                                 </div>
                                 <p>"Voting is the easiest way to accept the aspirations of many people"</p>
                             </div>
@@ -57,10 +57,10 @@
                             <div class="pt-2">
                                 <h5 class="mt-4 font-weight-medium mb-0">Arif Hendrawan Priliyanto</h5>
                                 <h6 class="subtitle mb-2">Frontend Developer</h6>
-                                <div class="d-flex justify-content-center">
-                                    <a href="https:www.linkedin.com/in/arif-hendrawan-priliyanto-3b0b20163" class="socialMedia px-1" target="_blank"><i class="fa-brands fa-linkedin" style="font-size: 1.5em;"></i></a>
-                                    <a href="mailto:arifhendrawan023@gmail.com" class="socialMedia px-1" target="_blank"><i class="fa-solid fa-square-envelope" style="font-size: 1.5em;"></i></a>
-                                    <a href="https://github.com/arifhendrawan023" class="socialMedia px-1" target="_blank"><i class="fa-brands fa-github-square" style="font-size: 1.5em;"></i></a>
+                                <div class="d-flex justify-content-center gap-2 mb-2">
+                                    <a href="https:www.linkedin.com/in/arif-hendrawan-priliyanto-3b0b20163" target="_blank"><i class="fa-brands fa-linkedin fs-2"></i></a>
+                                    <a href="mailto:arifhendrawan023@gmail.com" target="_blank"><i class="fa-solid fa-square-envelope fs-2"></i></a>
+                                    <a href="https://github.com/arifhendrawan023" target="_blank"><i class="fa-brands fa-github-square fs-2"></i></a>
                                 </div>
                                 <p>"Voting that is safe and free from fraud can increase voter satisfaction and confidence in the results obtained"</p>
                             </div>
@@ -76,11 +76,11 @@
                             <div class="pt-2">
                                 <h5 class="mt-4 font-weight-medium mb-0">Khairul Aqram</h5>
                                 <h6 class="subtitle mb-2">Backend Developer</h6>
-                                <div class="d-flex justify-content-center">
-                                    <a href="https://www.linkedin.com/in/khairul-aqram-2b890b228/" class="socialMedia px-1" target="_blank"><i class="fa-brands fa-linkedin" style="font-size: 1.5em;"></i></a>
-                                    <a href="https://twitter.com/KhairulAqram21" class="socialMedia px-1" target="_blank"><i class="fa-brands fa-twitter-square" style="font-size: 1.5em;"></i></a>
-                                    <a href="https://www.facebook.com/khairul.aqram.9/" class="socialMedia px-1" target="_blank"><i class="fa-brands fa-facebook-square" style="font-size: 1.5em;"></i></a>
-                                    <a href="https://www.instagram.com/khairul_aqram21/" class="socialMedia px-1" target="_blank"><i class="fa-brands fa-instagram-square" style="font-size: 1.5em;"></i></a>
+                                <div class="d-flex justify-content-center gap-2 mb-2">
+                                    <a href="https://www.linkedin.com/in/khairul-aqram-2b890b228/" target="_blank"><i class="fa-brands fa-linkedin fs-2"></i></a>
+                                    <a href="https://twitter.com/KhairulAqram21" target="_blank"><i class="fa-brands fa-twitter-square fs-2"></i></a>
+                                    <a href="https://www.facebook.com/khairul.aqram.9/" target="_blank"><i class="fa-brands fa-facebook-square fs-2"></i></a>
+                                    <a href="https://www.instagram.com/khairul_aqram21/" target="_blank"><i class="fa-brands fa-instagram-square fs-2"></i></a>
                                 </div>
                                 <p>"The weakest thing about participating in elections is only using the right to vote. Be a sovereign voter, keep an eye on the pilkada, keep your voice"</p>
                             </div>
@@ -96,11 +96,11 @@
                             <div class="pt-2">
                                 <h5 class="mt-4 font-weight-medium mb-0">Physco Sea Raflisoghi</h5>
                                 <h6 class="subtitle mb-2">Frontend Developer</h6>
-                                <div class="d-flex justify-content-center">
-                                    <a href="https://www.linkedin.com/in/physco-sea-raflisoghi-a85214218/" class="socialMedia px-1" target="_blank"><i class="fa-brands fa-linkedin" style="font-size: 1.5em;"></i></a>
-                                    <a href="https://www.instagram.com/physcose_a/" class="socialMedia px-1" target="_blank"><i class="fa-brands fa-instagram-square" style="font-size: 1.5em;"></i></a>
-                                    <a href="mailto:physcosea11@gmail.com" class="socialMedia px-1" target="_blank"><i class="fa-solid fa-square-envelope" style="font-size: 1.5em;"></i></a>
-                                    <a href="https://github.com/PhyscoSeaR" class="socialMedia px-1" target="_blank"><i class="fa-brands fa-github-square" style="font-size: 1.5em;"></i></a>
+                                <div class="d-flex justify-content-center gap-2 mb-2">
+                                    <a href="https://www.linkedin.com/in/physco-sea-raflisoghi-a85214218/" target="_blank"><i class="fa-brands fa-linkedin fs-2"></i></a>
+                                    <a href="https://www.instagram.com/physcose_a/" target="_blank"><i class="fa-brands fa-instagram-square fs-2"></i></a>
+                                    <a href="mailto:physcosea11@gmail.com" target="_blank"><i class="fa-solid fa-square-envelope fs-2"></i></a>
+                                    <a href="https://github.com/PhyscoSeaR" target="_blank"><i class="fa-brands fa-github-square fs-2"></i></a>
                                 </div>
                                 <p>"Hopefully this application can help users in making a vote"</p>
                             </div>
