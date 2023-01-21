@@ -47,14 +47,24 @@
         {{-- Option List --}}
         <div class="option-list">
             @foreach ($voter->event->options as $option)
-                <div class="card option-item">
-                    <div class="row g-0">
-                        <div class="@isset($option->image_location) col-8 @endisset">
-                            <div class="card-body">
-                                <p class="card-title fs-5 fw-bold">{{ $option->name }}</p>
-                                @isset($option->description)
-                                    <p class="card-text">{!! $option->description !!}</p>
-                                @endisset
+                <div class="option-item card">
+                    {{-- Option Image --}}
+                    <div class="option-item__image-frame">
+                        @if ($option->image_location)
+                            <img src="{{ route('options.image', ['option' => $option, 'voterId' => $voter->id, 'token' => $voter->token]) }}" class="option-item__image" alt="{{ $option->name }}">
+                        @else
+                            {{-- Default image --}}
+                            <img src="{{ asset('assets/image-option.jpg') }}" class="option-item__image" alt="No image">
+                        @endif
+                    </div>
+                    {{-- Option Name --}}
+                    <div class="@isset($option->image_location) @endisset">
+                        <div class="card-body">
+                            <p class="card-title fs-5 fw-bold">{{ $option->name }}</p>
+                            @isset($option->description)
+                                <p class="card-text">{!! $option->description !!}</p>
+                            @endisset
+                            <div class="d-flex justify-content-start gap-2 mt-3">
                                 @if ($voter->event->started_at->isPast())
                                     <form action="{{ route('vote.save', ['voterId' => $voter->id, 'token' => $voter->token]) }}" method="post">
                                         @csrf
@@ -66,17 +76,6 @@
                                 @endif
                             </div>
                         </div>
-
-                        {{-- Option Image --}}
-                        @if($option->image_location)
-                            <div class="col-4 option-item__image-frame">
-                                <img class="option-item__image" src="{{ route('options.image', ['option' => $option, 'voterId' => $voter->id, 'token' => $voter->token]) }}" alt="{{ $option->name }}">
-                            </div>
-                        @else
-                            <div class="col-4 option-item__image-frame">
-                                <img class="option-item__image" src="{{ asset('assets/image-option.jpg') }}" alt="">
-                            </div>
-                        @endif
                     </div>
                 </div>
             @endforeach

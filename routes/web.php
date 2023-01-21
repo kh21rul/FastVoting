@@ -6,6 +6,7 @@ use App\Http\Controllers\VoterController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\OptionController;
+use App\Http\Controllers\UserController;
 use App\Http\Controllers\VoteController;
 
 /*
@@ -45,6 +46,14 @@ Route::get('/about', function () {
 // Go to dashboard page
 Route::get('/dashboard', [DashboardController::class, 'index'])
     ->name('dashboard');
+
+/*
+| User routes
+| - route('users.show')     -> GET /users/{user}            -> Go to "detail user" page
+| - route('users.destroy')  -> DELETE /users/{user}         -> Delete an user
+*/
+Route::resource('users', UserController::class)
+    ->only(['show', 'destroy']);
 
 /*
 | Event routes

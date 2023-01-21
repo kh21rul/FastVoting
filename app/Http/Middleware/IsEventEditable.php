@@ -17,11 +17,13 @@ class IsEventEditable
      */
     public function handle(Request $request, Closure $next)
     {
-        $event = $request->event;
+        $event = $request->event
+            ?? optional($request->option)->event
+            ?? optional($request->voter)->event;
 
         // Ensure if the event is not committed yet.
         if ($event->is_committed) {
-            return redirect()->route('events.show', ['event' => $event])->with('error', 'Your event has been committed and can\'t be edited anymore.');
+            return redirect()->route('events.show', ['event' => $event])->with('error', 'This event has been committed and can\'t be edited anymore.');
         }
 
         return $next($request);

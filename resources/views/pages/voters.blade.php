@@ -5,15 +5,18 @@
     <section style="--bs-breadcrumb-divider: '>';" aria-label="breadcrumb">
         <ol class="breadcrumb">
             <li class="breadcrumb-item"><a href="{{ route('dashboard') }}">Dashboard</a></li>
+            @if (auth()->user()->is_admin)
+                <li class="breadcrumb-item"><a href="{{ route('users.show', ['user' => $event->creator]) }}">User</a></li>
+            @endif
             <li class="breadcrumb-item"><a href="{{ route('events.show', ['event' => $event]) }}">Event</a></li>
             <li class="breadcrumb-item active" aria-current="page">Voters</li>
         </ol>
     </section>
 
-    <h1>Voters</h1>
-    <p class="description-text">Add the participants you want to be able to choose the event you create</p>
-    @if (!$event->is_committed)
-        <section class="my-3">
+    <h1 class="mb-3">Voters</h1>
+    @if ($event->isEditable())
+        <section class="mb-4">
+            <p class="description-text">Add the participants you want to be able to choose the event you create</p>
             <form class="card" action="{{ route('events.voters.store', ['event' => $event]) }}" method="post">
                 @csrf
                 <div class="card-body">
@@ -58,10 +61,8 @@
                             <p class="card-title mb-0 fs-5">{{ $voter->name }}</p>
                             <p class="mb-0">{{ $voter->email }}</p>
                         </div>
-                        <div class="">
-                            @if ($event->is_committed)
-                                {{-- TODO: Resend vote link email --}}
-                            @else
+                        <div class="d-flex flex-wrap gap-2">
+                            @if ($event->isEditable())
                                 <form action="{{ route('voters.destroy', ['voter' => $voter]) }}" method="post">
                                     @csrf
                                     @method('DELETE')
@@ -69,6 +70,9 @@
                                         <i class="fa-solid fa-user-xmark"></i>
                                     </button>
                                 </form>
+                            @endif
+                            @if ($event->is_committed)
+                                {{-- TODO: Resend vote link email --}}
                             @endif
                         </div>
                     </div>

@@ -3,16 +3,35 @@
 @section('content')
 <div class="container py-4">
     <section style="--bs-breadcrumb-divider: '>';" aria-label="breadcrumb">
-        <ol class="breadcrumb" style="text-decoration: none">
-          <li class="breadcrumb-item"><a href="{{ route('dashboard') }}">Dashboard</a></li>
-          <li class="breadcrumb-item active" aria-current="page">Event</li>
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="{{ route('dashboard') }}">Dashboard</a></li>
+            @if (auth()->user()->is_admin)
+                <li class="breadcrumb-item"><a href="{{ route('users.show', ['user' => $event->creator]) }}">User</a></li>
+            @endif
+            <li class="breadcrumb-item active" aria-current="page">Event</li>
         </ol>
     </section>
 
     <section class="mb-4">
         <div class="d-flex align-items-center justify-content-between gap-3 mb-3">
-            <h1 class="m-0 fw-bold">{{ $event->title }}</h1>
-            @if (! $event->is_committed)
+            <div class="d-flex flex-wrap align-items-center gap-1">
+                {{-- Event Title --}}
+                <h1 class="fw-bold me-3">{{ $event->title }}</h1>
+                {{-- Event status badge --}}
+                @if ($event->is_committed)
+                    @if ($event->finished_at->isPast())
+                        <span class="badge fs-6 rounded-pill bg-danger" title="This event is closed">{{ __('Closed') }}</span>
+                    @elseif ($event->started_at->isPast())
+                        <span class="badge fs-6 rounded-pill bg-success" title="This event is opened">{{ __('Opened') }}</span>
+                    @else
+                        <span class="badge fs-6 rounded-pill bg-primary" title="This event will start at the appointed time">{{ __('Waiting') }}</span>
+                    @endif
+                @else
+                    <span class="badge fs-6 rounded-pill bg-secondary" title="This event is uncommitted">{{ __('Uncommitted') }}</span>
+                @endif
+            </div>
+
+            @if ($event->isEditable())
                 <a type="button" class="btn btn-outline-secondary" href="{{ route('events.edit', ['event' => $event]) }}" title="Edit this event">
                     <i class="fa-solid fa-pen">Edit</i>
                 </a>
@@ -98,7 +117,7 @@
         <h2>{{ __('Options') }}</h2>
         <div class="d-flex justify-content-between align-items-center gap-2 flex-wrap mb-3">
             <span>{{ $event->options->count() }} {{ $event->options->count() > 1 ? __('options available') : __('option available') }}</span>
-            @if (! $event->is_committed)
+            @if ($event->isEditable())
                 <a class="btn btn-primary" href="{{ route('events.options.create', ['event' => $event]) }}">{{ __('Add Option') }}</a>
             @endif
         </div>
@@ -124,7 +143,7 @@
                                         <p class="card-text">{!! $option->description !!}</p>
                                     @endisset
                                     <div class="d-flex justify-content-start gap-2 mt-3">
-                                        @if (! $event->is_committed)
+                                        @if ($event->isEditable())
                                             {{-- Edit Option Button --}}
                                             <a class="btn btn-outline-secondary" href="{{ route('options.edit', ['option' => $option]) }}" title="Edit this option">
                                                 <i class="fa-pen fa-solid">Edit</i>
@@ -193,7 +212,7 @@
     </section>
 
     {{-- Commit --}}
-    @if (! $event->is_committed)
+    @if ($event->isEditable())
         <section class="mb-4">
             <h2>{{ __('Commit Event') }}</h2>
             <div class="p-3 bg-white border mt-3">
@@ -227,35 +246,40 @@
     @endif
 
     {{-- Delete Event --}}
-    <section class="mb-4">
-        <h2>{{ __('Delete Event') }}</h2>
-        <div class="p-3 bg-white border border-danger mt-3">
-            <p><span class="text-danger fw-bold">Warning!</span> You <strong>can't undo</strong> this action.<br>All event data, options, voters and ballots <strong>will be lost</strong>.</p>
-            <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#deleteConfirmationModal">Delete Event</button>
-        </div>
-    </section>
+    @if ($event->isAuthorized())
+        <section class="mb-4">
+            <h2>{{ __('Delete Event') }}</h2>
+            <div class="p-3 bg-white border border-danger mt-3">
+                <p><span class="text-danger fw-bold">Warning!</span> You <strong>can't undo</strong> this action.<br>All event data, options, voters and ballots <strong>will be lost</strong>.</p>
+                <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#deleteConfirmationModal">Delete Event</button>
+            </div>
+        </section>
+    @endif
 </div>
 
 <!-- Modal -->
-<div class="modal fade" id="deleteConfirmationModal" tabindex="-1" aria-labelledby="deleteConfirmationModalLabel" aria-hidden="true">
-    <div class="modal-dialog">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title" id="deleteConfirmationModalLabel">{{ __('Delete This Event?') }}</h5>
-          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+@if ($event->isAuthorized())
+    <div class="modal fade" id="deleteConfirmationModal" tabindex="-1" aria-labelledby="deleteConfirmationModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="deleteConfirmationModalLabel">{{ __('Delete This Event?') }}</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    {{ __('You are going to delete this event. Are you sure with this?') }}
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">{{ __('Cancel') }}</button>
+                    <form action="{{ route('events.destroy', ['event' => $event]) }}" method="post">
+                        @csrf
+                        @method('DELETE')
+                        <button type="submit" class="btn btn-outline-danger">{{ __('Yes, Delete Now') }}</button>
+                    </form>
+                </div>
+            </div>
         </div>
-        <div class="modal-body">
-          {{ __('You are going to delete this event. Are you sure with this?') }}
-        </div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">{{ __('Cancel') }}</button>
-          <form action="{{ route('events.destroy', ['event' => $event]) }}" method="post">
-              @csrf
-              @method('DELETE')
-              <button type="submit" class="btn btn-outline-danger">{{ __('Yes, Delete Now') }}</button>
-          </form>
-        </div>
-      </div>
-   </div>
-</div>
+    </div>
+@endif
+
 @endsection

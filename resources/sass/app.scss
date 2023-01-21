@@ -12,6 +12,17 @@
 // Bootstrap
 @import '~bootstrap/scss/bootstrap';
 
+.app-link,
+.breadcrumb-item a {
+    color: $primary;
+    text-decoration: none;
+}
+
+.app-link:hover,
+.breadcrumb-item a:hover {
+    font-weight: bold;
+}
+
 .navbar {
     position: sticky;
     position: -webkit-sticky;
@@ -84,12 +95,18 @@
     flex-wrap: wrap;
 }
 
-.event-item {
+.user-list {
+    display: grid;
+    grid-template-columns: 1fr;
+    grid-row-gap: 1rem;
+}
+
+.event-item, .user-item {
     color: $black;
     text-decoration: none;
 }
 
-.event-item:hover {
+.event-item:hover, .user-item:hover {
     color: $black;
     background-color: $gray-100;
 }
@@ -128,8 +145,42 @@
     height: 32vh;
 }
 
-.imgTeam {
-    width: 75%;
+.team-list {
+    display: grid;
+    grid-template-columns: 1fr;
+    grid-row-gap: 1.5rem;
+}
+
+.team-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+}
+
+.team-item__header {
+    margin-bottom: 1rem;
+}
+
+.team-item__header__image {
+    width: 100%;
+    max-width: 200px;
+    border-radius: 50%;
+}
+
+.team-item__body__name {
+    font-size: 1.25rem;
+    margin-bottom: 0.25rem;
+}
+
+.team-item__body__role {
+    font-size: 0.85rem;
+    margin-bottom: 0.5rem;
+    color: $secondary;
+}
+
+.team-item__body__quote {
+    font-size: 0.85rem;
 }
 
 @media (min-width: 768px) {
@@ -142,10 +193,12 @@
     }
 
     .descriptionAbout {
-        width: 49%;
+        width: 48%;
     }
 
-    .option-list {
+    .user-list,
+    .option-list,
+    .team-list {
         grid-template-columns: repeat(2, 1fr);
         column-gap: 1.5rem;
     }
@@ -169,12 +222,12 @@
         width: 48%;
     }
 
-    .imgTeam {
-        width: 90%;
-    }
-
     .option-list {
         grid-template-columns: repeat(3, 1fr);
+    }
+
+    .team-list {
+        grid-template-columns: repeat(4, 1fr);
     }
 }
 

@@ -5,7 +5,6 @@ namespace App\Policies;
 use App\Models\User;
 use App\Models\Voter;
 use Illuminate\Auth\Access\HandlesAuthorization;
-use Illuminate\Auth\Access\Response;
 
 class VoterPolicy
 {
@@ -16,6 +15,7 @@ class VoterPolicy
      */
     private $messages = [
         'not_the_owner' => 'You are not the owner of this voter',
+        'not_the_event_owner' => 'You are not the owner of this event',
         'event_is_committed' => 'This event has been committed'
     ];
 
@@ -23,11 +23,29 @@ class VoterPolicy
      * Determine whether the user can view any models.
      *
      * @param  \App\Models\User  $user
+     * @param  \App\Models\Event  $event The event that the voter belongs to.
      * @return \Illuminate\Auth\Access\Response|bool
      */
-    public function viewAny(User $user)
+    public function viewAny(User $user, \App\Models\Event $event)
     {
-        return isset($user);
+        if (empty($user)) {
+            return false;
+        }
+
+        // Allow the admin to view all voters.
+        if ($user->is_admin) {
+            return true;
+        }
+
+        if ($user->id !== $event->user_id) {
+            return $this->deny($this->messages['not_the_event_owner']);
+        }
+
+        if ($event->is_committed) {
+            return $this->deny($this->messages['event_is_committed']);
+        }
+
+        return true;
     }
 
     /**
@@ -46,11 +64,24 @@ class VoterPolicy
      * Determine whether the user can create models.
      *
      * @param  \App\Models\User  $user
+     * @param  \App\Models\Event  $event The event that the voter belongs to.
      * @return \Illuminate\Auth\Access\Response|bool
      */
-    public function create(User $user)
+    public function create(User $user, \App\Models\Event $event)
     {
-        return isset($user);
+        if (empty($user)) {
+            return false;
+        }
+
+        if ($user->id !== $event->user_id) {
+            return $this->deny($this->messages['not_the_event_owner']);
+        }
+
+        if ($event->is_committed) {
+            return $this->deny($this->messages['event_is_committed']);
+        }
+
+        return true;
     }
 
     /**
@@ -79,11 +110,11 @@ class VoterPolicy
         }
 
         if ($user->id !== $voter->event->user_id) {
-            return Response::deny($this->messages['not_the_owner']);
+            return $this->deny($this->messages['not_the_owner']);
         }
 
         if ($voter->event->is_committed) {
-            return Response::deny($this->messages['event_is_committed']);
+            return $this->deny($this->messages['event_is_committed']);
         }
 
         return true;
